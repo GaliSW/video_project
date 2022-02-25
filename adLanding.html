@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>FUNDAY Tube</title>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <!-- Favicon -->
+        <link
+            rel="shortcut icon"
+            href="images/web_icon/favicon.ico"
+            type="image/x-icon"
+        />
+    </head>
+
+    <body></body>
+    <script>
+        window.onload = function () {
+            const url = location.href;
+            if (url.indexOf("?") != -1) {
+                //之後去分割字串把分割後的字串放進陣列中
+                var ary1 = url.split("?");
+
+                var name = ary1[1].split("&");
+                var adString = name[0].split("=");
+                //  取得ADid值
+                var ADid = adString[1];
+                sessionStorage.setItem("ADid", ADid);
+
+                if (name[1] == undefined) {
+                    location.href = "index.html";
+                } else {
+                    var pageString = name[1].split("=");
+                    var cateString = name[2].split("=");
+                    var vId = pageString[1];
+                    var cateId = cateString[1];
+                    location.href = `video.html?id=${vId}`;
+                }
+            } else {
+                location.href = "index.html";
+            }
+        };
+    </script>
+</html>
