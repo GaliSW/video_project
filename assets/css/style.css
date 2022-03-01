@@ -1305,10 +1305,18 @@ body.video_page .video_category .video_items .items_list .item {
     text-align: justify;
 }
 #video_playing .video_bar .tool_bar .buootn.cutover01 {
-    margin-right: 8px;
+    margin-right: 16px;
 }
 #video_playing .video_bar .tool_bar .buootn.cutover03 {
     margin-right: 16px;
+}
+@media (max-width: 1366px) {
+    #video_playing .video_bar .tool_bar .buootn.cutover01 {
+        margin-right: 8px;
+    }
+    #video_playing .video_bar .tool_bar .buootn.cutover03 {
+        margin-right: 8px;
+    }
 }
 #video_playing .video_bar .tool_bar .buootn.cutover03 img {
     width: 24px;
@@ -1382,9 +1390,6 @@ body.video_page .video_category .video_items .items_list .item {
 }
 @media (max-width: 1365px) and (min-width: 992px) {
     #video_playing .video_bar .play_bar {
-        /* position: absolute;
-        left: calc(50% - 104px);
-        bottom: calc(100% + 34px); */
         padding: 0;
     }
 }

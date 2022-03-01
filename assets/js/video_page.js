@@ -60,6 +60,7 @@ let app = new Vue({
         emailurl: "", //ig分享網址
         whatsurl: "", //whats app分享網址
         linkedinurl: "", //linkedin分享網址
+        URL: "",
     },
     created() {
         var player;
@@ -72,6 +73,7 @@ let app = new Vue({
         // ==========================================
         createPlayer() {
             const url = window.location.search;
+            this.URL = window.location.href;
             console.log(url);
             const memberid = sessionStorage.getItem("mindx");
             let id = "";
@@ -114,7 +116,7 @@ let app = new Vue({
                     this.lineurl = `https://social-plugins.line.me/lineit/share?url=https://newb2b.funday.asia/mylesson/video_project/video.html${url}`;
                     //*twitter
                     this.twitterurl = `https://twitter.com/intent/tweet?url=https://newb2b.funday.asia/mylesson/video_project/video.html${url}`;
-                    //*IG
+                    //*email
                     this.emailurl = `mailto:?to=&subject=Funtube&body=https://newb2b.funday.asia/mylesson/video_project/video.html${url}`;
                     //*Whatsapp
                     this.whatsurl = `https://api.whatsapp.com/send?text=https://newb2b.funday.asia/mylesson/video_project/video.html${url}`;
@@ -859,32 +861,16 @@ let app = new Vue({
                 single.classList.toggle("none");
                 this.mode = "正常";
                 this.modetext = "單曲";
-                app.hint = "單曲播放";
-                //隨機功能關閉
-                // play_bar.style.marginLeft = "56px";
-                // on.classList.add("none");
-                // close1.classList.add("none");
-                // close2.classList.remove("none");
-                // close.style.cursor = "not-allowed";
                 this.randomMode = false;
             } else if (!single.classList.contains("none")) {
-                app.hint = "單句播放";
+                app.hint = "隨機播放";
                 hint.style.opacity = "1";
                 hint.style.display = "block";
                 single.classList.toggle("none");
-                per.classList.toggle("none");
-                this.mode = "單句";
-                this.modetext = "單句";
-                app.hint = "單句播放";
-            } else if (!per.classList.contains("none")) {
-                app.hint = "隨機播放";
-                hint.style.opacity = "1";
-                hint.style.display = "block";
-                per.classList.toggle("none");
+                // per.classList.toggle("none");
                 random.classList.toggle("none");
                 this.mode = "循環";
                 this.modetext = "隨機";
-                app.hint = "隨機播放";
                 this.randomMode = true;
             } else if (!random.classList.contains("none")) {
                 app.hint = "全部播放";
@@ -894,11 +880,21 @@ let app = new Vue({
                 cycle.classList.toggle("none");
                 this.mode = "循環";
                 this.modetext = "循環";
-                app.hint = "全部播放";
                 this.randomMode = false;
             }
             timeoutHandle();
             timeoutHandle2();
+        },
+        // ==========================================
+        // === 單句模式按鍵切換 ===
+        // ==========================================
+        singleMode() {
+            console.log("123");
+            if (this.mode == "單句") {
+                this.mode = "正常";
+            } else {
+                this.mode = "單句";
+            }
         },
         // ==========================================
         // === 手機板tab頁面切換 ===
@@ -1281,12 +1277,15 @@ let app = new Vue({
         // === 分享 ===
         // ==========================================
         share() {
-            document
-                .querySelector(".share_btn ul")
-                .classList.toggle("share_click");
-            document
-                .querySelector(".share_btn2 ul")
-                .classList.toggle("share_click");
+            document.querySelector(".share_blk").classList.toggle("none");
+        },
+        shareClose() {
+            document.querySelector(".share_blk").classList.toggle("none");
+        },
+        copyURL() {
+            var url = document.getElementById("copyUrl");
+            url.select();
+            document.execCommand("copy");
         },
     },
     watch: {

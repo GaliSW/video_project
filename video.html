@@ -299,7 +299,23 @@
                     <div id="video_frame_top">
                         
                         <div id="video_playing">
-                          
+                            <!-- 分享彈窗 -->
+                            <div class="share_blk none">
+                                <div class="share_top">
+                                    <span>分享</span>
+                                    <img src="./images/web_icon/share_close.svg" alt="close" style="cursor: pointer" @click="shareClose">
+                                </div>
+                                <div class="share_center">
+                                    <div><a :href="lineurl"><img src="./images/web_icon/Line.svg" alt=""></a><p>Line</p></div>
+                                    <div><a :href="fburl"><img src="./images/web_icon/FB.svg" alt=""></a><p>FB</p></div>
+                                    <div><a :href="emailurl"><img src="./images/web_icon/Gmail.svg" alt=""></a><p>Gmail</p></div>
+                                    <div><a :href="linkedinurl"><img src="./images/web_icon/Linkedin.svg" alt=""></a><p>Linkedin</p></div>
+                                </div>
+                                <div class="share_bottom">
+                                    <input id="copyUrl" type="text" :value="URL" readonly  unselectable="on" >
+                                    <span @click="copyURL">複製</span>
+                                </div>
+                            </div>
                             <!--這一塊是撥放器-->
                             <div class="now_video"> 
                                 <div class="hint">{{hint}}</div>                    
@@ -373,68 +389,87 @@
                                                     src="images/web_icon/tool_bar_cut_a02.svg"
                                                 />單曲</span
                                             >
-                                            <span class="cut03 none"
+                                            <!-- <span class="cut03 none"
                                                 ><img
                                                     src="images/web_icon/tool_bar_cut_a01.svg"
                                                 />單句</span
-                                            >
+                                            > -->
                                             <span class="cut04 none"
                                             ><img
                                                 src="images/web_icon/tool_bar_cut_b01.svg"
                                             />隨機</span
                                         >
                                         </div>
-                                    <div>
-                                        <div class="play_bar">
-                                            <span class="prev"
-                                                ><img
-                                                    @click="vdPrev"
-                                                    src="images/web_icon/play_bar_prev.svg"
-                                            /></span>
-                                            <!-- <span class="Play"
-                                                ><i
-                                                    @click="vdController"
-                                                    id="play_btn"
-                                                    class="far fa-play-circle"
-                                                ></i></span
-                                            > -->
-                                            <span class="Play playBtn"
-                                                @click="vdControllerMobile">
-                                                    <img  v-if="playstate == 0 || playstate == -1" src="./images/web_icon/Play.svg" alt="">
-                                                    <img v-if="playstate == 1" src="./images/web_icon/Pause.svg" alt="">
-                                                    </span>
-                                            <span class="next"
-                                                ><img
-                                                    @click="vdNext"
-                                                    src="images/web_icon/play_bar_next.svg"
-                                            /></span>
+                                        <div
+                                            class="buootn"
+                                            @click="singleMode"
+                                        >
+                                            <span class="single_close" v-if="mode !== '單句'" v-cloak>
+                                                <img src="images/web_icon/tool_bar_cut_a01.svg" />
+                                                單句
+                                            </span>
+                                            <span class="single_open" v-if="mode == '單句'"  v-cloak>
+                                                <img src="images/web_icon/tool_bar_cut_a01_open.svg"/>
+                                                單句
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div class=" cutover05 favbtn" 
+                                        <div>
+                                            <div class="play_bar">
+                                                <span class="prev"
+                                                    ><img
+                                                        @click="vdPrev"
+                                                        src="images/web_icon/play_bar_prev.svg"
+                                                /></span>
+                                                <!-- <span class="Play"
+                                                    ><i
+                                                        @click="vdController"
+                                                        id="play_btn"
+                                                        class="far fa-play-circle"
+                                                    ></i></span
+                                                > -->
+                                                <span class="Play playBtn"
+                                                    @click="vdControllerMobile">
+                                                        <img  v-if="playstate == 0 || playstate == -1" src="./images/web_icon/Play.svg" alt="">
+                                                        <img v-if="playstate == 1" src="./images/web_icon/Pause.svg" alt="">
+                                                        </span>
+                                                <span class="next"
+                                                    ><img
+                                                        @click="vdNext"
+                                                        src="images/web_icon/play_bar_next.svg"
+                                                /></span>
+                                            </div>
+                                        </div>
+                                    <!-- <div class=" cutover05 favbtn" 
                                         :id="videoId"
                                         @click="fnAddToCollection">
                                                     <i v-if="bookmark == 0" class="fa-regular fa-heart vheart" :id="videoId"></i>
-                                                    <i v-else class="fa-solid fa-heart vheart" :id="videoId"></i> </div>
+                                                    <i v-else class="fa-solid fa-heart vheart" :id="videoId"></i> 
+                                    </div> -->
                                     </div>
                                     
-                                    <div class="right">
+                                    <div class="right" id="right">
                                         
                                         <div
                                         id="check_cate"
                                             class="buootn todo_Go none"
                                             @click="goChallenge"
                                         >
-                                            <a  class="check_cate">配音挑戰</a>
+                                            <a  class="check_cate">配音<span class="challenge_rwd">挑戰</span></a>
                                         </div>
-                                    </div>
-                                    <!-- 分享按鈕 -->
-                                    <div class="share_btn" >
-                                        <span @click="share">分享</span> 
-                                        <ul>
-                                            <li><a :href="fburl">FB</a> </li>
-                                            <li>Line</li>
-                                            <li>twitter</li>
-                                        </ul>
+                                        <div class="fav_btn" 
+                                        :id="videoId"
+                                        @click="fnAddToCollection">
+                                            <i v-if="bookmark == 0" class="fa-regular fa-heart vheart" :id="videoId"></i>
+                                            <i v-else class="fa-solid fa-heart vheart" :id="videoId"></i> 
+                                            收藏
+                                        </div>
+                                        <!-- 分享按鈕 -->
+                                        <div class="share_btn"  @click="share">
+                                            <img src="./images/web_icon/share.svg" alt="">
+                                            <span>
+                                                分享
+                                            </span> 
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- 手機控制欄 -->
