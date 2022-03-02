@@ -1328,7 +1328,7 @@ body.video_page .video_category .video_items .items_list .item {
 }
 #video_playing .video_bar .tool_bar .buootn.todo_Go a {
     background: #95001b;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    /* border: 2px solid rgba(255, 255, 255, 0.3); */
     box-sizing: border-box;
     border-radius: 100px;
     color: #fff;

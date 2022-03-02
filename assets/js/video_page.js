@@ -61,11 +61,12 @@ let app = new Vue({
         whatsurl: "", //whats app分享網址
         linkedinurl: "", //linkedin分享網址
         URL: "",
+        single: false,
+        role: "",
     },
     created() {
         var player;
         this.createPlayer();
-        // this.audioList();
     },
     methods: {
         // ==========================================
@@ -188,7 +189,6 @@ let app = new Vue({
                             );
                         }
                     }
-
                     //是否有配音挑戰
                     if (this.record_end_time.length !== 0) {
                         document
@@ -273,6 +273,17 @@ let app = new Vue({
                         });
                     };
                     function onPlayerReady() {
+                        //配音段落字幕上色
+                        for (let i = 0; i < app.roleAindex.length; i++) {
+                            document
+                                .getElementById(`subtitle${app.roleAindex[i]}`)
+                                .classList.add("role_A");
+                        }
+                        for (let i = 0; i < app.roleBindex.length; i++) {
+                            document
+                                .getElementById(`subtitle${app.roleBindex[i]}`)
+                                .classList.add("role_B");
+                        }
                         //取得影片時間軸
                         let allSec = player.getDuration();
                         let allMin = Math.floor(allSec / 60).toFixed(0);
@@ -490,41 +501,8 @@ let app = new Vue({
         // ==========================================
         // == play bar ==
         // ==========================================
-        //桌機影片播放鈕
-        vdController(e) {
-            if (Number(sessionStorage.getItem("free")) > 1) {
-                player.stopVideo();
-                document.getElementById("myModal01").classList.remove("none");
-                // console.log(document.getElementById("myModal01"));
-            } else {
-                if (e.target.classList.contains("fa-play-circle")) {
-                    e.target.classList.remove("fa-play-circle");
-                    e.target.classList.add("fa-pause-circle");
-                    player.playVideo();
-                    //點擊計算
-                    let mid = 0; //預設給0
-                    if (app.mid !== null) {
-                        mid = app.mid;
-                    }
-                    if (!app.clicks) {
-                        axios
-                            .get(
-                                `https://funday.asia/api/ProgramWeb/Behavior.asp?member_id=${mid}&ref_id=${app.videoId}&action=click`
-                            )
-                            .then((response) => {
-                                // console.log(response);
-                                app.clicks = true;
-                            });
-                    }
-                } else {
-                    e.target.classList.add("fa-play-circle");
-                    e.target.classList.remove("fa-pause-circle");
-                    player.pauseVideo();
-                }
-            }
-        },
-        //手機影片播放鈕
-        vdControllerMobile() {
+        //影片播放鈕
+        vdController() {
             console.log(app.playstate);
             // const btn = document.getElementById("play_btn_mobile");
             if (Number(sessionStorage.getItem("free")) > 1) {
@@ -719,14 +697,14 @@ let app = new Vue({
             clearTimeout(timeoutHandle2);
             hint.style.opacity = "0";
             hint.style.display = "none";
-            const en = document.querySelectorAll(".cut01")[0];
-            const ch = document.querySelectorAll(".cut02")[0];
-            const en_ch = document.querySelectorAll(".cut03")[0];
-            const close = document.querySelectorAll(".cut04")[0];
-            const en2 = document.querySelectorAll(".cut01")[2];
-            const ch2 = document.querySelectorAll(".cut02")[2];
-            const en_ch2 = document.querySelectorAll(".cut03")[2];
-            const close2 = document.querySelectorAll(".cut04")[2];
+            const en = document.querySelector(".en1");
+            const ch = document.querySelector(".ch1");
+            const en_ch = document.querySelector(".en_ch1");
+            const close = document.querySelector(".close1");
+            const en2 = document.querySelector(".en2");
+            const ch2 = document.querySelector(".ch2");
+            const en_ch2 = document.querySelector(".en_ch2");
+            const close2 = document.querySelector(".close2");
             const side_en = document.querySelectorAll(".side_en");
             const side_tw = document.querySelectorAll(".side_tw");
             const voiceImg = document.querySelectorAll(".voiceImg");
@@ -889,12 +867,36 @@ let app = new Vue({
         // === 單句模式按鍵切換 ===
         // ==========================================
         singleMode() {
-            console.log("123");
+            const hint = document.querySelector(".hint");
+            function timeoutHandle() {
+                setTimeout(() => {
+                    hint.style.opacity = "0";
+                }, 1500);
+            }
+            function timeoutHandle2() {
+                setTimeout(() => {
+                    hint.style.display = "none";
+                }, 2000);
+            }
+            clearTimeout(timeoutHandle);
+            clearTimeout(timeoutHandle2);
+            hint.style.opacity = "0";
+            hint.style.display = "none";
             if (this.mode == "單句") {
                 this.mode = "正常";
+                this.single = false;
+                app.hint = "單句模式關閉";
+                hint.style.opacity = "1";
+                hint.style.display = "block";
             } else {
                 this.mode = "單句";
+                this.single = true;
+                app.hint = "單句模式開啟";
+                hint.style.opacity = "1";
+                hint.style.display = "block";
             }
+            timeoutHandle();
+            timeoutHandle2();
         },
         // ==========================================
         // === 手機板tab頁面切換 ===
@@ -920,7 +922,12 @@ let app = new Vue({
                 hint.style.display = "block";
                 hintTimeout();
             } else {
-                return false;
+                app.nowtab = 0;
+                app.hint = "配音列表關閉";
+                clearTimeout(hintTimeout);
+                hint.style.opacity = "1";
+                hint.style.display = "block";
+                hintTimeout();
             }
         },
         // ==========================================
@@ -1087,16 +1094,6 @@ let app = new Vue({
         },
         fnCloseDrWordModal() {
             $(".DrWordModal").removeClass("active");
-        },
-        // ==========================================
-        // === 前往配音挑戰(登入判斷) ===
-        // ==========================================
-        goChallenge() {
-            if (this.cid == null) {
-                document.getElementById("myModal01").classList.remove("none");
-            } else {
-                location.href = `./video_dubbing.html?id=${this.videoId}&cate=${this.cate}`;
-            }
         },
         // ==========================================
         // === 收藏 ===
@@ -1286,6 +1283,111 @@ let app = new Vue({
             var url = document.getElementById("copyUrl");
             url.select();
             document.execCommand("copy");
+        },
+
+        // ==========================================
+        // === 配音挑戰區塊 ===
+        // ==========================================
+
+        // === 前往配音挑戰(登入判斷) ===
+        goChallenge() {
+            if (this.cid == null) {
+                document.getElementById("myModal01").classList.remove("none");
+            } else {
+                if (document.querySelector(".pause_blk") !== null) {
+                    document.querySelector(".pause_blk").classList.add("none");
+                }
+
+                document.querySelector(".begin_mask").classList.remove("none");
+                document
+                    .querySelector(".start_challenge")
+                    .classList.remove("none");
+                document
+                    .querySelector(".check_cate_leave")
+                    .classList.remove("none");
+                document.querySelector(".check_cate").classList.add("none");
+                if (window.innerWidth < 991) {
+                    document
+                        .querySelector(".leave_challenge")
+                        .classList.remove("none");
+                    document.querySelector(".video_bar").classList.add("none");
+                    document
+                        .getElementById("video_list2")
+                        .classList.add("none");
+                    document
+                        .getElementById("video_frame_bottom")
+                        .classList.add("none");
+                    document.getElementById("footer").classList.add("none");
+                }
+            }
+        },
+        leaveChallenge() {
+            document.querySelector(".begin_mask").classList.add("none");
+            document.querySelector(".start_challenge").classList.add("none");
+            document.querySelector(".check_cate_leave").classList.add("none");
+            document.querySelector(".check_cate").classList.remove("none");
+            if (document.querySelector(".pause_blk") !== null) {
+                document.querySelector(".pause_blk").classList.remove("none");
+            }
+            if (window.innerWidth < 991) {
+                document
+                    .querySelector(".leave_challenge")
+                    .classList.add("none");
+                document.querySelector(".video_bar").classList.remove("none");
+                document.getElementById("video_list2").classList.remove("none");
+                document
+                    .getElementById("video_frame_bottom")
+                    .classList.remove("none");
+                document.getElementById("footer").classList.remove("none");
+            }
+        },
+        // === 開始示範 ===
+        startSample() {
+            if (this.cid == null) {
+                document.getElementById("myModal01").classList.remove("none");
+            } else {
+                document
+                    .querySelector(".leave_challenge")
+                    .classList.add("none");
+                document.getElementById("startSample").classList.add("none");
+                document.querySelector(".begin_mask").classList.add("none");
+                document.querySelector(".demo_button").classList.remove("none");
+                document.querySelector(".function01").classList.remove("none");
+                const sentence_start = this.record_start_time[this.recordIndex];
+                const min = Number(sentence_start.slice(3, 5)) * 60;
+                const sec = Number(
+                    sentence_start.slice(6, 11).replace(",", ".")
+                );
+                const time = min + sec;
+                player.seekTo(time - 2);
+                player.unMute().playVideo();
+            }
+        },
+        // === 選擇腳色 ===
+        chooseRole(role) {
+            if (role == "A") {
+                document
+                    .querySelector(`.button_A`)
+                    .classList.add("button_activeA");
+                document
+                    .querySelector(`.button_B`)
+                    .classList.remove("button_activeB");
+            } else {
+                document
+                    .querySelector(`.button_B`)
+                    .classList.add("button_activeB");
+                document
+                    .querySelector(`.button_A`)
+                    .classList.remove("button_activeA");
+            }
+
+            this.role = role;
+        },
+        // === 略過示範 ===
+        passSample() {
+            player.pauseVideo();
+            document.querySelector(".lds-rippleA").classList.add("none");
+            document.querySelector(".lds-rippleB").classList.add("none");
         },
     },
     watch: {

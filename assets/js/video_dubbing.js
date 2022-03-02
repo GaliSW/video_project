@@ -319,62 +319,6 @@ let app = new Vue({
                         .classList.remove("none");
                 }
             } else if (this.mode == "全部播放") {
-                // let idNameArr = []; //音檔名稱陣列
-                // for (let i = 0; i < this.recBlob.length; i++) {
-                //     const idName = `myAudio_${i}`;
-                //     idNameArr.push(idName);
-                // }
-                // let audio = document.getElementById(
-                //     `${idNameArr[this.recordIndex]}`
-                // );
-                // this.nowplayingAudio = audio;
-                // let end = "";
-                // let start = "";
-                // if (this.role == "A") {
-                //     end = this.Arecord_end_time;
-                //     start = this.Arecord_start_time;
-                // } else if (this.role == "B") {
-                //     end = this.Brecord_end_time;
-                //     start = this.Brecord_start_time;
-                // }
-                // if (this.recordIndex <= this.recBlob.length - 1) {
-                //     const sentence_end =
-                //         Number(end[`${this.recordIndex}`].slice(3, 5) * 60) +
-                //         Number(
-                //             end[`${this.recordIndex}`]
-                //                 .slice(6, 11)
-                //                 .replace(",", ".")
-                //         );
-                //     const sentence_start =
-                //         Number(start[`${this.recordIndex}`].slice(3, 5) * 60) +
-                //         Number(
-                //             start[`${this.recordIndex}`]
-                //                 .slice(6, 11)
-                //                 .replace(",", ".")
-                //         );
-                //     this.sentence_end = Number(sentence_end.toFixed(1));
-                //     this.sentence_start = Number(sentence_start.toFixed(1));
-                //     const now_time = Number(player.getCurrentTime().toFixed(1));
-
-                //     if (now_time === this.sentence_start) {
-                //         player.mute();
-                //         audio.play();
-                //     }
-
-                //     if (now_time === this.sentence_end) {
-                //         player.unMute();
-                //         audio.pause();
-                //         audio.currentTime = 0;
-                //         this.recordIndex += 1;
-                //     }
-                // } else {
-                //     document.getElementById("allAudioStart").style.display =
-                //         "block";
-                //     document.getElementById("allAudioCon").style.display =
-                //         "none";
-                //     document.getElementById("allAudioPause").style.display =
-                //         "none";
-                // }
                 let idNameArr = []; //音檔名稱陣列
                 if (this.role == "A") {
                     for (let i = 0; i < this.roleAindex.length; i++) {
@@ -1039,41 +983,6 @@ let app = new Vue({
         },
         // ==========================================
         // === 播放整段錄音 ===
-        // ==========================================
-        // playAll(type) {
-        //     this.mode = "全部播放";
-
-        //     if (type == "start") {
-        //         // stop to active v
-        //         this.recordIndex = 0;
-        //         document.getElementById("allAudioPause").style.display =
-        //             "block";
-        //         document.getElementById("allAudioStart").style.display = "none";
-
-        // const sentence_start = this.record_start_time[0];
-        // const min = Number(sentence_start.slice(3, 5)) * 60;
-        // const sec = Number(
-        //     sentence_start.slice(6, 11).replace(",", ".")
-        // );
-        // const time = min + sec;
-        // player.seekTo(time - 1);
-        // player.unMute().playVideo();
-        //     } else if (type == "pause") {
-        //         // active to stop v
-        //         player.pauseVideo();
-        //         app.nowplayingAudio.pause();
-        //         document.getElementById("allAudioCon").style.display = "block";
-        //         document.getElementById("allAudioPause").style.display = "none";
-        //     } else if (type == "continue") {
-        //         player.playVideo();
-        //         this.nowplayingAudio.play();
-        //         document.getElementById("allAudioPause").style.display =
-        //             "block";
-        //         document.getElementById("allAudioCon").style.display = "none";
-        //     }
-        // },
-        // ==========================================
-        // === 配音列表播放 ===
         // ==========================================
         playAll(type) {
             this.recordIndex = 0;

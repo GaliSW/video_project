@@ -33,6 +33,7 @@
   />
         <link href="assets/css/style.css?1223" rel="stylesheet" />
         <link rel="stylesheet" href="assets/css/update.css" />
+        <link rel="stylesheet" href="assets/css/share.css">
 
         <!-- Google Fonts -->
         <link
@@ -306,10 +307,14 @@
                                     <img src="./images/web_icon/share_close.svg" alt="close" style="cursor: pointer" @click="shareClose">
                                 </div>
                                 <div class="share_center">
-                                    <div><a :href="lineurl"><img src="./images/web_icon/Line.svg" alt=""></a><p>Line</p></div>
-                                    <div><a :href="fburl"><img src="./images/web_icon/FB.svg" alt=""></a><p>FB</p></div>
-                                    <div><a :href="emailurl"><img src="./images/web_icon/Gmail.svg" alt=""></a><p>Gmail</p></div>
-                                    <div><a :href="linkedinurl"><img src="./images/web_icon/Linkedin.svg" alt=""></a><p>Linkedin</p></div>
+                                    <div class="share_wrapper">
+                                        <div class="copy_icon"><img  @click="copyURL" src="./images/web_icon/copy.svg" alt=""><p>複製連結</p></div>
+                                        <div><a :href="lineurl"><img src="./images/web_icon/Line.svg" alt=""></a><p>Line</p></div>
+                                        <div><a :href="fburl"><img src="./images/web_icon/FB.svg" alt=""></a><p>FB</p></div>
+                                        <div><a :href="emailurl"><img src="./images/web_icon/Gmail.svg" alt=""></a><p>Gmail</p></div>
+                                        <div><a :href="linkedinurl"><img src="./images/web_icon/Linkedin.svg" alt=""></a><p>Linkedin</p></div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="share_bottom">
                                     <input id="copyUrl" type="text" :value="URL" readonly  unselectable="on" >
@@ -317,7 +322,10 @@
                                 </div>
                             </div>
                             <!--這一塊是撥放器-->
-                            <div class="now_video"> 
+                            <div class="now_video">
+                                <div class="pause_blk" v-if="playstate == 0">
+                                    <img src="./images/web_icon/pause_issue.svg" alt="">
+                                </div> 
                                 <div class="hint">{{hint}}</div>                    
                                 <a href="#"
                                     > <iframe
@@ -331,6 +339,27 @@
                                     > 
                                     </iframe></a
                                 ><!--先用圖放個位置  -->
+                                <div class="begin_mask none"></div>
+                                <div
+                                    class="start_challenge none"
+                                    id="startSample"
+                                    @click="startSample">
+                                    開始示範
+                                    <!-- <img
+                                        class="right_icon"
+                                        src="./images/web_icon/chevron_right.svg"
+                                        alt=""/> -->
+                                </div>
+                                <div
+                                    class="leave_challenge none"
+                                    id="startSample"
+                                    @click="leaveChallenge">
+                                    取消配音
+                                    <!-- <img
+                                        class="right_icon"
+                                        src="./images/web_icon/chevron_right_leave.svg"
+                                        alt=""/> -->
+                                </div>
                             </div>
                             <div class="video_bar">
                                 <div class="subtitle" v-cloak>
@@ -354,22 +383,22 @@
                                             class="buootn cutover03"
                                             @click="subChange"
                                         >
-                                            <span class="cut01 none"
+                                            <span class="cut01 none en1"
                                                 ><img
                                                     src="images/web_icon/EN.svg"
                                                 />英文</span
                                             >
-                                            <span class="cut02 none"
+                                            <span class="cut02 none ch1"
                                                 ><img
                                                     src="images/web_icon/ZH.svg"
                                                 />中文</span
                                             >
-                                            <span class="cut03"
+                                            <span class="cut03 en_ch1"
                                                 ><img
                                                     src="images/web_icon/ENZH.svg"
                                                 />中英</span
                                             >
-                                            <span class="cut04 none"
+                                            <span class="cut04 none close1"
                                                 ><img
                                                     src="images/web_icon/None.svg"
                                                 />關閉</span
@@ -404,11 +433,11 @@
                                             class="buootn"
                                             @click="singleMode"
                                         >
-                                            <span class="single_close" v-if="mode !== '單句'" v-cloak>
+                                        <span class="single_close" :class="[{ none: single }, '']" v-cloak>
                                                 <img src="images/web_icon/tool_bar_cut_a01.svg" />
                                                 單句
                                             </span>
-                                            <span class="single_open" v-if="mode == '單句'"  v-cloak>
+                                            <span class="single_open" :class="[{ none: !single }, '']" v-cloak>
                                                 <img src="images/web_icon/tool_bar_cut_a01_open.svg"/>
                                                 單句
                                             </span>
@@ -419,16 +448,9 @@
                                                     ><img
                                                         @click="vdPrev"
                                                         src="images/web_icon/play_bar_prev.svg"
-                                                /></span>
-                                                <!-- <span class="Play"
-                                                    ><i
-                                                        @click="vdController"
-                                                        id="play_btn"
-                                                        class="far fa-play-circle"
-                                                    ></i></span
-                                                > -->
+                                                /></span>                                                
                                                 <span class="Play playBtn"
-                                                    @click="vdControllerMobile">
+                                                    @click="vdController">
                                                         <img  v-if="playstate == 0 || playstate == -1" src="./images/web_icon/Play.svg" alt="">
                                                         <img v-if="playstate == 1" src="./images/web_icon/Pause.svg" alt="">
                                                         </span>
@@ -439,22 +461,16 @@
                                                 /></span>
                                             </div>
                                         </div>
-                                    <!-- <div class=" cutover05 favbtn" 
-                                        :id="videoId"
-                                        @click="fnAddToCollection">
-                                                    <i v-if="bookmark == 0" class="fa-regular fa-heart vheart" :id="videoId"></i>
-                                                    <i v-else class="fa-solid fa-heart vheart" :id="videoId"></i> 
-                                    </div> -->
                                     </div>
                                     
                                     <div class="right" id="right">
                                         
                                         <div
-                                        id="check_cate"
+                                            id="check_cate"
                                             class="buootn todo_Go none"
-                                            @click="goChallenge"
                                         >
-                                            <a  class="check_cate">配音<span class="challenge_rwd">挑戰</span></a>
+                                            <a  class="check_cate" @click="goChallenge">配音<span class="challenge_rwd">挑戰</span></a>
+                                            <a  class="check_cate_leave none" @click="leaveChallenge"><span class="">取消</span><span class="challenge_rwd">配音</span></a>
                                         </div>
                                         <div class="fav_btn" 
                                         :id="videoId"
@@ -478,7 +494,7 @@
                                         
                                             <div>
                                                 <span class="Play"
-                                                @click="vdControllerMobile">
+                                                @click="vdController">
                                                     <img  v-if="playstate == 0" src="./images/web_icon/tool_bar_play.png" alt="">
                                                     <img v-if="playstate == 1" src="./images/web_icon/tool_bar_pause.png" alt="">
                                                     </span>
@@ -486,40 +502,34 @@
                                     
                                     </div>
                                     <div class="right" id="tool_bar_right">
+                                        <!-- 字幕切換 -->
                                         <div
                                             class="buootn cutover01"
                                             @click="subChange"
                                         >
-                                        <span class="cut01 none"
+                                        <span class="cut01 none en2"
                                                 ><img
                                                     src="images/web_icon/EN.svg"
                                                 /></span
                                             >
-                                            <span class="cut02 none"
+                                            <span class="cut02 none ch2"
                                                 ><img
                                                     src="images/web_icon/ZH.svg"
                                                 /></span
                                             >
-                                            <span class="cut03"
+                                            <span class="cut03 en_ch2"
                                                 ><img
                                                     src="images/web_icon/ENZH.svg"
                                                 /></span
                                             >
-                                            <span class="cut04 none"
+                                            <span class="cut04 none close2"
                                                 ><img
                                                     src="images/web_icon/None.svg"
                                                 /></span
                                             >
-                                            <!-- <span class="cut06"
-                                                ><img
-                                                    src="images/web_icon/lang.svg"
-                                                /></span
-                                            > -->
                                             
                                         </div>
-                                        <div class="buootn cutover02" @click="tabChange">
-                                            <span><img src="./images/web_icon/audioList.svg" alt=""></span>
-                                        </div>
+                                        <!-- 模式切換 -->
                                         <div
                                             class="buootn cutover03"
                                             @click="modeChange"
@@ -534,44 +544,375 @@
                                                     src="images/web_icon/tool_bar_cut_a02.svg"
                                                 /></span
                                             >
-                                            <span class="cut03" v-if="modetext == '單句'"
+                                            <!-- <span class="cut03" v-if="modetext == '單句'"
                                                 ><img
                                                     src="images/web_icon/tool_bar_cut_a01.svg"
                                                 /></span
-                                            >
+                                            > -->
                                             <span class="cut04" v-if="modetext == '隨機'"
                                             ><img
                                                 src="images/web_icon/tool_bar_cut_b01.svg"
                                             /></span
                                         >
                                         </div>
-                                        <div class=" cutover04" 
-                                        :id="videoId"
-                                        @click="fnAddToCollection">
-                                            <i v-if="bookmark == 0" class="fa-regular fa-heart" :id="videoId"></i>
-                                            <i v-else class="fa-solid fa-heart" :id="videoId"></i> 
-                                        </div>
-
-                                        
-                                        <!-- 分享按鈕 -->
-                                    <div class="share_btn2" >
-                                        <span @click="share">分享</span> 
-                                        <ul>
-                                            <li><a :href="fburl">FB</a></li>
-                                            <li><a :href="lineurl">Line</a></li>
-                                            <li><a :href="twitterurl">twitter</a></li>
-                                            <li><a :href="emailurl">Email</a></li>
-                                            <li><a :href="linkedinurl">Linkedin</a></li>
-                                            <li><a :href="whatsurl">Whatsapp</a></li>
-                                        </ul>
+                                        <div
+                                        class="buootn"
+                                        @click="singleMode"
+                                    >
+                                        <span class="single_close" :class="[{ none: single }, '']" v-cloak>
+                                            <img src="images/web_icon/tool_bar_cut_a01.svg" />
+                                        </span>
+                                        <span class="single_open":class="[{ none: !single },'']" v-cloak>
+                                            <img src="images/web_icon/tool_bar_cut_a01_open.svg"/>
+                                        </span>
                                     </div>
+                                    <!-- 配音挑戰 -->
                                         <div
                                         id="check_cate2"
                                             class="buootn todo_Go none"
-                                            @click="goChallenge"
                                         >
-                                            <a  class="check_cate3">配音</a>
+                                            <a  class="check_cate3" @click="goChallenge">配音</a>
                                         </div>
+                                    <!-- 更多功能 -->
+                                    <div class="more_btn">
+                                        <input type="checkbox" id="more">
+                                        <label class="more_open" for="more"><img src="./images/web_icon/more.svg" alt=""></label>
+                                        <label class="more_close" for="more"><img src="./images/web_icon/share_close.svg" alt=""></label>
+                                        <div class="more_blk">
+                                            <ul>
+                                                <li @click="share"><img src="./images/web_icon/share.svg" alt="">社群分享</li>
+                                                <li @click="tabChange" v-if="nowtab == 0"  style="color:#727272"><img src="./images/web_icon/audioList_close.svg" alt="">配音列表</li>
+                                                <li @click="tabChange" v-else><img src="./images/web_icon/audioList.svg" alt="">配音列表</li>
+                                                <li :id="videoId" @click="fnAddToCollection">
+                                                    <img v-if="bookmark == 0" src="./images/web_icon/heart_icon.svg" alt="">
+                                                    <img v-else src="./images/web_icon/heart_icon_do.svg" alt="">加入收藏
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-- 配音挑戰區塊 -->
+                                
+                                <div class="function_area">
+                                    <div class="function_items">
+                                        <div class="demo_button none">
+                                            <span
+                                                @click="chooseRole('A')"
+                                                class="button_A"
+                                                style="position: relative"
+                                            >
+                                                <div class="lds-rippleA none">
+                                                    <div></div>
+                                                    <div></div>
+                                                </div>
+                                                A</span
+                                            >
+
+                                            <span
+                                                @click="chooseRole('B')"
+                                                class="button_B"
+                                                style="position: relative"
+                                                ><div class="lds-rippleB none">
+                                                    <div></div>
+                                                    <div></div>
+                                                </div>
+                                                B</span
+                                            >
+                                        </div>
+                                        <div class="item function01 none">
+                                            <div class="explanation">
+                                                觀看A、B角色錄音教學，等一下就換你摟!
+                                            </div>
+                                            <div
+                                                class="pass_button"
+                                                @click="passSample"
+                                            >
+                                                <a style="cursor: pointer"
+                                                    >略過教學示範</a
+                                                >
+                                            </div>
+                                        </div>
+                                        <!-- <div
+                                            class="item function02"
+                                            style="display: none"
+                                        >
+                                            <div class="explanation">
+                                                請選擇想要扮演的角色
+                                            </div>
+                                            <div
+                                                class="begin_button"
+                                                @click="startRecord"
+                                            >
+                                                <a style="cursor: pointer">開始配音</a>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="item function03 none">
+                                            <div class="function_buttons">
+                                                <div class="left">
+                                                    <a
+                                                        :href="'./video.html?id=' + videoId + '&cate=' + cate"
+                                                        class="exit"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_exit.svg"
+                                                        />離開配音</a
+                                                    >
+                                                </div>
+                                                <div class="center">
+                                                    <span class="replay" @click="replay"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_replay.svg"
+                                                            />重播原音</a
+                                                        ></span
+                                                    >
+        
+                                                    <span
+                                                        class="record"
+                                                        style="
+                                                            position: relative;
+                                                            cursor: pointer;
+                                                        "
+                                                        @click="goRec"
+                                                        ><div id="timer" class="none">
+                                                            {{timer}}
+                                                        </div>
+                                                        <div
+                                                            id="container"
+                                                            style="position: absolute"
+                                                        ></div>
+                                                        <a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_record.svg"
+                                                            />開始錄製</a
+                                                        >
+                                                    </span>
+                                                </div>
+                                                <div class="right">
+                                                    <a class="next"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_next.svg"
+                                                        />下一句</a
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="item function04 none">
+                                            <div class="function_buttons">
+                                                <div class="left">
+                                                    <a
+                                                        :href="'./video.html?id=' + videoId + '&cate=' + cate"
+                                                        class="exit"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_exit.svg"
+                                                        />離開配音</a
+                                                    >
+                                                </div>
+                                                <div class="center">
+                                                    <span class="replay" @click="replay"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_replay.svg"
+                                                            />重播原音</a
+                                                        ></span
+                                                    >
+                                                    <span class="voice"
+                                                        ><a id="voice">
+                                                            <i
+                                                                @click="playAudio('stop')"
+                                                                id="stop_voice"
+                                                                class="far fa-stop-circle"
+                                                            ></i>
+                                                            <img
+                                                                @click="playAudio('start')"
+                                                                id="start_voice"
+                                                                src="images/web_icon/dubbing_button_voice.svg"
+                                                            />
+                                                            播放配音</a
+                                                        ></span
+                                                    >
+        
+                                                    <span
+                                                        class="record"
+                                                        @click="reRec"
+                                                        style="
+                                                            position: relative;
+                                                            cursor: pointer;
+                                                        "
+                                                    >
+                                                        <div id="timer2" class="none">
+                                                            {{timer}}
+                                                        </div>
+                                                        <div
+                                                            id="container2"
+                                                            style="position: absolute"
+                                                        ></div>
+                                                        <a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_record.svg"
+                                                            />重新錄製</a
+                                                        ></span
+                                                    >
+                                                </div>
+                                                <div
+                                                    class="right"
+                                                    id="nextRec"
+                                                    @click="nextRec"
+                                                >
+                                                    <a class="next"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_next.svg"
+                                                        />錄製下句</a
+                                                    >
+                                                </div>
+                                                <div
+                                                    class="right none"
+                                                    id="recDone"
+                                                    @click="uploadFile"
+                                                >
+                                                    <a class="upload"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_upload.svg"
+                                                        />完成配音</a
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="item function05 none">
+                                            <div class="function_buttons">
+                                                <div class="left">
+                                                    <a
+                                                        :href="'./video.html?id=' + videoId + '&cate=' + cate"
+                                                        class="exit"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_exit.svg"
+                                                        />離開配音</a
+                                                    >
+                                                </div>
+                                                <div class="center">
+                                                    <span class="replay"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_replay.svg"
+                                                            />播放原音</a
+                                                        ></span
+                                                    >
+                                                    <span class="voice"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_voice.svg"
+                                                            />播放配音</a
+                                                        ></span
+                                                    >
+                                                    <span class="record"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/dubbing_button_record.svg"
+                                                            />開始錄製</a
+                                                        ></span
+                                                    >
+                                                </div>
+                                                <div class="right">
+                                                    <a class="upload"
+                                                        ><img
+                                                            src="images/web_icon/dubbing_button_upload.svg"
+                                                        />完成配音</a
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="item function06 none">
+                                            <div class="function_buttons">
+                                                <div class="left"></div>
+                                                <div class="center">
+                                                    <span class="leave"
+                                                        ><a
+                                                            :href="'./video.html?id=' + videoId + '&cate=' + cate"
+                                                            ><img
+                                                                src="images/web_icon/audio_leave.svg"
+                                                            />結束配音</a
+                                                        ></span
+                                                    >
+                                                    <span
+                                                        class="replay"
+                                                        @click="restartRecord"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/audio_replay.svg"
+                                                            />重錄角色</a
+                                                        ></span
+                                                    >
+                                                    <span
+                                                        class="change"
+                                                        @click="changeRole"
+                                                        ><a
+                                                            ><img
+                                                                src="images/web_icon/audio_change.svg"
+                                                            />替換角色</a
+                                                        ></span
+                                                    >
+                                                    <span
+                                                        class="play"
+                                                        id="allAudioStart"
+                                                        ><a id="playAllBtn">
+                                                            <img
+                                                                @click="playAll('start')"
+                                                                src="images/web_icon/audio_play.svg"
+                                                            />
+                                                            播放配音</a
+                                                        ></span
+                                                    >
+                                                    <span
+                                                        class="play"
+                                                        id="allAudioPause"
+                                                        style="display: none"
+                                                        ><a id="playAllBtn">
+                                                            <img
+                                                                @click="playAll('stop')"
+                                                                src="images/web_icon/audio_stop.svg"
+                                                            />
+        
+                                                            停止播放</a
+                                                        ></span
+                                                    >
+                                                    <li
+                                                        class="none"
+                                                        v-for="(item, index) in RecordingList"
+                                                        :key="item['Pmember_id']"
+                                                        :id="item['Pmember_id']"
+                                                    >
+                                                        <div
+                                                            class="none"
+                                                            v-if="item.role == 'A' "
+                                                        >
+                                                            <audio
+                                                                v-for="(audio, index) in roleAindex"
+                                                                :src="'https://funday.asia/InteractiveVideo/' + item.Pcustomer_id + '-' + item.Pmember_id + '-' + videoId + '-' + audio + '.' + item.fileType"
+                                                                type="audio/mpeg"
+                                                                :id="'audio' + audio + item.Pmember_id"
+                                                            ></audio>
+                                                        </div>
+                                                        <div
+                                                            class="none"
+                                                            v-if="item.role == 'B' "
+                                                        >
+                                                            <audio
+                                                                v-for="(audio, index) in roleBindex"
+                                                                :src="'https://funday.asia/InteractiveVideo/' + item.Pcustomer_id + '-' + item.Pmember_id + '-' + videoId + '-' + audio + '.' + item.fileType"
+                                                                type="audio/mpeg"
+                                                                :id="'audio' + audio + item.Pmember_id"
+                                                            ></audio>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                                <div class="right"></div>
+                                            </div>
+                                        </div> -->
+                                        <div id="audioBox"></div>
+                                        <!-- <div id="uploadProgress" style="display: none">
+                                            上傳{{progress}}
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
