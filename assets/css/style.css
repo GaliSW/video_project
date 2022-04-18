@@ -266,7 +266,7 @@ body.modal-open #header {
 }
 @media (max-width: 1366px) {
     #video_playing .iframe2 {
-        height: 68%;
+        height: 73%;
     }
 }
 @media (max-width: 991px) {
@@ -277,7 +277,7 @@ body.modal-open #header {
 @media (max-width: 480px) {
     #video_playing .iframe2 {
         /* border: 1px solid red; */
-        height: 200px;
+        /* height: 200px; */
         /* width: 100%; */
     }
 }
@@ -1449,7 +1449,7 @@ body.video_page .video_category .video_items .items_list .item {
 /**********/
 /**********/
 /********** 以下是配音挑戰頁 */
-body.dubbing_page {
+/* body.dubbing_page {
 }
 body.video_page.dubbing_page #video_frame_top {
     display: block;
@@ -1459,10 +1459,9 @@ body.dubbing_page #video_playing {
     justify-content: start;
 }
 body.dubbing_page #video_playing .now_video * {
-    /* height: 600px; */
     max-height: 600px;
-}
-body.dubbing_page #video_playing .video_bar {
+} */
+/* body.dubbing_page #video_playing .video_bar {
     position: unset;
     margin: 10px 0px;
 }
@@ -1533,18 +1532,18 @@ body.dubbing_page .function_items .demo_button {
     font-size: 50px;
 }
 .demo_button > span:hover {
-    /* opacity: 0.8; */
+
 }
 .demo_button .button_A {
     background: #2f6fba;
-    /* margin-right: 6px; */
+
 }
 .demo_button .button_A:hover {
     background: #094b99;
 }
 .demo_button .button_B {
     background: #f07125;
-    /* margin-left: 6px; */
+
 }
 .button_activeA {
     box-shadow: 0px 0px 0px 5px rgba(47, 111, 186, 0.4);
@@ -1710,7 +1709,7 @@ body.dubbing_page .function_items .item.function06 .function_buttons a {
     body.dubbing_page .function_items .item .function_buttons {
         justify-content: space-between;
     }
-}
+} */
 /**********/
 /**********/
 /********** 以下是影片列表頁 */

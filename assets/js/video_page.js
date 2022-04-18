@@ -63,6 +63,7 @@ let app = new Vue({
         URL: "",
         single: false,
         role: "",
+        pauseBlk: true,
     },
     created() {
         var player;
@@ -313,6 +314,8 @@ let app = new Vue({
                                     app.randomMode == true
                                 ) {
                                     location.href = `./video.html?id=${app.random}&cate=${app.cate}`;
+                                } else {
+                                    player.stopVideo();
                                 }
                                 break;
                             case 1: //=== 播放 ===
@@ -958,11 +961,37 @@ let app = new Vue({
                 document
                     .getElementById(`subtitle${i}`)
                     .classList.remove("subtitle_checked");
+                document
+                    .getElementById(`subtitle${i}`)
+                    .classList.remove("role_A_checked");
+                document
+                    .getElementById(`subtitle${i}`)
+                    .classList.remove("role_B_checked");
             }
             player.seekTo(time + 0.1);
             document
                 .getElementById(`subtitle${index}`)
                 .classList.add("subtitle_checked");
+
+            if (
+                document
+                    .getElementById(`subtitle${index}`)
+                    .classList.contains("role_A")
+            ) {
+                document
+                    .getElementById(`subtitle${index}`)
+                    .classList.add("role_A_checked");
+                console.log("A");
+            } else if (
+                document
+                    .getElementById(`subtitle${index}`)
+                    .classList.contains("role_B")
+            ) {
+                document
+                    .getElementById(`subtitle${index}`)
+                    .classList.add("role_B_checked");
+            }
+
             document.querySelector(
                 ".subtitle_checked .side_tw"
             ).style.fontWeight = "500";
@@ -1289,15 +1318,145 @@ let app = new Vue({
         // === 配音挑戰區塊 ===
         // ==========================================
 
+        // ==========================================
+        // == 錄音裝置請求 (audio設置)
+        // ==========================================
+        showDialog() {
+            if (!/mobile/i.test(navigator.userAgent)) {
+                return;
+            }
+            dialogCancel();
+
+            let div = document.createElement("div");
+            document.body.appendChild(div);
+            div.innerHTML =
+                "" +
+                '<div class="waitDialog">' +
+                '<div class="waitDialog-1">' +
+                '<div style="flex:1;"></div>' +
+                '<div class="waitDialog-2">' +
+                '<div style="padding-bottom:10px;">錄音功能需要麥克風權限，請允許；如果未看到任何請求，請點擊忽略</div>' +
+                '<div style="text-align:center;"><a onclick="waitDialogClick()" style="color:#0B1">忽略</a></div>' +
+                "</div>" +
+                '<div style="flex:1;"></div>' +
+                "</div>" +
+                "</div>";
+        },
+
+        createDelayDialog() {
+            this.dialogInt = setTimeout(() => {
+                app.showDialog();
+            }, 8000);
+        },
+
+        dialogCancel() {
+            clearTimeout(this.dialogInt);
+            const elems = document.querySelectorAll(".waitDialog");
+            for (let i = 0; i < elems.length; i++) {
+                elems[i].parentNode.removeChild(elems[i]);
+            }
+        },
+        // ==========================================
+        // == browser 錄音充許開啟 (audio設置)
+        // ==========================================
+        recOpen() {
+            let newRec = Recorder({
+                type: "mp3",
+                sampleRate: 16000,
+                bitRate: 16,
+                onProcess: function (
+                    buffers,
+                    powerLevel,
+                    bufferDuration,
+                    bufferSampleRate,
+                    newBufferIdx,
+                    asyncEnd
+                ) {},
+            });
+
+            this.createDelayDialog(); // 防止特異 browser 設定狀況
+            newRec.open(
+                function () {
+                    app.dialogCancel();
+                    console.log(newRec);
+                    console.log(
+                        Recorder.FrequencyHistogramView({
+                            elem: ".recwave",
+                        })
+                    );
+                    app.rec = newRec;
+                    app.wave = Recorder.FrequencyHistogramView({
+                        elem: ".recwave",
+                    });
+                },
+                function (msg, isUserNotAllow) {
+                    alert("未偵測到錄音裝置");
+                    app.dialogCancel();
+                    location.reload();
+                }
+            );
+
+            window.waitDialogClick = function () {
+                app.dialogCancel();
+            };
+            // console.log("rec is open");
+        },
+        // ==========================================
+        // == browser 錄音充許關閉 (釋放資源) (audio設置)
+        // ==========================================
+        recClose() {
+            if (app.rec) {
+                app.rec.close();
+            }
+        },
+        // ==========================================
+        // == 開始錄音(audio設置)
+        // ==========================================
+        recStart() {
+            app.rec && Recorder.IsOpen() ? app.rec.start() : app.recOpen();
+        },
+
+        // ==========================================
+        // == 结束錄音，得到音頻文件 (audio設置)
+        // ==========================================
+        recStop() {
+            if (!(app.rec && Recorder.IsOpen())) {
+                return;
+            }
+            app.rec.stop(function (blob, duration) {
+                // console.log(blob);
+                app.recBlob.push(blob);
+                // console.log("push", recBlob);
+
+                // CREATE AUDIO ELE v
+                if (!app.recBlob) {
+                    return;
+                }
+
+                // 加載 audio 物件 v
+                const audio = document.createElement("audio");
+                audio.controls = true; // true => 產生可操控介面
+                audio.preload = "auto";
+                audio.load();
+                audio.setAttribute("id", "myAudio_" + app.recordIndex);
+                document.getElementById("audioBox").append(audio);
+
+                //簡單利用URL生成播放地址，注意不用了時需要revokeObjectURL，否則霸占暫存
+                audio.src = (window.URL || webkitURL).createObjectURL(
+                    app.recBlob[app.recordIndex]
+                );
+                setTimeout(function () {
+                    (window.URL || webkitURL).revokeObjectURL(audio.src);
+                }, 1000);
+            });
+        },
         // === 前往配音挑戰(登入判斷) ===
         goChallenge() {
             if (this.cid == null) {
                 document.getElementById("myModal01").classList.remove("none");
             } else {
-                if (document.querySelector(".pause_blk") !== null) {
-                    document.querySelector(".pause_blk").classList.add("none");
-                }
-
+                this.pauseBlk = false;
+                player.pauseVideo();
                 document.querySelector(".begin_mask").classList.remove("none");
                 document
                     .querySelector(".start_challenge")
@@ -1310,7 +1469,9 @@ let app = new Vue({
                     document
                         .querySelector(".leave_challenge")
                         .classList.remove("none");
-                    document.querySelector(".video_bar").classList.add("none");
+                    document
+                        .querySelector(".tool_bar_mobile")
+                        .classList.add("none");
                     document
                         .getElementById("video_list2")
                         .classList.add("none");
@@ -1322,18 +1483,18 @@ let app = new Vue({
             }
         },
         leaveChallenge() {
+            this.pauseBlk = true;
             document.querySelector(".begin_mask").classList.add("none");
             document.querySelector(".start_challenge").classList.add("none");
             document.querySelector(".check_cate_leave").classList.add("none");
             document.querySelector(".check_cate").classList.remove("none");
-            if (document.querySelector(".pause_blk") !== null) {
-                document.querySelector(".pause_blk").classList.remove("none");
-            }
             if (window.innerWidth < 991) {
                 document
                     .querySelector(".leave_challenge")
                     .classList.add("none");
-                document.querySelector(".video_bar").classList.remove("none");
+                document
+                    .querySelector(".tool_bar_mobile")
+                    .classList.remove("none");
                 document.getElementById("video_list2").classList.remove("none");
                 document
                     .getElementById("video_frame_bottom")
@@ -1346,6 +1507,20 @@ let app = new Vue({
             if (this.cid == null) {
                 document.getElementById("myModal01").classList.remove("none");
             } else {
+                app.mode = "配音模式";
+                app.plastate = 0;
+                document.querySelector(".subtitle").classList.add("sub_bg");
+                document.querySelector(".time_bar").classList.add("none");
+                document.querySelector(".video_bar").style.border = "none";
+                document
+                    .querySelector(".subtitle_mobile")
+                    .classList.remove("none");
+                document
+                    .querySelector(".function_area")
+                    .classList.remove("none");
+                document
+                    .querySelector(".tool_bar_desktop")
+                    .classList.add("none");
                 document
                     .querySelector(".leave_challenge")
                     .classList.add("none");
@@ -1389,6 +1564,31 @@ let app = new Vue({
             document.querySelector(".lds-rippleA").classList.add("none");
             document.querySelector(".lds-rippleB").classList.add("none");
         },
+        // === 開始配音 ===
+        startRecord() {
+            this.mode == "正常";
+            if (this.role == "") {
+                alert("請先選擇任一角色來扮演");
+            } else {
+                document.querySelector(".function02").style.display = "none";
+                document.querySelector(".demo_button").style.pointerEvents =
+                    "none";
+                // this.startSample();
+                this.mode = "正常";
+                this.recordIndex = 0;
+                this.recOpen();
+                setTimeout(() => {
+                    let sentence_start = this.record_start_time[0];
+                    const min = Number(sentence_start.slice(3, 5)) * 60;
+                    const sec = Number(
+                        sentence_start.slice(6, 11).replace(",", ".")
+                    );
+                    const time = min + sec;
+                    player.seekTo(time - 2);
+                    player.unMute().playVideo();
+                }, 1500);
+            }
+        },
     },
     watch: {
         // ==========================================
@@ -1415,10 +1615,36 @@ let app = new Vue({
                             document
                                 .getElementById(`subtitle${i}`)
                                 .classList.remove("subtitle_checked");
+                            document
+                                .getElementById(`subtitle${i}`)
+                                .classList.remove("role_A_checked");
+                            document
+                                .getElementById(`subtitle${i}`)
+                                .classList.remove("role_B_checked");
                         }
+
                         document
                             .getElementById(`subtitle${subtitleIndex}`)
                             .classList.add("subtitle_checked");
+
+                        if (
+                            document
+                                .getElementById(`subtitle${subtitleIndex}`)
+                                .classList.contains("role_A")
+                        ) {
+                            document
+                                .getElementById(`subtitle${subtitleIndex}`)
+                                .classList.add("role_A_checked");
+                            console.log("A");
+                        } else if (
+                            document
+                                .getElementById(`subtitle${subtitleIndex}`)
+                                .classList.contains("role_B")
+                        ) {
+                            document
+                                .getElementById(`subtitle${subtitleIndex}`)
+                                .classList.add("role_B_checked");
+                        }
                         document.querySelector(
                             ".subtitle_checked .side_tw"
                         ).style.fontWeight = "500";

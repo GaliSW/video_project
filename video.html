@@ -34,6 +34,7 @@
         <link href="assets/css/style.css?1223" rel="stylesheet" />
         <link rel="stylesheet" href="assets/css/update.css" />
         <link rel="stylesheet" href="assets/css/share.css">
+        <link rel="stylesheet" href="assets/css/video_dubbing.css">
 
         <!-- Google Fonts -->
         <link
@@ -323,7 +324,7 @@
                             </div>
                             <!--這一塊是撥放器-->
                             <div class="now_video">
-                                <div class="pause_blk" v-if="playstate == 0">
+                                <div class="pause_blk" v-if="playstate == 0 && pauseBlk">
                                     <img src="./images/web_icon/pause_issue.svg" alt="">
                                 </div> 
                                 <div class="hint">{{hint}}</div>                    
@@ -363,6 +364,10 @@
                             </div>
                             <div class="video_bar">
                                 <div class="subtitle" v-cloak>
+                                    <div class="en">{{en_content}}</div>
+                                    <div class="tw">{{ch_content}}</div>
+                                </div>
+                                <div class="subtitle_mobile none" v-cloak>
                                     <div class="en">{{en_content}}</div>
                                     <div class="tw">{{ch_content}}</div>
                                 </div>
@@ -595,7 +600,7 @@
                                 </div>
                                 <!-- 配音挑戰區塊 -->
                                 
-                                <div class="function_area">
+                                <div class="function_area none">
                                     <div class="function_items">
                                         <div class="demo_button none">
                                             <span
@@ -634,7 +639,7 @@
                                                 >
                                             </div>
                                         </div>
-                                        <!-- <div
+                                        <div
                                             class="item function02"
                                             style="display: none"
                                         >
@@ -647,7 +652,7 @@
                                             >
                                                 <a style="cursor: pointer">開始配音</a>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <!-- <div class="item function03 none">
                                             <div class="function_buttons">
                                                 <div class="left">
