@@ -1143,7 +1143,7 @@ body.video_page .switch_tab ul.subtitle_items > li {
     /* background-image: url(../../images/web_icon/subtitle_list_icon.svg); */
     /* background-repeat: no-repeat;
     background-position: 20px 20px; */
-    padding: 8px 8px 8px 52px;
+    padding: 8px 16px 8px 16px;
     font-family: Noto Sans TC;
     font-size: 16px;
     line-height: 22px;
@@ -1163,13 +1163,17 @@ body.video_page .switch_tab ul.subtitle_items > li img {
 .switch_tab ul.subtitle_items > li:hover {
     background-color: #2b2b2b;
 }
+
 @media (max-width: 991px) {
     .switch_tab ul.subtitle_items > li:hover {
         background-color: unset;
     }
     body.video_page .switch_tab ul.subtitle_items > li {
-        padding: 8px 30px 8px 52px;
+        padding: 8px 16px 8px 16px;
     }
+}
+.role_padding {
+    padding: 8px 16px 8px 52px !important;
 }
 body.video_page ul.tabs {
     margin-bottom: 4px;

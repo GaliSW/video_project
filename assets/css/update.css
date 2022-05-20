@@ -2194,6 +2194,12 @@ body.video_page .switch_tab .back_to_singer {
 .size16 {
     font-size: 16px;
 }
+.firstClick {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+}
 @media (max-width: 991px) {
     .confirm_blk {
         top: 50%;

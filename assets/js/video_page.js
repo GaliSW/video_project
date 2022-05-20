@@ -28,6 +28,7 @@ let app = new Vue({
         keyWordResult: {}, //字典搜尋結果
         DrWordModal: false, //字典modal開關
         DrWord: "", //字本人
+        NoWord: false,
         clicks: false,
         RecordingList: {},
         audioStart: "", //配音開始時間
@@ -107,7 +108,13 @@ let app = new Vue({
         if (sessionStorage.getItem("cycle")) {
             this.mode = sessionStorage.getItem("cycle");
         }
-
+        if (sessionStorage.getItem("mindx") !== null) {
+            this.mid = sessionStorage.getItem("mindx");
+        } else {
+            setTimeout(() => {
+                document.getElementById("myModal01").classList.remove("none");
+            }, 15000);
+        }
         if (location.hash.indexOf("mid") > -1) {
             console.log(location.hash);
             this.singerMode = true;
@@ -140,7 +147,7 @@ let app = new Vue({
         createPlayer() {
             const url = window.location.search;
             this.URL = window.location.href;
-            console.log(url);
+            // console.log(url);
             const memberid = sessionStorage.getItem("mindx");
             let id = "";
             if (url.indexOf("?") != -1) {
@@ -160,7 +167,7 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/ProgramJson.asp?indx=${id}&member_id=${memberid}`
                 )
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     // ==========================================
                     // == 影片各資料取得
@@ -369,11 +376,11 @@ let app = new Vue({
                         let allSec = player.getDuration();
                         let allMin = Math.floor(allSec / 60).toFixed(0);
                         let sec = allSec % 60;
-                        console.log(allSec);
+                        // console.log(allSec);
                         if (sec == "0") {
                             sec = "00";
                         }
-                        console.log(sec);
+                        // console.log(sec);
                         // console.log(sec);s
                         app.allTime = `${allMin}:${sec}`; //影片總長
                         setInterval(app.fnTimeChecking, 1); //timeUpdate
@@ -480,7 +487,7 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}`
                 )
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     this.cateList = response.data[`${this.cate}`];
                 });
             //影片點擊會員登入判斷
@@ -499,7 +506,7 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/RecordingListNew.asp?indx=${this.videoId}&member_id=${mid}`
                 )
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     let audioObject = []; //物件重組
 
                     let newObjectA = "";
@@ -1086,6 +1093,7 @@ let app = new Vue({
             vm.baseForm = "";
             vm.keyWordResult = "";
             vm.DrWord = target;
+            vm.NoWord = false;
             const str = target
                 .replace(".", "")
                 .replace("?", "")
@@ -1677,11 +1685,15 @@ let app = new Vue({
                 //配音字幕加上角色標籤
                 const roleA = document.querySelectorAll(".role_A");
                 const roleB = document.querySelectorAll(".role_B");
+                const li = document.querySelectorAll(".side_li");
                 for (let i = 0; i < roleA.length; i++) {
                     roleA[i].classList.add("role_A_label");
                 }
                 for (let j = 0; j < roleB.length; j++) {
                     roleB[j].classList.add("role_B_label");
+                }
+                for (let k = 0; k < li.length; k++) {
+                    li[k].classList.add("role_padding");
                 }
                 //滾動到配音字幕區間
                 const container = document.querySelector(".tab_container");
@@ -1741,11 +1753,15 @@ let app = new Vue({
             //配音字幕去掉角色標籤
             const roleA = document.querySelectorAll(".role_A");
             const roleB = document.querySelectorAll(".role_B");
+            const li = document.querySelectorAll(".side_li");
             for (let i = 0; i < roleA.length; i++) {
                 roleA[i].classList.remove("role_A_label");
             }
             for (let j = 0; j < roleB.length; j++) {
                 roleB[j].classList.remove("role_B_label");
+            }
+            for (let k = 0; k < li.length; k++) {
+                li[k].classList.remove("role_padding");
             }
             this.challenge = false;
         },
@@ -1970,6 +1986,11 @@ let app = new Vue({
         backToSinger() {
             this.singerMode = false;
         },
+        //第一次點擊頁面
+        firstClickPage() {
+            this.firstClick = true;
+            document.getElementById("myModal01").classList.remove("none");
+        },
     },
     watch: {
         // ==========================================
@@ -1987,7 +2008,7 @@ let app = new Vue({
                 this.ch_content =
                     this.subtitle[`${subtitleIndex}`]["ch_content"];
                 // === 側邊欄字幕active ===
-                if (app.nowtab == 0 && app.subMode !== 3) {
+                if (app.nowtab == 0 && app.subMode !== 3 && !app.single) {
                     if (subtitleIndex == 0) {
                         document
                             .getElementById(`subtitle${subtitleIndex}`)
