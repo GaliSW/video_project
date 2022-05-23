@@ -64,8 +64,210 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <!-- ADS  -->
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    "gtm.start": new Date().getTime(),
+                    event: "gtm.js",
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-WLN4W9C");
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-128191330-4"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "UA-128191330-4");
+        </script>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !(function (f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function () {
+                    n.callMethod
+                        ? n.callMethod.apply(n, arguments)
+                        : n.queue.push(arguments);
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = "2.0";
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s);
+            })(
+                window,
+                document,
+                "script",
+                "https://connect.facebook.net/en_US/fbevents.js"
+            );
+            fbq("init", "929787711235866");
+            fbq("track", "PageView");
+        </script>
+        <noscript
+            ><img
+                height="1"
+                width="1"
+                style="display: none"
+                src="https://www.facebook.com/tr?id=929787711235866&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !(function (f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function () {
+                    n.callMethod
+                        ? n.callMethod.apply(n, arguments)
+                        : n.queue.push(arguments);
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = "2.0";
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s);
+            })(
+                window,
+                document,
+                "script",
+                "https://connect.facebook.net/en_US/fbevents.js"
+            );
+
+            fbq("init", "318780062004624");
+            fbq("track", "PageView");
+        </script>
+        <noscript>
+            <img
+                height="1"
+                width="1"
+                src="https://www.facebook.com/tr?id=318780062004624&ev=PageView
+&noscript=1"
+            />
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+        <!-- End Facebook Pixel Code -->
+
+        <!-- yahoo -->
+        <script type="application/javascript">
+            (function (w, d, t, r, u) {
+                w[u] = w[u] || [];
+                w[u].push({
+                    projectId: "10000",
+                    properties: { pixelId: "10171770", he: "<email_address>" },
+                });
+                var s = d.createElement(t);
+                s.src = r;
+                s.async = true;
+                s.onload = s.onreadystatechange = function () {
+                    var y,
+                        rs = this.readyState,
+                        c = w[u];
+                    if (rs && rs != "complete" && rs != "loaded") {
+                        return;
+                    }
+                    try {
+                        y = YAHOO.ywa.I13N.fireBeacon;
+                        w[u] = [];
+                        w[u].push = function (p) {
+                            y([p]);
+                        };
+                        y(c);
+                    } catch (e) {}
+                };
+                var scr = d.getElementsByTagName(t)[0],
+                    par = scr.parentNode;
+                par.insertBefore(s, scr);
+            })(
+                window,
+                document,
+                "script",
+                "https://s.yimg.com/wi/ytc.js",
+                "dotq"
+            );
+        </script>
+
+        <!-- LINE Tag Base Code -->
+        <!-- Do Not Modify -->
+        <script>
+            (function (g, d, o) {
+                g._ltq = g._ltq || [];
+                g._lt =
+                    g._lt ||
+                    function () {
+                        g._ltq.push(arguments);
+                    };
+                var h =
+                    location.protocol === "https:"
+                        ? "https://d.line-scdn.net"
+                        : "http://d.line-cdn.net";
+                var s = d.createElement("script");
+                s.async = 1;
+                s.src = o || h + "/n/line_tag/public/release/v1/lt.js";
+                var t = d.getElementsByTagName("script")[0];
+                t.parentNode.insertBefore(s, t);
+            })(window, document);
+            _lt("init", {
+                customerType: "lap",
+                tagId: "2671cfe8-8de7-4525-b1a0-59dc1724d993",
+            });
+            _lt("send", "pv", ["2671cfe8-8de7-4525-b1a0-59dc1724d993"]);
+        </script>
+        <noscript>
+            <img
+                height="1"
+                width="1"
+                style="display: none"
+                src="https://tr.line.me/tag.gif?c_t=lap&t_id=2671cfe8-8de7-4525-b1a0-59dc1724d993&e=pv&noscript=1"
+            />
+        </noscript>
+        <!-- End LINE Tag Base Code -->
+        <script>
+            _lt(
+                "send",
+                "cv",
+                {
+                    type: "Conversion",
+                },
+                ["2671cfe8-8de7-4525-b1a0-59dc1724d993"]
+            );
+        </script>
     </head>
     <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-WLN4W9C"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
         <header>
             <a id="logo" href="javascript:;">
                 <span class="img rotateX" id="logoImg"
