@@ -44,7 +44,7 @@ const app = new Vue({
         alert: "", //留言板錯誤訊息
         ads: true, //廣告預設開啟
         captcha: "", //驗證碼
-        // firstClick: true,
+        nav: false,
     },
     created() {
         if (

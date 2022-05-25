@@ -32,6 +32,8 @@ body.modal-open #header {
 } */
 #logo {
     text-decoration: none;
+    /* border: 1px solid red; */
+    width: 125px;
 }
 #logo img {
     cursor: pointer;
@@ -63,10 +65,79 @@ body.modal-open #header {
     line-height: 46px;
     cursor: pointer;
 }
+.header_center {
+    font-family: "Noto Sans TC";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #ffffff;
+    cursor: default;
+}
+.header_left {
+    display: flex;
+    align-items: center;
+}
+#navCheck {
+    display: none;
+}
+.header_left label {
+    margin: 0;
+}
+.subWeb > a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 15px;
+}
+.subWeb > a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.nav_bar {
+    position: fixed;
+    background: #031326;
+    left: -154px;
+    top: 50px;
+    width: 154px;
+    height: 100%;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+}
+#navCheck:checked ~ .nav_bar {
+    left: 0;
+}
+.nav_on {
+    left: 0px;
+}
+.nav_bar ul {
+    list-style: none;
+    padding: 24px 16px;
+}
+.nav_bar ul li {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 32px;
+}
+.nav_bar ul a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+.nav_bar ul a:hover {
+    color: rgba(255, 255, 255, 1);
+}
 .header_right {
     display: flex;
     align-items: center;
 }
+
 .header_right .coupon_btn a {
     color: #fff;
     display: flex;

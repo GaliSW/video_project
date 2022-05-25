@@ -356,14 +356,16 @@ let app = new Vue({
                         //取得影片時間軸
                         let allSec = player.getDuration();
                         let allMin = Math.floor(allSec / 60).toFixed(0);
-                        let sec = allSec % 60;
-                        // console.log(allSec);
-                        if (sec == "0") {
-                            sec = "00";
+                        let sec = Number(allSec % 60);
+                        let Minsec;
+                        if (sec == 0) {
+                            Minsec = 00;
+                        } else if (sec > 0 && sec < 10) {
+                            Minsec = `0${sec}`;
+                        } else {
+                            Minsec = sec;
                         }
-                        // console.log(sec);
-                        // console.log(sec);s
-                        app.allTime = `${allMin}:${sec}`; //影片總長
+                        app.allTime = `${allMin}:${Minsec}`; //影片總長
                         setInterval(app.fnTimeChecking, 1); //timeUpdate
                         document
                             .querySelector(".loading_blk")

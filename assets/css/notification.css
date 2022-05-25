@@ -165,7 +165,7 @@
     .notification_wrapper_mobile {
         display: block;
         position: fixed;
-        z-index: 998;
+        z-index: 2;
     }
 }
 .notification_mobile {
