@@ -115,8 +115,10 @@ let app = new Vue({
             console.log(this.cid);
             resolve();
         }).then(() => {
-            this.createPlayer();
-            this.audioList();
+            setTimeout(() => {
+                this.createPlayer();
+                this.audioList();
+            });
         });
     },
     methods: {
