@@ -167,8 +167,7 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/ProgramJson.asp?indx=${id}&member_id=${memberid}`
                 )
                 .then((response) => {
-                    // console.log(response.data);
-
+                    console.log(response);
                     // ==========================================
                     // == 影片各資料取得
                     // ==========================================
@@ -389,6 +388,8 @@ let app = new Vue({
                         document
                             .querySelector(".loading_blk")
                             .classList.add("none");
+
+                        player.playVideo();
                     }
                     function onPlayerStateChange(e) {
                         let btn = document.getElementById("play_btn");
@@ -1149,14 +1150,23 @@ let app = new Vue({
                         vm.keyWordResult[keys[i]].text = fixWord;
                     }
 
-                    if (window.innerWidth > 600) {
-                        // $(".DrWord").css({ right: 25, top: evt.pageY + 10 });
-                        document.querySelector(".DrWord").style.right = "25px";
-                        document.querySelector(".DrWord").style.top = `${
-                            e.pageY + 10
-                        }px`;
-                    }
                     this.DrWordModal = true;
+                    const blkHeight = e.pageY + 430;
+                    const windowHeight = window.innerHeight;
+                    const adjust = blkHeight - (blkHeight - windowHeight);
+
+                    if (window.innerWidth > 600) {
+                        document.querySelector(".DrWord").style.right = "25px";
+                        if (blkHeight < windowHeight) {
+                            console.log("not over");
+                            document.querySelector(".DrWord").style.top = `${
+                                e.pageY + 10
+                            }px`;
+                        } else {
+                            document.querySelector(".DrWord").style.top =
+                                adjust - 420 + "px";
+                        }
+                    }
                 })
                 .catch((error) => console.log(error));
 
@@ -1992,6 +2002,19 @@ let app = new Vue({
         firstClickPage() {
             this.firstClick = true;
             document.getElementById("myModal01").classList.remove("none");
+        },
+
+        //時間軸跳轉
+        turnTo(e) {
+            const elm = document.querySelector(".allTime_bar");
+            const length = elm.offsetWidth;
+            const xPos = e.pageX - elm.offsetLeft;
+            const allTime = player.getDuration();
+            const nowTime = (xPos / length) * allTime;
+            player.seekTo(nowTime);
+            document.querySelector(".goTime_bar").style.width = `${
+                (xPos / length) * 100
+            }%`;
         },
     },
     watch: {

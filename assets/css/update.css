@@ -695,8 +695,18 @@
     margin-right: 4px;
 }
 .subtitle_items .en span:hover {
-    /* color: #a1cdff; */
+    color: #7096c3;
     text-decoration: underline;
+}
+.subtitle_items .no_hover span:hover {
+    color: #b6b6b6;
+    text-decoration: none;
+}
+.role_B .en span:hover {
+    color: #fff;
+}
+.role_A .en span:hover {
+    color: #fff;
 }
 .subtitle_items .en .select {
     color: #a1cdff;
@@ -1096,15 +1106,15 @@
 .side_en {
     font-family: Noto Sans TC;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 18px;
     line-height: 26px;
 }
 .side_tw {
     font-family: Noto Sans TC;
     font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
     line-height: 20px;
     padding-top: 8px;
     padding-bottom: 4px;
@@ -1162,8 +1172,11 @@
 .subtitle_checked {
     background: linear-gradient(0deg, #ffffff, #ffffff), #dfeeff !important;
     box-shadow: 0px 0.5px 0px rgba(255, 255, 255, 0.3) !important;
-    color: #2f6fba !important;
+    color: #4f4f4f !important;
     font-weight: 500 !important;
+}
+.subtitle_checked .en span:hover {
+    color: #2f6fba;
 }
 #fullscreen {
     position: fixed;

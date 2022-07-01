@@ -489,12 +489,12 @@ body.modal-open #header {
     left: 0;
     transform: translateY(0%);
     width: 100%;
-    height: 500px;
+    height: 600px;
     z-index: 0;
 }
 @media (max-width: 1366px) {
     #video_playing .iframe2 {
-        height: 320px;
+        height: 450px;
     }
 }
 @media (max-width: 991px) {
@@ -605,7 +605,7 @@ ul.tabs {
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
-    height: 626px;
+    height: 767px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     /* border: 1px solid red; */
@@ -991,7 +991,7 @@ body.home_page .video_category .video_items .items_list .item {
 }
 @media (max-width: 1366px) {
     .switch_tab div.tab_container {
-        height: 450px;
+        height: 600px;
     }
     .scroll_bar .video_category .video_items {
         display: block;
@@ -1228,7 +1228,7 @@ body.video_page .switch_tab ul.subtitle_items > li {
     font-family: Noto Sans TC;
     font-size: 16px;
     line-height: 22px;
-    color: #ffffff;
+    color: #b6b6b6;
     font-weight: 300;
     border-bottom: 1px solid #525252;
     z-index: 0;
@@ -1521,6 +1521,7 @@ body.video_page .video_category .video_items .items_list .item {
     border-radius: 8px;
     position: relative;
     margin-top: 8px;
+    cursor: pointer;
 }
 #video_playing .video_bar .time_bar .allTime_bar .goTime_bar {
     display: inline-block;

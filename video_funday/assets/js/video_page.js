@@ -3,6 +3,7 @@ let app = new Vue({
     data: {
         bannerVd: "", //youtube網址
         subtitle: "", //字幕陣列
+        title: "",
         cate: "", //該影片分類
         cateList: "", //相關推薦列表
         allTime: "", //影片總長
@@ -111,8 +112,8 @@ let app = new Vue({
         new Promise((resolve, reject) => {
             this.mid = url.split("&")[1].split("=")[1];
             this.cid = url.split("&")[2].split("=")[1];
-            console.log(this.mid);
-            console.log(this.cid);
+            // console.log(this.mid);
+            // console.log(this.cid);
             resolve();
         }).then(() => {
             setTimeout(() => {
@@ -138,20 +139,16 @@ let app = new Vue({
                     }
                 }
             }
-            console.log(this.mid);
-            console.log(this.cid);
             // ===影片資料===
             axios
                 .get(
                     `https://funday.asia/api/ProgramWeb/ProgramJson.asp?indx=${id}&member_id=${this.mid}`
                 )
                 .then((response) => {
-                    console.log(response.data);
-
                     // ==========================================
                     // == 影片各資料取得
                     // ==========================================
-
+                    this.title = response.data.info.title;
                     //取得播放清單(上下一首 或 隨機)
                     this.next = response.data.others.next_id;
                     this.prev = response.data.others.previous_id;
@@ -304,6 +301,9 @@ let app = new Vue({
                         );
 
                         this.audioLength = `00:${sec}`; //配音長度
+                    } else {
+                        document.querySelector(".switch_tab").style.marginTop =
+                            "32px";
                     }
                     //會員資料
                     // this.cid = sessionStorage.getItem("cindx");
@@ -372,6 +372,7 @@ let app = new Vue({
                         document
                             .querySelector(".loading_blk")
                             .classList.add("none");
+                        player.playVideo();
                     }
                     function onPlayerStateChange(e) {
                         let btn = document.getElementById("play_btn");
@@ -1069,11 +1070,15 @@ let app = new Vue({
         //搜尋單字
         fnSearchWord(target, e) {
             if (this.challenge) return;
+            if (document.querySelector(".select") !== null) {
+                document.querySelector(".select").classList.remove("select");
+            }
             let vm = this;
             vm.baseForm = "";
             vm.keyWordResult = "";
             vm.NoWord = false;
             vm.DrWord = target;
+            e.target.classList.add("select");
             const str = target
                 .replace(".", "")
                 .replace("?", "")
@@ -1086,7 +1091,7 @@ let app = new Vue({
                 .replace("--", "")
                 .replace(",", "");
             $(".Dr_title .word h3").html(str);
-            console.log(str);
+
             const md5str = md5(`${str}|Funday1688`);
 
             axios
@@ -1127,14 +1132,23 @@ let app = new Vue({
                         vm.keyWordResult[keys[i]].text = fixWord;
                     }
 
-                    if (window.innerWidth > 600) {
-                        // $(".DrWord").css({ right: 25, top: evt.pageY + 10 });
-                        document.querySelector(".DrWord").style.right = "25px";
-                        document.querySelector(".DrWord").style.top = `${
-                            e.pageY + 10
-                        }px`;
-                    }
                     this.DrWordModal = true;
+                    const blkHeight = e.pageY + 430;
+                    const windowHeight = window.innerHeight;
+                    const adjust = blkHeight - (blkHeight - windowHeight);
+
+                    if (window.innerWidth > 600) {
+                        document.querySelector(".DrWord").style.right = "25px";
+                        if (blkHeight < windowHeight) {
+                            console.log("not over");
+                            document.querySelector(".DrWord").style.top = `${
+                                e.pageY + 10
+                            }px`;
+                        } else {
+                            document.querySelector(".DrWord").style.top =
+                                adjust - 420 + "px";
+                        }
+                    }
                 })
                 .catch((error) => console.log(error));
 
@@ -1163,6 +1177,12 @@ let app = new Vue({
                     })
                     .catch((error) => console.log(error));
             }
+        },
+        //關閉字典
+        fnCloseDrWordModal() {
+            this.DrWordModal = false;
+            document.querySelector(".select").classList.remove("select");
+            // document.querySelector(".DrWordModal").classList.remove("active");
         },
         //會員單字收錄
         fnWordsCollect(e) {
@@ -1195,9 +1215,6 @@ let app = new Vue({
                     $(".collect .icon .far.fa-heart").show();
                 })
                 .catch((error) => console.log(error));
-        },
-        fnCloseDrWordModal() {
-            $(".DrWordModal").removeClass("active");
         },
         // ==========================================
         // === 收藏 ===
@@ -1702,6 +1719,7 @@ let app = new Vue({
                 });
             }
             this.challenge = true;
+            console.log(this.challenge);
         },
         leaveChallenge() {
             this.hasChallenge = true;
@@ -1968,6 +1986,19 @@ let app = new Vue({
         firstClickPage() {
             this.firstClick = true;
             document.getElementById("myModal01").classList.remove("none");
+        },
+
+        //時間軸跳轉
+        turnTo(e) {
+            const elm = document.querySelector(".allTime_bar");
+            const length = elm.offsetWidth;
+            const xPos = e.pageX - elm.offsetLeft;
+            const allTime = player.getDuration();
+            const nowTime = (xPos / length) * allTime;
+            player.seekTo(nowTime);
+            document.querySelector(".goTime_bar").style.width = `${
+                (xPos / length) * 100
+            }%`;
         },
     },
     watch: {

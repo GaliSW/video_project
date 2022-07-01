@@ -695,8 +695,18 @@
     margin-right: 4px;
 }
 .subtitle_items .en span:hover {
-    /* color: #a1cdff; */
+    color: #7096c3;
     text-decoration: underline;
+}
+.subtitle_items .no_hover span:hover {
+    color: #b6b6b6;
+    text-decoration: none;
+}
+.role_B .en span:hover {
+    color: #fff;
+}
+.role_A .en span:hover {
+    color: #fff;
 }
 .subtitle_items .en .select {
     color: #a1cdff;
@@ -1094,17 +1104,11 @@
     padding-right: 8px;
 }
 .side_en {
-    font-family: Noto Sans TC;
-    font-style: normal;
-    font-weight: bold;
     font-size: 18px;
     line-height: 26px;
 }
 .side_tw {
-    font-family: Noto Sans TC;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     padding-top: 8px;
     padding-bottom: 4px;
@@ -1162,8 +1166,11 @@
 .subtitle_checked {
     background: linear-gradient(0deg, #ffffff, #ffffff), #dfeeff !important;
     box-shadow: 0px 0.5px 0px rgba(255, 255, 255, 0.3) !important;
-    color: #2f6fba !important;
+    color: #4f4f4f !important;
     font-weight: 500 !important;
+}
+.subtitle_checked .en span:hover {
+    color: #2f6fba;
 }
 #fullscreen {
     position: fixed;
@@ -1400,7 +1407,7 @@
     text-decoration: underline;
 }
 .vd_toolbar {
-    padding: 0px 40px;
+    padding: 0px 27px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1454,7 +1461,9 @@
     margin-right: 15px;
     cursor: pointer;
 }
-
+.vd_toolbar .right .vd_fav img {
+    width: 24px;
+}
 .vd_toolbar .right .vd_fav p {
     margin: 0;
     font-family: "Noto Sans TC";
@@ -2218,4 +2227,30 @@ body.video_page .switch_tab .back_to_singer {
     .adjust {
         padding-top: 50px !important;
     }
+}
+
+.video_title {
+    position: absolute;
+    left: 40px;
+    top: 40px;
+    z-index: 3;
+    font-size: 22px;
+    color: #fff;
+}
+
+.video_blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    z-index: 1;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.8) 0.46%,
+        rgba(0, 0, 0, 0) 50.48%
+    );
+}
+.margin32 {
+    margin-top: 32px;
 }

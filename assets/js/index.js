@@ -58,7 +58,7 @@ const app = new Vue({
         axios
             .get("https://funday.asia/api/ProgramWeb/defaultlist.asp")
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 const length = response.data.Category.length;
                 for (let i = 0; i < length; i++) {
                     const str = response.data.Category[i]["Category"];
@@ -76,7 +76,6 @@ const app = new Vue({
             mid = sessionStorage.getItem("mindx");
             // this.firstClick = true;
         } else {
-            console.log("notlog");
             setTimeout(() => {
                 document.getElementById("myModal01").classList.remove("none");
             }, 15000);
@@ -87,7 +86,7 @@ const app = new Vue({
                 `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}`
             )
             .then((response) => {
-                // console.log(response.data.Cinephile);
+                // console.log(response.data);
                 const length = response.data.Category.length;
                 // console.log(length);
                 for (let j = 0; j < length; j++) {
@@ -412,7 +411,9 @@ const app = new Vue({
                     };
 
                     function onPlayerReady(e) {
-                        e.target.mute().playVideo();
+                        console.log("1");
+                        e.target.mute();
+                        e.target.playVideo();
                     }
                     function onPlayerStateChange(e) {
                         let btn = document.getElementById("play_btn");
@@ -556,7 +557,7 @@ const app = new Vue({
                         `https://videoapi.funday.asia/api/BulletinBoard/BulletinBoardLastThirtyRecords`
                     )
                     .then((res) => {
-                        console.log(res);
+                        // console.log(res);
                         app.boardContent = res.data.content.reverse();
                         app.boardMessage = res.data.content;
                         app.fnBoardMessage();

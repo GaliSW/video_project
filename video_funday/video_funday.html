@@ -35,7 +35,7 @@
         <!-- Favicon -->
         <link
             rel="shortcut icon"
-            href="images/web_icon/favicon.ico"
+            href="images/web_icon/FD-favicon.ico"
             type="image/x-icon"
         />
 
@@ -289,6 +289,9 @@
             ></div> -->
             <!--header-->
             <div id="header">
+                <div class="header_left">
+                    <img src="./images/web_icon/LOGO.svg" alt="" />
+                </div>
                 <div class="header_right">
                     <div
                         class="header_challenge mobile_visible"
@@ -485,6 +488,16 @@
                                     </div>
                                     <span>配音挑戰</span>
                                 </div>
+                                <div
+                                    class="video_blur mobile_hidden"
+                                    v-if="playstate !==1"
+                                ></div>
+                                <div
+                                    class="video_title mobile_hidden"
+                                    v-if="playstate !==1"
+                                >
+                                    {{title}}
+                                </div>
                                 <div class="hint">{{hint}}</div>
                                 <div class="confirm_mask" v-if="confirm"></div>
                                 <div class="confirm_blk" v-if="confirm">
@@ -580,8 +593,18 @@
                                     :class="{sub_bg:onSample}"
                                     v-cloak
                                 >
-                                    <div class="en">{{en_content}}</div>
-                                    <div class="tw">{{ch_content}}</div>
+                                    <div
+                                        class="en"
+                                        v-show="subMode == 0 || subMode == 1"
+                                    >
+                                        {{en_content}}
+                                    </div>
+                                    <div
+                                        class="tw"
+                                        v-show="subMode == 0 || subMode == 2"
+                                    >
+                                        {{ch_content}}
+                                    </div>
                                 </div>
                                 <div class="subtitle_mobile none" v-cloak>
                                     <div class="en">{{en_content}}</div>
@@ -597,7 +620,10 @@
                                     <div class="go_time" v-cloak>
                                         {{currentTime}}
                                     </div>
-                                    <div class="allTime_bar">
+                                    <div
+                                        class="allTime_bar"
+                                        @click="turnTo($event)"
+                                    >
                                         <span class="goTime_bar"></span>
                                     </div>
                                     <div class="end_time" v-cloak>
@@ -945,7 +971,10 @@
                                 </div>
                             </div>
                             <!--這一塊是頁籤式電影列表切換-->
-                            <div class="switch_tab">
+                            <div
+                                class="switch_tab"
+                                :class="{margin32:!hasChallenge}"
+                            >
                                 <ul class="tabs tabs_mobile none">
                                     <li
                                         @click="tabChangePC"
@@ -1000,6 +1029,7 @@
 
                                                 <div
                                                     class="en side_en"
+                                                    :class="{no_hover:challenge}"
                                                     v-if="subMode==0 || subMode==1"
                                                     v-cloak
                                                 >
@@ -1335,7 +1365,7 @@
 
             <!-- 字典功能 -->
             <div class="DrWord" v-show="DrWordModal" v-cloak>
-                <div class="close" @click="DrWordModal = !DrWordModal">
+                <div class="close" @click="fnCloseDrWordModal">
                     <img src="images/web_icon/top_bar_close.svg" />
                 </div>
                 <div class="Dr_title">
