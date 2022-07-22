@@ -3,6 +3,7 @@ let app = new Vue({
     data: {
         bannerVd: "", //youtube網址
         subtitle: "", //字幕陣列
+        title: "",
         cate: "", //該影片分類
         cateList: "", //相關推薦列表
         allTime: "", //影片總長
@@ -100,6 +101,7 @@ let app = new Vue({
         baseForm: {}, //kk音標
         vdLoading: false, //影片是否讀取
         confirm: false,
+        vdVoice: true,
     },
     created() {
         var player;
@@ -116,7 +118,7 @@ let app = new Vue({
             }, 15000);
         }
         if (location.hash.indexOf("mid") > -1) {
-            console.log(location.hash);
+            // console.log(location.hash);
             this.singerMode = true;
             let str = location.hash.replace("#", "").split("=")[1];
             this.singerCid = str.split("-")[0];
@@ -134,13 +136,26 @@ let app = new Vue({
                     this.singerFile = `https://funday.asia/FundayKtv/files/${this.singerCid}-${this.singerMid}-${this.videoId}.mp3`;
                 });
             this.hint = "歌手列表:讀取中";
-            this.nowTab = 1;
-            setTimeout(() => {
-                this.tabChange(0);
-            }, 2000);
+            this.nowtab = 1;
+            if (window.innerWidth < 991) {
+                setTimeout(() => {
+                    this.nowtab = 1;
+                }, 2000);
+            }
+        }
+        window.addEventListener("resize", this.onResize, { passive: true });
+        if (window.innerWidth > 991) {
+            this.nowtab = 2;
         }
     },
     methods: {
+        onResize() {
+            if (window.innerWidth > 991) {
+                app.nowtab = 2;
+            } else {
+                app.nowtab = 0;
+            }
+        },
         // ==========================================
         // == 主內容資料 ==
         // ==========================================
@@ -167,11 +182,10 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/ProgramJson.asp?indx=${id}&member_id=${memberid}`
                 )
                 .then((response) => {
-                    console.log(response);
                     // ==========================================
                     // == 影片各資料取得
                     // ==========================================
-
+                    this.title = response.data.info.title;
                     //取得播放清單(上下一首 或 隨機)
                     this.next = response.data.others.next_id;
                     this.prev = response.data.others.previous_id;
@@ -267,15 +281,16 @@ let app = new Vue({
                     //是否有配音挑戰
                     if (this.record_end_time.length !== 0) {
                         this.hasChallenge = true;
+                        // document
+                        //     .querySelector(".tabs")
+                        //     .classList.remove("none");
                         document
-                            .querySelector(".tabs")
+                            .querySelector(".tab2_title")
                             .classList.remove("none");
-                        document
-                            .querySelector(".audioList_li")
-                            .classList.remove("none");
-                        document.querySelector(".audioList_li").style.width =
-                            "50%";
-                        document.querySelector(".cc_li").style.width = "50%";
+                        document.getElementById(
+                            "video_list2"
+                        ).style.marginBottom = "50px";
+                        // document.querySelector(".cc_li").style.width = "50%";
 
                         //配音最後一句結束時間
                         this.last_record_end =
@@ -447,8 +462,6 @@ let app = new Vue({
                                 break;
                             case 2: //=== 暫停 ===
                                 app.playstate = 0;
-                                // btn.classList.add("fa-play-circle");
-                                // btn.classList.remove("fa-pause-circle");
                                 player.pauseVideo();
                                 app.timeupdate = false;
                                 if (
@@ -474,6 +487,8 @@ let app = new Vue({
                                 }
 
                                 app.goTimer(false);
+                                app.audioStatus = false;
+
                                 break;
                         }
                     }
@@ -526,7 +541,6 @@ let app = new Vue({
                             const files = array.files[0].split(",");
                             for (let j = 0; j < files.length; j++) {
                                 const singleFile = files[j].substr(-6, 1);
-                                console.log(singleFile);
                                 // console.log(this.roleAindex[0]);
                                 if (singleFile == "A") {
                                     aAudio = true;
@@ -700,8 +714,7 @@ let app = new Vue({
                     player.seekTo(sentence_start);
                 }
             } else if (this.audioStatus) {
-                // console.log("audiostatus");
-                this.fnRecordPlayer();
+                app.fnRecordPlayer();
             } else if (this.challenge && !this.onChallenge) {
                 const now_time = Number(player.getCurrentTime().toFixed(1));
                 if (now_time === app.last_record_end + 1) {
@@ -852,7 +865,6 @@ let app = new Vue({
         },
         // 原音與錄音交錯模式
         fnRecordPlayer() {
-            // console.log("1");
             const now_time = Number(player.getCurrentTime().toFixed(1));
             let start;
             let end;
@@ -880,8 +892,11 @@ let app = new Vue({
                 app.sentence_start = Number(sentence_start.toFixed(1));
 
                 if (now_time === app.sentence_start) {
-                    player.mute();
-                    console.log("mute");
+                    if (app.vdVoice) {
+                        player.unMute();
+                    } else {
+                        player.mute();
+                    }
                 }
 
                 if (now_time === app.sentence_end) {
@@ -952,6 +967,10 @@ let app = new Vue({
         // === 單句模式按鍵切換 ===
         // ==========================================
         singleMode() {
+            if (this.audioStatus) {
+                app.hint = "配音播放中";
+                return false;
+            }
             this.single = !this.single;
             switch (this.single) {
                 case true:
@@ -1039,6 +1058,7 @@ let app = new Vue({
         // ==========================================
         findPara(index) {
             if (this.challenge) return;
+            if (this.audioStatus) return;
             this.sIndex = index;
             console.log(index);
             const sentence_start = this.subtitle[index].starttime;
@@ -1092,6 +1112,7 @@ let app = new Vue({
         //搜尋單字
         fnSearchWord(target, e) {
             if (this.challenge) return;
+            if (this.audioStatus) return;
             let vm = this;
             vm.baseForm = "";
             vm.keyWordResult = "";
@@ -1313,6 +1334,8 @@ let app = new Vue({
                 return false;
             }
             this.audioStatus = true;
+            this.vdVoice = true;
+            document.getElementById("original").checked = false;
             if (Number(sessionStorage.getItem("free")) <= 1) {
                 this.recordIndex = 0;
 
@@ -1387,6 +1410,8 @@ let app = new Vue({
                     this.nowplayingAudio.currentTime = 0;
                     player.pauseVideo();
                     this.goTimer(false);
+                    this.audioStatus = false;
+                    player.unMute();
                     return false;
                 }
             } else {
@@ -1450,6 +1475,19 @@ let app = new Vue({
             }
             this.timer = str;
         },
+
+        //影片聲音開關
+        voiceController() {
+            if (this.vdVoice) {
+                this.vdVoice = false;
+                player.mute();
+                app.hint = "背景原音:關閉";
+            } else {
+                this.vdVoice = true;
+                player.unMute();
+                app.hint = "背景原音:開啟";
+            }
+        },
         // ==========================================
         // === 按讚 ===
         // ==========================================
@@ -1505,8 +1543,6 @@ let app = new Vue({
                 `https://tube.funday.asia/video.html?id=${this.videoId}#${singer}`
             );
             // *FB
-            //www.facebook.com/sharer.php?u=http://blog.ja-anything.com/&quote=大家跟我一起用Facebook分享吧!
-            // this.fburl = `https://www.facebook.com/sharer.php?u=https://music.funday.asia/video.html?videoId=1060`;
             this.fburl = `javascript: void(window.open('http://www.facebook.com/share.php?u='.concat(encodeURIComponent('https://tube.funday.asia/video.html?id=${this.videoId}#${singer}'))));`;
             //*Line
             this.lineurl = `https://social-plugins.line.me/lineit/share?url=${link}`;
@@ -1684,7 +1720,9 @@ let app = new Vue({
                 document.getElementById("myModal01").classList.remove("none");
                 return false;
             } else {
-                app.nowtab = 0;
+                if (window.innerWidth < 991) {
+                    this.nowtab = 0;
+                }
                 this.pauseBlk = false;
                 this.single = false;
                 player.pauseVideo();
@@ -1693,6 +1731,7 @@ let app = new Vue({
                 this.voice = "";
                 this.isPass = false;
                 this.leavingCheck = false;
+                document.getElementById("singer_list").checked = true;
 
                 //配音字幕加上角色標籤
                 const roleA = document.querySelectorAll(".role_A");
@@ -2006,6 +2045,7 @@ let app = new Vue({
 
         //時間軸跳轉
         turnTo(e) {
+            if (this.audioStatus) return;
             const elm = document.querySelector(".allTime_bar");
             const length = elm.offsetWidth;
             const xPos = e.pageX - elm.offsetLeft;
@@ -2022,7 +2062,7 @@ let app = new Vue({
         // === 字幕同步 ===
         // ==========================================
         currentTimeMin: function (value) {
-            console.log(value);
+            // console.log(value);
             // console.log(this.startTimeArr);
             if (this.startTimeArr.indexOf(value) !== -1) {
                 const subtitleIndex = this.startTimeArr.indexOf(value);
@@ -2033,7 +2073,7 @@ let app = new Vue({
                 this.ch_content =
                     this.subtitle[`${subtitleIndex}`]["ch_content"];
                 // === 側邊欄字幕active ===
-                if (app.nowtab == 0 && app.subMode !== 3 && !app.single) {
+                if (app.subMode !== 3 && !app.single) {
                     if (subtitleIndex == 0) {
                         document
                             .getElementById(`subtitle${subtitleIndex}`)

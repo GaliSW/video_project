@@ -118,20 +118,6 @@
         </script>
         <!-- End Google Tag Manager -->
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-128191330-4"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-
-            gtag("config", "UA-128191330-4");
-        </script>
         <!-- Facebook Pixel Code -->
         <script>
             !(function (f, b, e, v, n, t, s) {
@@ -265,7 +251,7 @@
             ></iframe
         ></noscript>
         <!-- End Google Tag Manager (noscript) -->
-        <div
+        <!-- <div
             id="fullscreen"
             onclick="toggleFullScreen(document.documentElement)"
         >
@@ -279,14 +265,9 @@
                 src="./images/web_icon/full_close.svg"
                 alt=""
             />
-        </div>
+        </div> -->
 
         <div class="all_wrap" id="app" v-cloak>
-            <!-- <div
-                v-if="!firstClick"
-                @click="firstClickPage"
-                class="firstClick"
-            ></div> -->
             <!--header-->
             <div id="header">
                 <div class="header_left">
@@ -381,7 +362,7 @@
                 <!-- 這邊是側邊條 -->
                 <div id="video_frame">
                     <!--這邊是影音部份-->
-                    <div id="video_frame_top" :class="{tab_close:subClose}">
+                    <div id="video_frame_top">
                         <div id="video_playing">
                             <div class="singer_notification" v-if="singerMode">
                                 <img
@@ -632,8 +613,10 @@
                                 </div>
                                 <!-- 桌機控制欄 -->
                                 <div class="vd_toolbar" v-if="!challenge">
-                                    <div class="left" @click="subChange">
-                                        <span v-if="subMode == 0"
+                                    <div class="left">
+                                        <span
+                                            v-if="subMode == 0"
+                                            @click="subChange"
                                             ><img
                                                 class="mobile_visible"
                                                 src="images/web_icon/ENZH.svg"
@@ -642,7 +625,9 @@
                                                 中英字幕
                                             </p>
                                         </span>
-                                        <span v-if="subMode == 1"
+                                        <span
+                                            v-if="subMode == 1"
+                                            @click="subChange"
                                             ><img
                                                 class="mobile_visible"
                                                 src="images/web_icon/EN.svg"
@@ -651,7 +636,9 @@
                                                 英文字幕
                                             </p>
                                         </span>
-                                        <span v-if="subMode == 2"
+                                        <span
+                                            v-if="subMode == 2"
+                                            @click="subChange"
                                             ><img
                                                 class="mobile_visible"
                                                 src="images/web_icon/ZH.svg"
@@ -660,7 +647,9 @@
                                                 中文字幕
                                             </p>
                                         </span>
-                                        <span v-if="subMode == 3"
+                                        <span
+                                            v-if="subMode == 3"
+                                            @click="subChange"
                                             ><img
                                                 class="mobile_visible"
                                                 src="images/web_icon/None.svg"
@@ -669,6 +658,21 @@
                                                 關閉字幕
                                             </p>
                                         </span>
+                                        <input
+                                            type="checkbox"
+                                            id="original"
+                                            class="none"
+                                        />
+                                        <label
+                                            for="original"
+                                            class="original"
+                                            v-if="audioStatus"
+                                        >
+                                            <span>背景原音</span>
+                                            <div @click="voiceController">
+                                                <div></div>
+                                            </div>
+                                        </label>
                                     </div>
                                     <div class="center">
                                         <div
@@ -736,7 +740,7 @@
                                             @click="tabChange"
                                         >
                                             <img
-                                                v-if="nowtab == 0"
+                                                v-if="nowtab == 0 || nowtab == 2"
                                                 src="images/web_icon/tab_close.svg"
                                                 alt=""
                                             />
@@ -746,7 +750,7 @@
                                                 alt=""
                                             />
                                         </span>
-                                        <span class="vd_fav">
+                                        <!-- <span class="vd_fav">
                                             <img
                                                 @click="vdFav"
                                                 :id="videoId"
@@ -768,7 +772,7 @@
                                             >
                                                 收藏
                                             </p>
-                                        </span>
+                                        </span> -->
                                         <span class="share" @click="share(0)">
                                             <img
                                                 src="images/web_icon/share.svg"
@@ -960,7 +964,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="video_list2" :class="{pd0:subClose}">
+                        <div id="video_list2">
                             <div
                                 class="challenge_mb_blk mobile_visible"
                                 v-if="challenge && !onSample"
@@ -971,10 +975,7 @@
                                 </div>
                             </div>
                             <!--這一塊是頁籤式電影列表切換-->
-                            <div
-                                class="switch_tab"
-                                :class="{margin32:!hasChallenge}"
-                            >
+                            <div class="switch_tab">
                                 <ul class="tabs tabs_mobile none">
                                     <li
                                         @click="tabChangePC"
@@ -984,13 +985,13 @@
                                         <a href="javascript:;">中英字幕</a>
                                     </li>
                                     <!--頁籤1-->
-                                    <li
+                                    <!-- <li
                                         @click="tabChangePC"
                                         class="audioList_li"
                                         :class="{active:nowtab == 1}"
                                     >
                                         <a href="javascript:;">配音列表</a>
-                                    </li>
+                                    </li> -->
                                     <!--頁籤2-->
                                 </ul>
                                 <div
@@ -1001,7 +1002,7 @@
                                         id="tab1"
                                         class="tab_content"
                                         v-cloak
-                                        v-show="nowtab == 0"
+                                        v-show="nowtab == 0 || nowtab == 2"
                                     >
                                         <!--頁籤1的內容-->
                                         <div class="noWord" v-if="subMode==3">
@@ -1029,7 +1030,7 @@
 
                                                 <div
                                                     class="en side_en"
-                                                    :class="{no_hover:challenge}"
+                                                    :class="{no_hover:challenge || audioStatus}"
                                                     v-if="subMode==0 || subMode==1"
                                                     v-cloak
                                                 >
@@ -1055,15 +1056,27 @@
                                     <div
                                         id="tab2"
                                         class="tab_content audioTab"
-                                        v-show="nowtab == 1"
+                                        v-show="nowtab == 1 || nowtab ==2"
                                     >
-                                        <!--頁籤2的內容-->
+                                        <input
+                                            type="checkbox"
+                                            id="singer_list"
+                                            class="none"
+                                        />
                                         <div
-                                            v-if="RecordingList.length == 0"
-                                            class="no_audio"
+                                            class="tab2_title mobile_hidden none"
+                                            for="singer_list"
                                         >
-                                            尚無配音
+                                            <label for="singer_list">
+                                                <img
+                                                    src="./images/web_icon/arrow_down.svg"
+                                                    alt=""
+                                                />
+                                                <span>配唱列表</span>
+                                            </label>
                                         </div>
+                                        <!--頁籤2的內容-->
+
                                         <!-- 單一歌手 -->
                                         <ul
                                             class="voice_items"
@@ -1161,8 +1174,14 @@
                                         <ul
                                             class="voice_items"
                                             v-cloak
-                                            v-show="!singerMode"
+                                            v-show="!singerMode && hasChallenge"
                                         >
+                                            <div
+                                                v-if="RecordingList.length == 0"
+                                                class="no_audio"
+                                            >
+                                                尚未有人配音，馬上成為第一人
+                                            </div>
                                             <li
                                                 v-for="(item, index) in RecordingList"
                                                 :id="item['Pmember_id']"

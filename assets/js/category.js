@@ -72,7 +72,6 @@ const app = new Vue({
                     `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=${this.order}&CategoryId=${this.CategoryId}&member_id=${mid}`
                 )
                 .then((res) => {
-                    console.log(res);
                     this.CategoryTitle = Object.keys(res.data)[0];
                     if (!res.data[this.CategoryTitle]) {
                         return false;

@@ -1,10 +1,10 @@
 .notification_wrapper {
     /* border: 1px solid red; */
-    /* position: fixed;
-    top: 696px;
+    position: fixed;
+    top: 530px;
     overflow-y: scroll;
-    height: calc(100vh - 740px);
-    padding: 0; */
+    height: calc(100vh - 600px);
+    padding: 0;
     margin-top: 32px;
 }
 .notification_wrapper::-webkit-scrollbar-track {

@@ -102,6 +102,7 @@ let app = new Vue({
         confirm: false,
         NoWord: false,
         subClose: false,
+        vdVoice: true,
     },
     created() {
         var player;
@@ -121,8 +122,21 @@ let app = new Vue({
                 this.audioList();
             });
         });
+        window.addEventListener("resize", this.onResize, { passive: true });
+        if (window.innerWidth > 991) {
+            this.nowtab = 2;
+        }
     },
     methods: {
+        onResize() {
+            if (window.innerWidth > 991) {
+                app.nowtab = 2;
+            } else {
+                app.nowtab = 0;
+                document.querySelector(".tab_container").style.paddingBottom =
+                    "0px";
+            }
+        },
         // ==========================================
         // == 主內容資料 ==
         // ==========================================
@@ -248,15 +262,23 @@ let app = new Vue({
                     //是否有配音挑戰
                     if (this.record_end_time.length !== 0) {
                         this.hasChallenge = true;
+                        // document
+                        //     .querySelector(".tabs")
+                        //     .classList.remove("none");
+                        // document
+                        //     .querySelector(".audioList_li")
+                        //     .classList.remove("none");
+                        // document.querySelector(".audioList_li").style.width =
+                        //     "50%";
+                        // document.querySelector(".cc_li").style.width = "50%";
                         document
-                            .querySelector(".tabs")
+                            .querySelector(".tab2_title")
                             .classList.remove("none");
-                        document
-                            .querySelector(".audioList_li")
-                            .classList.remove("none");
-                        document.querySelector(".audioList_li").style.width =
-                            "50%";
-                        document.querySelector(".cc_li").style.width = "50%";
+                        if (window.innerWidth > 991) {
+                            document.querySelector(
+                                ".tab_container"
+                            ).style.paddingBottom = "50px";
+                        }
 
                         //配音最後一句結束時間
                         this.last_record_end =
@@ -301,9 +323,6 @@ let app = new Vue({
                         );
 
                         this.audioLength = `00:${sec}`; //配音長度
-                    } else {
-                        document.querySelector(".switch_tab").style.marginTop =
-                            "32px";
                     }
                     //會員資料
                     // this.cid = sessionStorage.getItem("cindx");
@@ -376,7 +395,6 @@ let app = new Vue({
                     }
                     function onPlayerStateChange(e) {
                         let btn = document.getElementById("play_btn");
-                        console.log(e.data);
                         switch (e.data) {
                             case 0: //=== 結束 ===
                                 app.playstate = 0;
@@ -458,6 +476,7 @@ let app = new Vue({
                                 }
 
                                 app.goTimer(false);
+                                app.audioStatus = false;
                                 break;
                         }
                     }
@@ -505,7 +524,6 @@ let app = new Vue({
                             const files = array.files[0].split(",");
                             for (let j = 0; j < files.length; j++) {
                                 const singleFile = files[j].substr(-6, 1);
-                                console.log(singleFile);
                                 // console.log(this.roleAindex[0]);
                                 if (singleFile == "A") {
                                     aAudio = true;
@@ -678,8 +696,7 @@ let app = new Vue({
                     player.seekTo(sentence_start);
                 }
             } else if (this.audioStatus) {
-                // console.log("audiostatus");
-                this.fnRecordPlayer();
+                app.fnRecordPlayer();
             } else if (this.challenge && !this.onChallenge) {
                 const now_time = Number(player.getCurrentTime().toFixed(1));
                 if (now_time === app.last_record_end + 1) {
@@ -858,8 +875,11 @@ let app = new Vue({
                 app.sentence_start = Number(sentence_start.toFixed(1));
 
                 if (now_time === app.sentence_start) {
-                    player.mute();
-                    console.log("mute");
+                    if (app.vdVoice) {
+                        player.unMute();
+                    } else {
+                        player.mute();
+                    }
                 }
 
                 if (now_time === app.sentence_end) {
@@ -1017,6 +1037,7 @@ let app = new Vue({
         // ==========================================
         findPara(index) {
             if (this.challenge) return;
+            if (this.audioStatus) return;
             this.sIndex = index;
             console.log(index);
             const sentence_start = this.subtitle[index].starttime;
@@ -1070,6 +1091,7 @@ let app = new Vue({
         //搜尋單字
         fnSearchWord(target, e) {
             if (this.challenge) return;
+            if (this.audioStatus) return;
             if (document.querySelector(".select") !== null) {
                 document.querySelector(".select").classList.remove("select");
             }
@@ -1298,6 +1320,8 @@ let app = new Vue({
                 return false;
             }
             this.audioStatus = true;
+            this.vdVoice = true;
+            document.getElementById("original").checked = false;
             if (Number(sessionStorage.getItem("free")) <= 1) {
                 this.recordIndex = 0;
 
@@ -1372,6 +1396,8 @@ let app = new Vue({
                     this.nowplayingAudio.currentTime = 0;
                     player.pauseVideo();
                     this.goTimer(false);
+                    this.audioStatus = false;
+                    player.unMute();
                     return false;
                 }
             } else {
@@ -1434,6 +1460,18 @@ let app = new Vue({
                 str = `0${m}:0${s}`;
             }
             this.timer = str;
+        },
+        //影片聲音開關
+        voiceController() {
+            if (this.vdVoice) {
+                this.vdVoice = false;
+                player.mute();
+                app.hint = "背景原音:關閉";
+            } else {
+                this.vdVoice = true;
+                player.unMute();
+                app.hint = "背景原音:開啟";
+            }
         },
         // ==========================================
         // === 按讚 ===
@@ -1669,7 +1707,9 @@ let app = new Vue({
                 document.getElementById("myModal01").classList.remove("none");
                 return false;
             } else {
-                app.nowtab = 0;
+                if (window.innerWidth < 991) {
+                    this.nowtab = 0;
+                }
                 this.pauseBlk = false;
                 this.single = false;
                 player.pauseVideo();
@@ -1678,6 +1718,9 @@ let app = new Vue({
                 this.voice = "";
                 this.isPass = false;
                 this.leavingCheck = false;
+                document.getElementById("singer_list").checked = true;
+                document.querySelector(".tab_container").style.paddingBottom =
+                    "0";
 
                 //滾動到配音字幕區間
                 const container = document.querySelector(".tab_container");
@@ -1744,6 +1787,9 @@ let app = new Vue({
             this.wave = -1;
             this.endChallenge = false;
             this.onChallenge = false;
+            app.nowtab = 2;
+            document.querySelector(".tab_container").style.paddingBottom =
+                "50px";
             player.pauseVideo();
             document.querySelector(".video_bar").style.display = "block";
             //配音字幕去掉角色標籤
@@ -1990,6 +2036,7 @@ let app = new Vue({
 
         //時間軸跳轉
         turnTo(e) {
+            if (this.audioStatus) return;
             const elm = document.querySelector(".allTime_bar");
             const length = elm.offsetWidth;
             const xPos = e.pageX - elm.offsetLeft;
@@ -2017,7 +2064,7 @@ let app = new Vue({
                 this.ch_content =
                     this.subtitle[`${subtitleIndex}`]["ch_content"];
                 // === 側邊欄字幕active ===
-                if (app.nowtab == 0 && app.subMode !== 3 && !app.single) {
+                if (app.subMode !== 3 && !app.single) {
                     if (subtitleIndex == 0) {
                         document
                             .getElementById(`subtitle${subtitleIndex}`)
@@ -2101,7 +2148,7 @@ let app = new Vue({
                                 });
                             } else {
                                 container.scrollTo({
-                                    top: sutitleBlkTop,
+                                    top: sutitleBlkTop - 8,
                                     behavior: "smooth",
                                 });
                             }

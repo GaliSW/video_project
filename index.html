@@ -105,20 +105,6 @@
         </script>
         <!-- End Google Tag Manager -->
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-128191330-4"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-
-            gtag("config", "UA-128191330-4");
-        </script>
         <!-- Facebook Pixel Code -->
         <script>
             !(function (f, b, e, v, n, t, s) {
@@ -292,7 +278,7 @@
         <!-- End Google Tag Manager (noscript) -->
         <!--header-->
         <div
-            id="fullscreen"
+            id="fullscreen_index"
             onclick="toggleFullScreen(document.documentElement)"
         >
             <img
@@ -322,6 +308,9 @@
                         >FunMusic</a
                     >
                     <a href="https://map.funday.asia" target="_blank">FunMap</a>
+                    <a href="https://dic.funday.asia" target="_blank"
+                        >FunDictionary</a
+                    >
                     <a href="https://funday.asia" target="_blank">FunDay</a>
                 </div>
             </div>
@@ -343,6 +332,11 @@
                     <li>
                         <a href="https://map.funday.asia" target="_blank"
                             >FunMap</a
+                        >
+                    </li>
+                    <li>
+                        <a href="https://dic.funday.asia" target="_blank"
+                            >FunDictionary</a
                         >
                     </li>
                     <li>
@@ -642,7 +636,7 @@
                                     <li><a href="#tab2">熱門排行</a></li>
                                     <!--頁籤2-->
                                 </ul>
-                                <div class="tab_container">
+                                <div class="tab_container index_container">
                                     <div id="tab1" class="tab_content">
                                         <!--頁籤1的內容-->
                                         <ul

@@ -438,7 +438,7 @@ body.modal-open #header {
 /********** video_frame_top 上半部區域 */
 #video_frame_top {
     background-color: #090909;
-    padding: 16px 22px;
+    padding: 0;
     display: grid;
     grid-template-columns: auto 333px;
     position: relative;
@@ -489,12 +489,12 @@ body.modal-open #header {
     left: 0;
     transform: translateY(0%);
     width: 100%;
-    height: 600px;
+    height: 670px;
     z-index: 0;
 }
 @media (max-width: 1366px) {
     #video_playing .iframe2 {
-        height: 450px;
+        height: 525px;
     }
 }
 @media (max-width: 991px) {
@@ -562,7 +562,7 @@ ul.tabs {
     padding: 4px;
     background: #555555;
     border-radius: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     color: #fff;
     font-family: Noto Sans TC;
     font-style: normal;
@@ -609,21 +609,22 @@ ul.tabs {
     overflow-y: scroll;
     scroll-behavior: smooth;
     /* border: 1px solid red; */
-    position: relative;
+    /* position: relative; */
 }
-.switch_tab div.tab_container::-webkit-scrollbar-track {
-    /*捲軸底色*/
+.index_container {
+    height: 504px !important;
+}
+/* .switch_tab div.tab_container::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: rgb(22, 22, 22);
-}
+} */
 .switch_tab div.tab_container::-webkit-scrollbar {
     /*捲軸寬度*/
-    width: 5px;
-    background-color: rgb(22, 22, 22);
+    width: 2px;
 }
 .switch_tab div.tab_container::-webkit-scrollbar-thumb {
     /*捲軸本體顏色*/
-    background-color: #ccc;
+    background-color: #7a7a7a;
 }
 .switch_tab div.tab_container ul.video_items {
     /* border: 1px solid red; */
@@ -661,6 +662,9 @@ ul.tabs {
         line-height: 59px;
         /* identical to box height */
         color: rgba(255, 255, 255, 0.6);
+    }
+    .index_container {
+        height: auto !important;
     }
 }
 .switch_tab div.tab_container ul.video_items li::after {
@@ -1132,6 +1136,7 @@ body.home_page .video_category .video_items .items_list .item {
     }
     #video_list2 {
         padding-bottom: 0;
+        margin-bottom: 0 !important;
     }
     ul.tabs {
         /* display: none; */
@@ -1265,11 +1270,12 @@ body.video_page .switch_tab ul.voice_items {
     background-color: #000;
     list-style-type: none;
 }
+
 body.video_page .switch_tab ul.voice_items > li {
     font-family: Roboto;
     font-style: normal;
     font-weight: 300;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
     color: #fff;
     border-bottom: 1px solid #737373;
@@ -1489,14 +1495,14 @@ body.video_page .video_category .video_items .items_list .item {
 #video_playing .video_bar .subtitle {
     font-family: Roboto;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 26px;
     line-height: 26px;
     text-align: center;
     /* margin-bottom: 8px; */
 }
 #video_playing .video_bar .subtitle div {
     padding: 5px 0;
-    line-height: 22px;
+    line-height: 26px;
 }
 #video_playing .video_bar .subtitle .tw {
     font-size: 18px;

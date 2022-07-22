@@ -86,7 +86,7 @@ const app = new Vue({
                 `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}`
             )
             .then((response) => {
-                // console.log(response.data);
+                console.log(response.data);
                 const length = response.data.Category.length;
                 // console.log(length);
                 for (let j = 0; j < length; j++) {
@@ -124,7 +124,7 @@ const app = new Vue({
                                     中英字幕
                                 </div>
                                 <div class="blank"></div>
-                                <div class="number video_icon">
+                                <div class="number video_icon" >
                                     <img
                                         src="images/web_icon/video_icon.svg"
                                         class="icon"
