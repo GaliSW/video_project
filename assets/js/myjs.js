@@ -24,6 +24,51 @@ $(function () {
     } else {
         document.getElementById("menu").classList.remove("none");
     }
+    if (localStorage.getItem("fdtk")) {
+        const token = localStorage.getItem("fdtk");
+        document.querySelector(".subWeb").innerHTML = "";
+        str_pc = `<a href="https://music.funday.asia?fdtk=${token}" target="_blank">FunMusic</a>
+                <a href="https://map.funday.asia?fdtk=${token}" target="_blank">FunMap</a>
+                <a href="https://dic.funday.asia?fdtk=${token}" target="_blank">FunDictionary</a>
+                <a href="https://funday.asia/api/SSO.asp
+                ?fdtk=${token}" target="_blank">FunDay</a>
+            `;
+        document
+            .querySelector(".subWeb")
+            .insertAdjacentHTML("afterbegin", str_pc);
+    }
+    if (
+        location.search.indexOf("fdtk") > -1 &&
+        location.search.split("=")[1] !== "" &&
+        !sessionStorage.getItem("mindx")
+    ) {
+        //判斷token
+        const token = location.search.split("=")[1];
+        tokenCheck(token);
+    } else {
+        if (localStorage.getItem("fdtk") && !sessionStorage.getItem("mindx")) {
+            const token = sessionStorage.getItem("fdtk");
+            tokenCheck(token);
+        } else {
+            return false;
+        }
+    }
+    //* === Token check ===
+    function tokenCheck(token) {
+        axios
+            .get(`https://webaspapi.funday.asia/api/User/Login?Token=${token}`)
+            .then((res) => {
+                console.log(res, "hasToken");
+                if (res.data.IsSuccess) {
+                    sessionStorage.setItem("mindx", res.data.Content.Mindx);
+                    sessionStorage.setItem("cindx", res.data.Content.Cindx);
+                    localStorage.setItem("fdtk", token);
+                    location.href = "https://tube.funday.asia";
+                } else {
+                    return false;
+                }
+            });
+    }
 
     // 預設顯示第一個 Tab
     var _showTab = 0;
