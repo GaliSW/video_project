@@ -16,7 +16,7 @@
         <meta name="author" content="" />
         <meta
             property="og:title"
-            content="FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合"
+            content="FunTube看影片學英文｜讓學習與生活結合"
         />
         <meta property="og:url" content="https://funday.asia" />
         <meta property="og:image" content="https://img.onl/pNwt9i" />
@@ -29,9 +29,8 @@
             content="看影片學英文,英文教學,歐美英文,線上英文,學習英文,看影片學英文,英詞字義,雙語字幕,線上英文配音,英聽,聽力練習,線上英語,字彙解析,歡樂學英文"
         />
 
-        <title>
-            FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合
-        </title>
+        <title>FunTube看影片學英文｜讓學習與生活結合</title>
+        <script src="https://accounts.google.com/gsi/client"></script>
 
         <!-- Favicon -->
         <link
@@ -393,7 +392,10 @@
                     <!--這邊是側邊條-->
                     <div id="sidebar_wrapper">
                         <ul class="channel_list">
-                            <li v-for="(item, index) in sidebar">
+                            <li
+                                v-for="(item, index) in sidebar"
+                                v-if="item.Category !== 'Life' && item.Category !== 'Trend' && item.Category !== 'IT'"
+                            >
                                 <a
                                     :href="'./video_category.html?p=' + item.Category.replace(/\s*/g,'')"
                                     >{{item.Category}}</a
@@ -484,7 +486,7 @@
                         </div>
                     </div>
                     <!-- Podcast -->
-                    <div class="podcast_pop" v-if="podcast" v-cloak>
+                    <div class="podcast_pop" :class="{none:!podcast}">
                         <div class="pop_close" @click="podcast = !podcast">
                             <img
                                 src="./images/web_icon/share_close.svg"
@@ -572,7 +574,7 @@
 
                 <div id="video_frame" v-scroll="handleScroll">
                     <!--這邊是影音部份-->
-                    <div class="notification_wrapper_mobile" v-cloak>
+                    <div class="notification_wrapper_mobile none" v-cloak>
                         <div
                             class="notification_mobile animate__animated"
                             :class="{animate__fadeIn:notiChange}"
@@ -636,7 +638,10 @@
                                                     中英字幕
                                                 </div>
                                                 <div class="blank"></div>
-                                                <div class="number video_icon">
+                                                <div
+                                                    class="number video_icon"
+                                                    v-if="item.Category_id == 15"
+                                                >
                                                     <img
                                                         src="images/web_icon/video_icon.svg"
                                                         class="icon"
@@ -675,20 +680,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lds-roller" v-if="loading">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- <div class="loading_blk" v-if="!loading">
+                <div class="lds-roller roller-center">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div> -->
             <!--footer-->
             <div id="footer">
                 <div class="copyright">
@@ -742,11 +749,12 @@
                                         使用電子信箱加入
                                     </div>
                                 </div>
-                                <div class="login_way fb">
+                                <!-- <div class="login_way fb">
                                     <div onclick="fbLogin()">
                                         使用Facebook加入
                                     </div>
-                                </div>
+                                </div> -->
+                                <div id="google_signup"></div>
                             </div>
                             <div class="form_bottom">
                                 <div
@@ -1508,6 +1516,7 @@
                                             "
                                             onclick="fbLoginCheck()"
                                         />
+                                        <div id="google_login"></div>
                                     </div>
                                 </form>
                             </div>

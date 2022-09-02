@@ -159,6 +159,111 @@ async function fbSignUp() {
             }
         });
 }
+
+// ********************************google註冊********************************
+
+async function handleCredentialResponse(response) {
+    const token = response.credential;
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split("")
+            .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+    );
+    const data = await JSON.parse(jsonPayload);
+
+    axios
+        .post(
+            ` https://funday.asia/api/GoogleOAuth/IDCheck.asp?id=${data.sub}&name=${data.name}&email=${data.email}`
+        )
+        .then((res) => {
+            const state = res.data.State;
+            if (state === "0") {
+                sessionStorage.setItem("email", res.data.id);
+                loginTo(myModal01, myModal06);
+            } else {
+                const id = res.data.id;
+                axios
+                    .get(
+                        `https://webaspapi.funday.asia/api/User/Login?GoogleID=${id}`
+                    )
+                    .then((res) => {
+                        // loginTo(myModal06, null);
+                        document
+                            .getElementById("join_button")
+                            .classList.add("none");
+                        document
+                            .getElementById("menu")
+                            .classList.remove("none");
+                        sessionStorage.setItem("mindx", res.data.Content.Mindx);
+                        sessionStorage.setItem("cindx", res.data.Content.Cindx);
+                        sessionStorage.setItem(
+                            "nickName",
+                            res.data.Content.Nickname
+                        );
+                        sessionStorage.setItem("sex", res.data.Content.Sex);
+                        sessionStorage.setItem("pic", res.data.Content.Pic);
+                        localStorage.setItem("fdtk", res.data.Content.Token);
+                        sessionStorage.removeItem("free");
+                        let hash = window.location.href;
+                        if (hash.indexOf("landing") > -1) {
+                            location.href = `https://tube.funday.asia/`;
+                        } else {
+                            window.location.reload();
+                        }
+                    });
+            }
+        });
+}
+
+async function googleSignUp() {
+    const mail = sessionStorage.getItem("email");
+    const pass = document.getElementById("google_account_mobile").value;
+    if (pass == "") {
+        alert("請填寫密碼");
+        return false;
+    }
+    const name = document.getElementById("google_account_name").value;
+    if (name == "") {
+        alert("請填寫中文姓名");
+        return false;
+    }
+    const sexColumn = document.querySelector(
+        "input[name='account_gender']:checked"
+    );
+    if (sexColumn == null) {
+        alert("請選擇性別");
+        return false;
+    }
+    const sex = sexColumn.value;
+    let Adid = 60;
+    if (sessionStorage.getItem("ADid") !== undefined) {
+        Adid = sessionStorage.getItem("ADid");
+    }
+    const json = JSON.stringify({
+        ID: mail,
+        realname: name,
+        sex: sex,
+        tel: pass,
+        ADid: Adid,
+    });
+    await axios
+        .post("https://funday.asia/api/Application.asp", json)
+        .then((res) => {
+            if (res.data.StateId === "0") {
+                alert(res.data.StateMessage);
+                loginTo(myModal06, myModal09);
+            } else {
+                document.cookie = `phone = ${pass}`;
+                sessionStorage.setItem("phone", pass);
+                loginTo(myModal06, myModal03);
+            }
+        });
+}
 // ********************************驗證信檢查********************************
 
 function joinCheck(status) {

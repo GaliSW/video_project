@@ -2,6 +2,7 @@ import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.esm.browser.js
 var player;
 import badWordsPlus from "https://cdn.skypack.dev/bad-words-plus";
 import zhBadWords from "./words.js";
+
 // ***********************************navbar**************************************
 const app = new Vue({
     el: ".all_wrap",
@@ -26,6 +27,8 @@ const app = new Vue({
         state: 0,
         Cinephile: "",
         News: "",
+        Explore: "",
+        調查局: "",
         LifeStyle: "",
         Knowledge: "",
         微電影: "",
@@ -45,6 +48,7 @@ const app = new Vue({
         ads: true, //廣告預設開啟
         captcha: "", //驗證碼
         nav: false,
+        tab: true,
     },
     created() {
         if (
@@ -53,7 +57,6 @@ const app = new Vue({
         ) {
             sessionStorage.setItem("free", 0); //設置試用次數
         }
-
         //側邊欄資料
         axios
             .get("https://funday.asia/api/ProgramWeb/defaultlist.asp")
@@ -62,7 +65,7 @@ const app = new Vue({
                 const length = response.data.Category.length;
                 for (let i = 0; i < length; i++) {
                     const str = response.data.Category[i]["Category"];
-                    if (str !== "Life Style") {
+                    if (str !== "Life" && str !== "IT" && str !== "Trend") {
                         this.list += `<li onclick="scrollToBlk('ca0${
                             i + 1
                         }')">${str}</a></li>`;
@@ -75,23 +78,17 @@ const app = new Vue({
         if (sessionStorage.getItem("mindx") !== null) {
             mid = sessionStorage.getItem("mindx");
             // this.firstClick = true;
-        } else {
-            setTimeout(() => {
-                document.getElementById("myModal01").classList.remove("none");
-            }, 15000);
         }
 
         axios
             .get(
-                `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}`
+                `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}&timestamp=${new Date().getTime()}`
             )
             .then((response) => {
-                console.log(response.data);
                 const length = response.data.Category.length;
-                // console.log(length);
                 for (let j = 0; j < length; j++) {
                     const nav = response.data.Category[j]["Category"];
-                    if (nav !== "Life Style") {
+                    if (nav !== "Life" && nav !== "IT" && nav !== "Trend") {
                         for (let i = 0; i < 4; i++) {
                             const title = response.data[`${nav}`][i]["Title"];
                             const pic = response.data[`${nav}`][i]["Pic"];
@@ -164,14 +161,14 @@ const app = new Vue({
                 }
             })
             .catch((error) => console.log(error));
-        this.notification();
+        // this.notification();
         this.createPlayer();
         this.getMessage();
         let nickname = sessionStorage.getItem("nickName");
         let sex = sessionStorage.getItem("sex");
         let pic = sessionStorage.getItem("pic");
         this.nickname = nickname;
-        if (pic == null || pic == "") {
+        if (pic == "null" || pic == "" || pic == null) {
             this.userPic = false;
         } else {
             this.userPic = true;
@@ -203,15 +200,19 @@ const app = new Vue({
             "use strict";
             function getNotification() {
                 axios
-                    .get("https://funday.asia/api/programweb/RealTimeList.asp")
+                    // .get("https://funday.asia/api/programweb/RealTimeList.asp")
+                    .get("http://192.168.11.42:9982/api/Behavior/RealTimeList")
                     .then((response) => {
-                        // console.log(response.data.reverse());
+                        console.log(response);
                         if (response.data.length !== 0) {
                             const length = response.data.length;
                             if (length < 10) {
-                                app.notifications = response.data;
+                                app.notifications = response.data.content;
                             } else {
-                                app.notifications = response.data.slice(0, 9);
+                                app.notifications = response.data.Content.slice(
+                                    0,
+                                    9
+                                );
                             }
                             // if(window.innerHeight < )
                             if (app.notiIndex < app.notifications.length - 1) {
@@ -377,7 +378,7 @@ const app = new Vue({
                             "https://youtu.be/"
                         )[1];
                     sessionStorage.setItem("ytid", youtubeId);
-                    const youtubeUrl = `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&mute=0&loop=1`;
+                    const youtubeUrl = `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&controls=0&showinfo=0&autoplay=1&rel=0&mute=1&loop=1`;
                     this.bannerVd = youtubeUrl;
 
                     var tag = document.createElement("script");
@@ -389,7 +390,8 @@ const app = new Vue({
                     window.onYouTubeIframeAPIReady = () => {
                         player = new YT.Player("bannerVd", {
                             playerVars: {
-                                autoplay: 0,
+                                mute: 1,
+                                autoplay: 1,
                                 playsinline: 1,
                                 loop: 1,
                                 rel: 0,
@@ -411,8 +413,6 @@ const app = new Vue({
                     };
 
                     function onPlayerReady(e) {
-                        console.log("1");
-                        e.target.mute();
                         e.target.playVideo();
                     }
                     function onPlayerStateChange(e) {

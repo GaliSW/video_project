@@ -221,6 +221,12 @@ let app = new Vue({
                         case "20":
                             this.cate = "微電影";
                             break;
+                        case "22":
+                            this.cate = "Explore";
+                            break;
+                        case "23":
+                            this.cate = "調查局";
+                            break;
                     }
                     //取得是否收藏
                     this.bookmark = response.data.info.Bookmark;
@@ -236,11 +242,6 @@ let app = new Vue({
                             Number(startTime.slice(0, 2) * 60) +
                             Number(startTime.slice(3, 5)) +
                             startTime.slice(5, 7);
-                        // console.log(
-                        //     Number(startTime.slice(0, 2) * 60) +
-                        //         Number(startTime.slice(3, 5)) +
-                        //         startTime.slice(5, 8)
-                        // );
 
                         startTimeArr.push(time);
                         if (response.data.data[i].role !== "") {
@@ -432,12 +433,6 @@ let app = new Vue({
                                         .getElementById("myModal01")
                                         .classList.remove("none");
                                 } else {
-                                    // if (window.innerWidth < 991) {
-                                    //     document
-                                    //         .querySelector(".time_bar")
-                                    //         .classList.add("none");
-                                    // }
-
                                     app.playstate = 1;
                                     player.unMute().playVideo();
                                     app.vdLoading = true;
@@ -505,7 +500,6 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/defaultlist.asp?member_id=${mid}`
                 )
                 .then((response) => {
-                    // console.log(response);
                     this.cateList = response.data[`${this.cate}`];
                 });
             //影片點擊會員登入判斷

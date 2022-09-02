@@ -1,9 +1,22 @@
 function loginTo(item, modal) {
-    // console.log(item, modal);
+    google.accounts.id.renderButton(document.getElementById("google_signup"), {
+        theme: "outline",
+        size: "large",
+        width: "318px",
+    });
     item.classList.toggle("none");
-    // console.log(item);
     if (modal !== null) {
         modal.classList.remove("none");
+    }
+    if ((modal !== null && modal.attributes.id.value) == "myModal09") {
+        google.accounts.id.renderButton(
+            document.getElementById("google_login"),
+            {
+                theme: "outline",
+                size: "large",
+                width: "360px",
+            }
+        );
     }
 }
 

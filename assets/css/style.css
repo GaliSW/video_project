@@ -401,7 +401,7 @@ body.modal-open #header {
 }
 #sidebar ul.channel_list > li {
     margin-top: 24px;
-    background-image: url(../img/list.svg);
+    background-image: url(../../images/web_icon/list.svg);
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 6px;
@@ -750,6 +750,7 @@ ul.tabs {
     margin-left: 2px;
     background-color: #313131;
     padding-bottom: 20px;
+    min-height: calc(100vh - 80px);
 }
 .video_category {
     padding: 40px 20px 20px 20px;
@@ -1162,7 +1163,13 @@ body.home_page .video_category .video_items .items_list .item {
         color: #fff;
     }
 }
-@media (max-width: 480px) {
+@media (max-width: 767px) {
+    .category_videos {
+        margin-left: 2px;
+        background-color: #313131;
+        padding-bottom: 20px;
+        min-height: 100%;
+    }
 }
 /**********/
 /**********/
@@ -1498,6 +1505,7 @@ body.video_page .video_category .video_items .items_list .item {
     font-size: 26px;
     line-height: 26px;
     text-align: center;
+    background-color: #000;
     /* margin-bottom: 8px; */
 }
 #video_playing .video_bar .subtitle div {

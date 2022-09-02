@@ -113,8 +113,8 @@ let app = new Vue({
         new Promise((resolve, reject) => {
             this.mid = url.split("&")[1].split("=")[1];
             this.cid = url.split("&")[2].split("=")[1];
-            // console.log(this.mid);
-            // console.log(this.cid);
+            console.log(this.mid);
+            console.log(this.cid);
             resolve();
         }).then(() => {
             setTimeout(() => {
@@ -145,7 +145,7 @@ let app = new Vue({
             let id = "";
             if (url.indexOf("?") != -1) {
                 const ary = url.split("?")[1].split("&");
-                // console.log(ary);
+                console.log(ary);
                 for (i = 0; i <= ary.length - 1; i++) {
                     if (ary[i].split("=")[0] == "id") {
                         id = decodeURI(ary[i].split("=")[1]);

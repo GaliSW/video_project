@@ -69,9 +69,14 @@ const app = new Vue({
             }
             axios
                 .get(
-                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=${this.order}&CategoryId=${this.CategoryId}&member_id=${mid}`
+                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=${
+                        this.order
+                    }&CategoryId=${
+                        this.CategoryId
+                    }&member_id=${mid}&timestamp=${new Date().getTime()}`
                 )
                 .then((res) => {
+                    // console.log(res);
                     this.CategoryTitle = Object.keys(res.data)[0];
                     if (!res.data[this.CategoryTitle]) {
                         return false;
@@ -133,7 +138,7 @@ const app = new Vue({
                 axios
                     .get("https://funday.asia/api/programweb/RealTimeList.asp")
                     .then((response) => {
-                        // console.log(response.data.reverse());
+                        // console.log(response);
                         if (response.data.length !== 0) {
                             const length = response.data.length;
                             if (length < 10) {
@@ -271,7 +276,7 @@ const app = new Vue({
             }
 
             xssScript(recommendMessage);
-            console.log(filterTxt);
+            // console.log(filterTxt);
             const json = JSON.stringify({
                 member_id: member_id,
                 message: filterTxt,
@@ -328,7 +333,7 @@ const app = new Vue({
                 this.mainList = response.data[`${page}`];
                 this.getData();
             });
-        this.notification();
+        // this.notification();
         if (sessionStorage.getItem("mindx") !== null) {
             this.firstClick = true;
         }

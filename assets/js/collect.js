@@ -32,13 +32,15 @@ let app = new Vue({
         this.Audio();
         this.Myfav();
         this.sideBar();
-        this.notification();
+        // this.notification();
     },
     methods: {
         Audio() {
             axios
                 .get(
-                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=1&CategoryId=9997&member_id=${this.mid}`
+                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=1&CategoryId=9997&member_id=${
+                        this.mid
+                    }&timestamp=${new Date().getTime()}`
                 )
                 .then(function (response) {
                     if (response.data["我的配音"].length < 3) {
@@ -73,6 +75,10 @@ let app = new Vue({
                                 response.data["我的配音"][i]["Category_id"] =
                                     "微電影";
                                 break;
+                            case "23":
+                                response.data["我的配音"][i]["Category_id"] =
+                                    "調查局";
+                                break;
                         }
                     }
                     app.myAudioList = response.data["我的配音"];
@@ -81,10 +87,11 @@ let app = new Vue({
         Myfav() {
             axios
                 .get(
-                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=1&CategoryId=9996&member_id=${this.mid}`
+                    `https://funday.asia/api/ProgramWeb/ClassifyPg.asp?PG=1&CategoryId=9996&member_id=${
+                        this.mid
+                    }&timestamp=${new Date().getTime()}`
                 )
                 .then(function (response) {
-                    console.log(response.data["我的收錄"].length);
                     if (response.data["我的收錄"].length < 4) {
                         app.favLess = true;
                     }
@@ -119,6 +126,14 @@ let app = new Vue({
                             case "20":
                                 response.data["我的收錄"][i]["Category_id"] =
                                     "微電影";
+                                break;
+                            case "22":
+                                response.data["我的收錄"][i]["Category_id"] =
+                                    "Explore";
+                                break;
+                            case "23":
+                                response.data["我的收錄"][i]["Category_id"] =
+                                    "調查局";
                                 break;
                         }
                     }

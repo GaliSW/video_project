@@ -15,7 +15,7 @@
         <meta name="author" content="" />
         <meta
             property="og:title"
-            content="FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合"
+            content="FunTube看影片學英文｜讓學習與生活結合"
         />
         <meta property="og:url" content="https://funday.asia" />
         <meta property="og:image" content="https://img.onl/pNwt9i" />
@@ -28,9 +28,9 @@
             content="看影片學英文,英文教學,歐美英文,線上英文,學習英文,看影片學英文,英詞字義,雙語字幕,線上英文配音,英聽,聽力練習,線上英語,字彙解析,歡樂學英文"
         />
 
-        <title>
-            FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合
-        </title>
+        <title>FunTube看影片學英文｜讓學習與生活結合</title>
+
+        <script src="https://accounts.google.com/gsi/client"></script>
 
         <!-- Favicon -->
         <link
@@ -315,7 +315,7 @@
             <!--header-->
             <div id="header">
                 <div class="header_left">
-                    <a id="logo" href="./">
+                    <a id="logo" href="https://tube.funday.asia">
                         <span class="img rotateX" id="logoImg"
                             ><img
                                 src="images/web_icon/funtube.svg"
@@ -660,12 +660,32 @@
                                     :class="{sub_bg:onSample}"
                                     v-cloak
                                 >
-                                    <div class="en">{{en_content}}</div>
-                                    <div class="tw">{{ch_content}}</div>
+                                    <div
+                                        class="en"
+                                        v-if="subMode==0 || subMode==1"
+                                    >
+                                        {{en_content}}
+                                    </div>
+                                    <div
+                                        class="tw"
+                                        v-if="subMode==0 || subMode==2"
+                                    >
+                                        {{ch_content}}
+                                    </div>
                                 </div>
                                 <div class="subtitle_mobile none" v-cloak>
-                                    <div class="en">{{en_content}}</div>
-                                    <div class="tw">{{ch_content}}</div>
+                                    <div
+                                        class="en"
+                                        v-if="subMode==0 || subMode==1"
+                                    >
+                                        {{en_content}}
+                                    </div>
+                                    <div
+                                        class="tw"
+                                        v-if="subMode==0 || subMode==2"
+                                    >
+                                        {{ch_content}}
+                                    </div>
                                 </div>
                                 <div style="display: none">
                                     {{currentTimeMin}}
@@ -1631,11 +1651,12 @@
                                         使用電子信箱加入
                                     </div>
                                 </div>
-                                <div class="login_way fb">
+                                <!-- <div class="login_way fb">
                                     <div onclick="fbLogin()">
                                         使用Facebook加入
                                     </div>
-                                </div>
+                                </div> -->
+                                <div id="google_signup"></div>
                             </div>
                             <div class="form_bottom">
                                 <div
@@ -1971,7 +1992,7 @@
                                 />
                                 <span>看影片學英文</span>
                             </div>
-                            <div class="slogin">使用Facebook登入</div>
+                            <div class="slogin">使用Google登入</div>
                             <div class="form_body">
                                 <form
                                     action=""
@@ -1981,7 +2002,7 @@
                                 >
                                     <div class="input">
                                         <input
-                                            id="fb_account_mobile"
+                                            id="google_account_mobile"
                                             name="account_mobile"
                                             type="text"
                                             placeholder="手機(密碼)"
@@ -1992,7 +2013,7 @@
                                     <div class="row">
                                         <div class="input col-xs-8">
                                             <input
-                                                id="fb_account_name"
+                                                id="google_account_name"
                                                 name="account_name"
                                                 type="text"
                                                 placeholder="中文姓名"
@@ -2385,7 +2406,7 @@
                                             "
                                             onclick="mailLoginCheck()"
                                         />
-                                        <input
+                                        <!-- <input
                                             class="fb-in"
                                             type="button"
                                             type="submit"
@@ -2396,7 +2417,8 @@
                                                 color: #fff;
                                             "
                                             onclick="fbLoginCheck()"
-                                        />
+                                        /> -->
+                                        <div id="google_login"></div>
                                     </div>
                                 </form>
                             </div>

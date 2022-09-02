@@ -15,7 +15,7 @@
         <meta name="author" content="" />
         <meta
             property="og:title"
-            content="FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合"
+            content="FunTube看影片學英文｜讓學習與生活結合"
         />
         <meta property="og:url" content="https://funday.asia" />
         <meta property="og:image" content="https://img.onl/pNwt9i" />
@@ -28,9 +28,9 @@
             content="看影片學英文,英文教學,歐美英文,線上英文,學習英文,看影片學英文,英詞字義,雙語字幕,線上英文配音,英聽,聽力練習,線上英語,字彙解析,歡樂學英文"
         />
 
-        <title>
-            FunTube看影片學英文 | 專業線上英文學習平台，讓學習與生活結合
-        </title>
+        <title>FunTube看影片學英文｜讓學習與生活結合</title>
+
+        <script src="https://accounts.google.com/gsi/client"></script>
 
         <!-- Favicon -->
         <link
@@ -361,33 +361,16 @@
                 />
                 <h1 class="header_title mobile_visible">我的收藏</h1>
             </div>
-            <!-- Ads Block -->
-            <!-- <div class="ads_blk_mb">
-                <div>
-                    <a
-                        class="ads_mb"
-                        href="https://fundayasia.pse.is/45fpmc"
-                        target="_blank"
-                        v-if="ads"
-                    >
-                        <img src="./images/web_icon/FunTubeBN.svg" alt="" />
-                    </a>
-                    <img
-                        v-if="ads"
-                        @click="ads = !ads"
-                        class="ads_close_btn"
-                        src="./images/web_icon/ads_close_btn.svg"
-                        alt=""
-                    />
-                </div>
-            </div> -->
             <!--main-body-->
             <div id="main-body" class="adjust">
                 <div id="sidebar">
                     <!--這邊是側邊條-->
                     <div id="sidebar_wrapper">
                         <ul class="channel_list">
-                            <li v-for="(item, index) in sidebar">
+                            <li
+                                v-for="(item, index) in sidebar"
+                                v-if="item.Category !== 'Life' && item.Category !== 'Trend' && item.Category !== 'IT'"
+                            >
                                 <a
                                     :href="'./video_category.html?p=' + item.Category.replace(/\s*/g,'')"
                                     >{{item.Category}}</a
@@ -565,7 +548,7 @@
                 </div>
                 <div id="video_frame">
                     <!--這邊是影音部份-->
-                    <div class="notification_wrapper_mobile">
+                    <div class="notification_wrapper_mobile none">
                         <div
                             class="notification_mobile animate__animated"
                             :class="{animate__fadeIn:notiChange}"
@@ -1001,11 +984,12 @@
                                         使用電子信箱加入
                                     </div>
                                 </div>
-                                <div class="login_way fb">
+                                <!-- <div class="login_way fb">
                                     <div onclick="fbLogin()">
                                         使用Facebook加入
                                     </div>
-                                </div>
+                                </div> -->
+                                <div id="google_signup"></div>
                             </div>
                             <div class="form_bottom">
                                 <div
@@ -1342,7 +1326,7 @@
                                 />
                                 <span>看影片學英文</span>
                             </div>
-                            <div class="slogin">使用Facebook登入</div>
+                            <div class="slogin">使用Google登入</div>
                             <div class="form_body">
                                 <form
                                     action=""
@@ -1352,7 +1336,7 @@
                                 >
                                     <div class="input">
                                         <input
-                                            id="fb_account_mobile"
+                                            id="google_account_mobile"
                                             name="account_mobile"
                                             type="text"
                                             placeholder="手機(密碼)"
@@ -1363,7 +1347,7 @@
                                     <div class="row">
                                         <div class="input col-xs-8">
                                             <input
-                                                id="fb_account_name"
+                                                id="google_account_name"
                                                 name="account_name"
                                                 type="text"
                                                 placeholder="中文姓名"
@@ -1756,7 +1740,7 @@
                                             "
                                             onclick="mailLoginCheck()"
                                         />
-                                        <input
+                                        <!-- <input
                                             class="fb-in"
                                             type="button"
                                             type="submit"
@@ -1767,7 +1751,8 @@
                                                 color: #fff;
                                             "
                                             onclick="fbLoginCheck()"
-                                        />
+                                        /> -->
+                                        <div id="google_login"></div>
                                     </div>
                                 </form>
                             </div>

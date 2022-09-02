@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "eruda": "^2.4.1",
-    "progressbar.js": "^1.1.0",
-    "vue-vconsole-devtools": "^1.0.5"
-  }
-}

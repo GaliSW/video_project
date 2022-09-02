@@ -18,20 +18,24 @@ $("#toFav_btn").click(function () {
 });
 //頁籤效果
 $(function () {
-    //判斷是否登入
     if (sessionStorage.getItem("mindx") == undefined) {
         document.getElementById("join_button").classList.remove("none");
     } else {
         document.getElementById("menu").classList.remove("none");
     }
+    google.accounts.id.initialize({
+        client_id:
+            "424336502494-0lqsgtdqhq1eq58dspl52uc13k168uon.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+    });
+    //判斷是否登入
     if (localStorage.getItem("fdtk")) {
         const token = localStorage.getItem("fdtk");
         document.querySelector(".subWeb").innerHTML = "";
         str_pc = `<a href="https://music.funday.asia?fdtk=${token}" target="_blank">FunMusic</a>
                 <a href="https://map.funday.asia?fdtk=${token}" target="_blank">FunMap</a>
                 <a href="https://dic.funday.asia?fdtk=${token}" target="_blank">FunDictionary</a>
-                <a href="https://funday.asia/api/SSO.asp
-                ?fdtk=${token}" target="_blank">FunDay</a>
+                <a href="https://funday.asia/api/SSO.asp?fdtk=${token}" target="_blank">FunDay</a>
             `;
         document
             .querySelector(".subWeb")
@@ -47,7 +51,7 @@ $(function () {
         tokenCheck(token);
     } else {
         if (localStorage.getItem("fdtk") && !sessionStorage.getItem("mindx")) {
-            const token = sessionStorage.getItem("fdtk");
+            const token = localStorage.getItem("fdtk");
             tokenCheck(token);
         } else {
             return false;
@@ -58,7 +62,7 @@ $(function () {
         axios
             .get(`https://webaspapi.funday.asia/api/User/Login?Token=${token}`)
             .then((res) => {
-                console.log(res, "hasToken");
+                // console.log(res, "hasToken");
                 if (res.data.IsSuccess) {
                     sessionStorage.setItem("mindx", res.data.Content.Mindx);
                     sessionStorage.setItem("cindx", res.data.Content.Cindx);
@@ -103,14 +107,13 @@ $(function () {
             });
     });
 });
-window.addEventListener("resize", () => {
+window.addEventListener("resize", { passive: true }, () => {
     // We execute the same script as before
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
 });
 //logoChange
 $(function () {
-    // console.log("222");
     setInterval(() => {
         if ($("#logoImg").hasClass("none")) {
             $("#logoImg").removeClass("none");
