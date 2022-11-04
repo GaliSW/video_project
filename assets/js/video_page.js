@@ -102,6 +102,7 @@ let app = new Vue({
         vdLoading: false, //影片是否讀取
         confirm: false,
         vdVoice: true,
+        firstClick: false,
     },
     created() {
         var player;
@@ -110,11 +111,15 @@ let app = new Vue({
         if (sessionStorage.getItem("cycle")) {
             this.mode = sessionStorage.getItem("cycle");
         }
-        if (sessionStorage.getItem("mindx") !== null) {
+        if (sessionStorage.getItem("mindx")) {
             this.mid = sessionStorage.getItem("mindx");
+            this.firstClick = true;
         } else {
+            const login = document.getElementById("myModal01");
             setTimeout(() => {
-                document.getElementById("myModal01").classList.remove("none");
+                if (login.classList.contains("none")) {
+                    loginTo(login, null);
+                }
             }, 15000);
         }
         if (location.hash.indexOf("mid") > -1) {
@@ -182,6 +187,7 @@ let app = new Vue({
                     `https://funday.asia/api/ProgramWeb/ProgramJson.asp?indx=${id}&member_id=${memberid}`
                 )
                 .then((response) => {
+                    console.log(response);
                     // ==========================================
                     // == 影片各資料取得
                     // ==========================================
@@ -2034,7 +2040,7 @@ let app = new Vue({
         //第一次點擊頁面
         firstClickPage() {
             this.firstClick = true;
-            document.getElementById("myModal01").classList.remove("none");
+            loginTo(myModal01, null);
         },
 
         //時間軸跳轉

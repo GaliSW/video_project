@@ -297,7 +297,7 @@ const app = new Vue({
         //第一次點擊頁面
         firstClickPage() {
             this.firstClick = true;
-            document.getElementById("myModal01").classList.remove("none");
+            loginTo(myModal01, null);
         },
     },
     created() {
@@ -334,7 +334,7 @@ const app = new Vue({
                 this.getData();
             });
         // this.notification();
-        if (sessionStorage.getItem("mindx") !== null) {
+        if (sessionStorage.getItem("mindx")) {
             this.firstClick = true;
         }
     },

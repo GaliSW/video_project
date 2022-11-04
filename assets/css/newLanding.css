@@ -152,7 +152,7 @@ header #logo {
 .lottery ul {
     padding-left: 32px;
 }
-.lottery ul li {
+.lottery > div > ul li {
     list-style: decimal;
 }
 
@@ -195,18 +195,23 @@ header #logo {
     padding: 0 20px;
     height: 0;
     opacity: 0;
-    transition: all 0.1s linear;
-    -webkit-transition: all 0.1s linear;
-    -moz-transition: all 0.1s linear;
-    -ms-transition: all 0.1s linear;
-    -o-transition: all 0.1s linear;
-    -webkit-transition: all 0.3s e;
 }
 
+.lottery .list > div ul {
+    list-style: none;
+    padding: 0;
+    width: calc(100% / 4);
+}
+.lottery .list > div ul li {
+    text-align: center;
+    color: #676767;
+    font-size: 14px;
+    display: flex;
+}
 #first:checked ~ .first_blk {
     height: 100%;
     padding: 16px 20px;
-    display: block;
+    display: flex;
     opacity: 1;
 }
 #first:checked ~ #first_i {
@@ -219,7 +224,7 @@ header #logo {
 #second:checked ~ .second_blk {
     height: 100%;
     padding: 16px 20px;
-    display: block;
+    display: flex;
     opacity: 1;
 }
 #second:checked ~ #second_i {
@@ -250,6 +255,7 @@ header #logo {
 .bottom_btn_pc {
     width: 632px;
 }
+
 @media (max-width: 991px) {
     .banner {
         margin-bottom: 15px;

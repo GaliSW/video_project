@@ -25,6 +25,7 @@ let app = new Vue({
         songLessMb: false,
         favLess: false,
         favLessMb: false,
+        tab: true,
     },
     created() {
         this.cid = sessionStorage.getItem("cindx");

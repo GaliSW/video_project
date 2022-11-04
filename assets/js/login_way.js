@@ -3,6 +3,7 @@ function loginTo(item, modal) {
         theme: "outline",
         size: "large",
         width: "318px",
+        text: "signup_with",
     });
     item.classList.toggle("none");
     if (modal !== null) {
@@ -15,13 +16,18 @@ function loginTo(item, modal) {
                 theme: "outline",
                 size: "large",
                 width: "360px",
+                text: "signin_with",
             }
         );
     }
 }
 
 function modal_close(n) {
-    document.getElementById(`myModal0${n}`).classList.toggle("none");
+    if (n === 10) {
+        document.getElementById(`myModal${n}`).classList.toggle("none");
+    } else {
+        document.getElementById(`myModal0${n}`).classList.toggle("none");
+    }
 }
 
 function toVideo(item) {

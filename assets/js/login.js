@@ -32,7 +32,7 @@ async function mailSignUp() {
     }
     const sex = sexColumn.value;
     let Adid = 60;
-    if (sessionStorage.getItem("ADid") !== undefined) {
+    if (sessionStorage.getItem("ADid")) {
         Adid = sessionStorage.getItem("ADid");
     }
     // console.log(Adid);
@@ -105,7 +105,7 @@ function GetFbProfile(fbLogin) {
             sessionStorage.setItem("id", `FB${user.id}`);
             sessionStorage.setItem("email", `${user.email}`);
             if (fbLogin !== "fbLogin") {
-                loginTo(myModal01, myModal06);
+                loginTo(myModal01, myModal10);
             }
         }
     });
@@ -151,11 +151,11 @@ async function fbSignUp() {
             // console.log(res);
             if (res.data.StateId == 0) {
                 alert("此帳號已註冊，請進行登入");
-                loginTo(myModal06, myModal09);
+                loginTo(myModal10, myModal09);
             } else {
                 document.cookie = `phone = ${pass}`;
                 sessionStorage.setItem("phone", pass);
-                loginTo(myModal06, myModal03);
+                loginTo(myModal10, myModal03);
             }
         });
 }
@@ -183,7 +183,8 @@ async function handleCredentialResponse(response) {
         .then((res) => {
             const state = res.data.State;
             if (state === "0") {
-                sessionStorage.setItem("email", res.data.id);
+                sessionStorage.setItem("email", res.data.email);
+                sessionStorage.setItem("gid", res.data.id);
                 loginTo(myModal01, myModal06);
             } else {
                 const id = res.data.id;
@@ -222,6 +223,7 @@ async function handleCredentialResponse(response) {
 
 async function googleSignUp() {
     const mail = sessionStorage.getItem("email");
+    const gid = sessionStorage.getItem("gid");
     const pass = document.getElementById("google_account_mobile").value;
     if (pass == "") {
         alert("請填寫密碼");
@@ -241,11 +243,12 @@ async function googleSignUp() {
     }
     const sex = sexColumn.value;
     let Adid = 60;
-    if (sessionStorage.getItem("ADid") !== undefined) {
+    if (sessionStorage.getItem("ADid")) {
         Adid = sessionStorage.getItem("ADid");
     }
     const json = JSON.stringify({
-        ID: mail,
+        ID: gid,
+        FBFemail: mail,
         realname: name,
         sex: sex,
         tel: pass,

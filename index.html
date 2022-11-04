@@ -11,14 +11,10 @@
             name="description"
             content="FunTube看影片學英文，超過萬部經典影片，線上配音練習道地發音，增進自己文法，善用傑出的詞彙，讓語感單字深入腦海，全面提升英語力。"
         />
-        <meta
-            name="keywords"
-            content="看影片學英文,英文教學,歐美英文,線上英文,學習英文,看影片學英文,英詞字義,雙語字幕,線上英文配音,英聽,聽力練習,線上英語,字彙解析,歡樂學英文"
-        />
         <meta name="author" content="" />
         <meta
             property="og:title"
-            content="FunTube看影片學英文｜讓學習與生活結合"
+            content="FunTube看影片學英文｜FUNDAY讓學習與生活結合"
         />
         <meta property="og:url" content="https://funday.asia" />
         <meta property="og:image" content="https://img.onl/pNwt9i" />
@@ -26,11 +22,7 @@
             property="og:description"
             content="FunTube看影片學英文，超過萬部經典影片，學習道地發音，增進自己文法，善用傑出的詞彙，讓語感單字深入腦海，全面提升英語力。"
         />
-        <meta
-            property="og:keywords"
-            content="看影片學英文,英文教學,歐美英文,線上英文,學習英文,看影片學英文,英詞字義,雙語字幕,線上英文配音,英聽,聽力練習,線上英語,字彙解析,歡樂學英文"
-        />
-        <title>FunTube看影片學英文｜讓學習與生活結合</title>
+        <title>FunTube看影片學英文｜FUNDAY讓學習與生活結合</title>
         <script src="https://accounts.google.com/gsi/client"></script>
         <!-- Favicon -->
         <link
@@ -306,7 +298,6 @@
                     <a href="https://music.funday.asia" target="_blank"
                         >FunMusic</a
                     >
-                    <a href="https://map.funday.asia" target="_blank">FunMap</a>
                     <a href="https://dic.funday.asia" target="_blank"
                         >FunDictionary</a
                     >
@@ -326,11 +317,6 @@
                     <li>
                         <a href="https://music.funday.asia" target="_blank"
                             >FunMusic</a
-                        >
-                    </li>
-                    <li>
-                        <a href="https://map.funday.asia" target="_blank"
-                            >FunMap</a
                         >
                     </li>
                     <li>
@@ -387,11 +373,11 @@
             </div>
         </div>
         <div class="all_wrap" v-cloak>
-            <!-- <div
+            <div
                 v-if="!firstClick"
                 @click="firstClickPage"
                 class="firstClick"
-            ></div> -->
+            ></div>
             <!--main-body-->
             <div id="main-body">
                 <div id="sidebar">
@@ -673,6 +659,21 @@
                         <div class="category_videos">
                             <div class="video_category ca01">
                                 <div class="ga_title">
+                                    News
+                                    <a
+                                        href="video_category.html?p=News"
+                                        class="more"
+                                        >more</a
+                                    >
+                                </div>
+                                <div class="video_items">
+                                    <div class="items_list" v-html="News">
+                                        <!--只能放四個唷-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="video_category ca02">
+                                <div class="ga_title">
                                     Cinephile
                                     <!-- !首頁參數 -->
                                     <a
@@ -683,21 +684,6 @@
                                 </div>
                                 <div class="video_items">
                                     <div class="items_list" v-html="Cinephile">
-                                        <!--只能放四個唷-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video_category ca02">
-                                <div class="ga_title">
-                                    News
-                                    <a
-                                        href="video_category.html?p=News"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div class="items_list" v-html="News">
                                         <!--只能放四個唷-->
                                     </div>
                                 </div>
@@ -749,7 +735,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="video_category ca06">
+                            <div class="video_category ca09">
                                 <div class="ga_title">
                                     微電影
                                     <a
@@ -1055,11 +1041,11 @@
                                         快速加入
                                     </div>
                                 </div>
-                                <!-- <div class="login_way fb">
+                                <div class="login_way fb">
                                     <div onclick="fbLogin()">
                                         使用Facebook加入
                                     </div>
-                                </div> -->
+                                </div>
                                 <div id="google_signup"></div>
                             </div>
                             <div class="form_bottom">
@@ -1364,7 +1350,7 @@
                 </div>
             </div>
         </div>
-        <!--使用Facebook登入#myModal06-->
+        <!--使用google登入#myModal06-->
         <div class="login_page center_modal none" id="myModal06">
             <div class="modal-dialog">
                 <div
@@ -1442,6 +1428,107 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <div
+                                        class="button"
+                                        onclick="googleSignUp()"
+                                    >
+                                        <input
+                                            name="join_in"
+                                            type="button"
+                                            value="加入"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form_bottom">
+                                加入即代表同意FUNDAY的服務
+                                <span onclick="loginTo(myModal05,null)"
+                                    >條款與隱私權</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--使用facebook登入#myModal10-->
+        <div class="login_page center_modal none" id="myModal10">
+            <div class="modal-dialog">
+                <div
+                    class="modal-content animate__animated animate__fadeInDown"
+                    id="modal-content6"
+                >
+                    <div id="page-body">
+                        <div id="top_bar">
+                            <div
+                                class="icon_pre"
+                                onclick="loginTo(myModal10,myModal01)"
+                            >
+                                <a href="javascript:;"
+                                    ><img src="images/web_icon/top_bar_pre.svg"
+                                /></a>
+                            </div>
+                            <div class="icon_close" onclick="modal_close(10)">
+                                <a href="javascript:;"
+                                    ><img
+                                        src="images/web_icon/top_bar_close.svg"
+                                /></a>
+                            </div>
+                        </div>
+                        <div id="login_body">
+                            <div class="logo">
+                                <img
+                                    src="images/web_icon/funtube.svg"
+                                    width="110px"
+                                />
+                                <span>看影片學英文</span>
+                            </div>
+                            <div class="slogin">使用Facebook登入</div>
+                            <div class="form_body">
+                                <form
+                                    action=""
+                                    method="get"
+                                    name="login_form"
+                                    class="login_form"
+                                >
+                                    <div class="input">
+                                        <input
+                                            id="fb_account_mobile"
+                                            name="account_mobile"
+                                            type="text"
+                                            placeholder="手機(密碼)"
+                                        />
+                                        <br />
+                                        請填寫正確手機號碼以取得簡訊驗證碼，完成加入
+                                    </div>
+                                    <div class="row">
+                                        <div class="input col-xs-8">
+                                            <input
+                                                id="fb_account_name"
+                                                name="account_name"
+                                                type="text"
+                                                placeholder="中文姓名"
+                                            />
+                                        </div>
+                                        <div class="radio col-xs-4">
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    value="1"
+                                                    name="account_gender"
+                                                />
+                                                <span>男</span>
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    value="0"
+                                                    name="account_gender"
+                                                />
+                                                <span>女</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div class="button" onclick="fbSignUp()">
                                         <input
                                             name="join_in"
@@ -1462,6 +1549,7 @@
                 </div>
             </div>
         </div>
+
         <!--條款與隱私權   #myModal05-->
         <div class="login_page center_modal none" id="myModal05">
             <div class="modal-dialog">
@@ -1810,7 +1898,7 @@
                                             "
                                             onclick="mailLoginCheck()"
                                         />
-                                        <!-- <input
+                                        <input
                                             class="fb-in"
                                             type="button"
                                             type="submit"
@@ -1821,7 +1909,7 @@
                                                 color: #fff;
                                             "
                                             onclick="fbLoginCheck()"
-                                        /> -->
+                                        />
                                         <div id="google_login"></div>
                                     </div>
                                 </form>
@@ -1848,11 +1936,6 @@
                     <li>
                         <a href="https://music.funday.asia?fdtk=${token}" target="_blank"
                             >FunMusic</a
-                        >
-                    </li>
-                    <li>
-                        <a href="https://map.funday.asia?fdtk=${token}" target="_blank"
-                            >FunMap</a
                         >
                     </li>
                     <li>

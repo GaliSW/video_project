@@ -49,6 +49,7 @@ const app = new Vue({
         captcha: "", //驗證碼
         nav: false,
         tab: true,
+        firstClick: false,
     },
     created() {
         if (
@@ -75,9 +76,9 @@ const app = new Vue({
             .catch((error) => console.log(error));
         let mid = 0;
         //登入後memberId
-        if (sessionStorage.getItem("mindx") !== null) {
+        if (sessionStorage.getItem("mindx")) {
             mid = sessionStorage.getItem("mindx");
-            // this.firstClick = true;
+            this.firstClick = true;
         }
 
         axios
@@ -716,9 +717,9 @@ const app = new Vue({
             input.style.boxShadow = " 0px 0px 0px 4px rgb(0 ,0, 0,0.1)";
         },
         //第一次點擊頁面
-        // firstClickPage() {
-        //     this.firstClick = true;
-        //     document.getElementById("myModal01").classList.remove("none");
-        // },
+        firstClickPage() {
+            this.firstClick = true;
+            loginTo(myModal01, null);
+        },
     },
 });
