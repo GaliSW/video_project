@@ -62,7 +62,6 @@ async function mailSignUp() {
 function fbLogin(fbLogin) {
     FB.getLoginStatus(
         function (response) {
-            // console.log(response);
             if (response.status == "connected") {
                 GetFbProfile(fbLogin);
             } else if (
@@ -209,6 +208,10 @@ async function handleCredentialResponse(response) {
                         sessionStorage.setItem("sex", res.data.Content.Sex);
                         sessionStorage.setItem("pic", res.data.Content.Pic);
                         localStorage.setItem("fdtk", res.data.Content.Token);
+                        sessionStorage.setItem(
+                            "level",
+                            res.data.Content.UserLevel
+                        );
                         sessionStorage.removeItem("free");
                         let hash = window.location.href;
                         if (hash.indexOf("landing") > -1) {
@@ -365,9 +368,10 @@ function changeMobile() {
 async function mailLoginCheck() {
     const account = document.getElementById("login_account").value;
     const pass = document.getElementById("login_pass").value;
+    const passEncode = encodeURIComponent(pass);
     await axios
         .get(
-            `https://webaspapi.funday.asia/api/User/Login?ID=${account}&Password=${pass}`
+            `https://webaspapi.funday.asia/api/User/Login?ID=${account}&Password=${passEncode}`
         )
         .then((res) => {
             console.log(res);
@@ -381,6 +385,7 @@ async function mailLoginCheck() {
                 sessionStorage.setItem("sex", res.data.Content.Sex);
                 sessionStorage.setItem("pic", res.data.Content.Pic);
                 localStorage.setItem("fdtk", res.data.Content.Token);
+                sessionStorage.setItem("level", res.data.Content.UserLevel);
                 sessionStorage.removeItem("free");
                 sessionStorage.removeItem("id");
                 sessionStorage.removeItem("email");
@@ -424,6 +429,10 @@ function fbLoginCheck() {
                         sessionStorage.setItem("sex", res.data.Content.Sex);
                         sessionStorage.setItem("pic", res.data.Content.Pic);
                         localStorage.setItem("fdtk", res.data.Content.Token);
+                        sessionStorage.setItem(
+                            "level",
+                            res.data.Content.UserLevel
+                        );
                         sessionStorage.removeItem("free");
                         sessionStorage.removeItem("id");
                         sessionStorage.removeItem("email");

@@ -33,8 +33,11 @@ $(function () {
         const token = localStorage.getItem("fdtk");
         document.querySelector(".subWeb").innerHTML = "";
         str_pc = `<a href="https://music.funday.asia?fdtk=${token}" target="_blank">FunMusic</a>
+                <a href="https://tales.funday.asia?fdtk=${token}" target="_blank">FunTales</a>
+                <a href="https://funradio.funday.asia?fdtk=${token}" target="_blank">FunRadio</a>
                 <a href="https://dic.funday.asia?fdtk=${token}" target="_blank">FunDictionary</a>
                 <a href="https://funday.asia/api/SSO.asp?fdtk=${token}" target="_blank">FunDay</a>
+                <a href="https://funday.asia/api/SSOGOLink.asp?fdtk=${token}&Path=Subscription" target="_blank" class="more_service">更多會員服務</a>
             `;
         document
             .querySelector(".subWeb")
@@ -51,6 +54,10 @@ $(function () {
     } else {
         if (localStorage.getItem("fdtk") && !sessionStorage.getItem("mindx")) {
             const token = localStorage.getItem("fdtk");
+            console.log(
+                localStorage.getItem("fdtk"),
+                sessionStorage.getItem("mindx")
+            );
             tokenCheck(token);
         } else {
             return false;
@@ -61,12 +68,19 @@ $(function () {
         axios
             .get(`https://webaspapi.funday.asia/api/User/Login?Token=${token}`)
             .then((res) => {
-                // console.log(res, "hasToken");
                 if (res.data.IsSuccess) {
                     sessionStorage.setItem("mindx", res.data.Content.Mindx);
                     sessionStorage.setItem("cindx", res.data.Content.Cindx);
+                    sessionStorage.setItem("level", res.data.Content.UserLevel);
+                    sessionStorage.setItem(
+                        "nickName",
+                        res.data.Content.Nickname
+                    );
+                    sessionStorage.setItem("sex", res.data.Content.Sex);
                     localStorage.setItem("fdtk", token);
-                    location.href = "https://tube.funday.asia";
+                    sessionStorage.setItem("pic", res.data.Content.Pic);
+                    // location.href = "https://tube.funday.asia";
+                    location.reload();
                 } else {
                     return false;
                 }

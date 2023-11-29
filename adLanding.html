@@ -8,6 +8,12 @@
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+            integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
 
         <!-- Favicon -->
         <link
@@ -30,15 +36,16 @@
                 //  取得ADid值
                 var ADid = adString[1];
                 sessionStorage.setItem("ADid", ADid);
+                axios.get(`https://funday.asia/api/AdClick.asp?ad_id=${ADid}`);
+                console.log(name[1]);
 
                 if (name[1] == undefined) {
                     location.href = "index.html";
                 } else {
                     var pageString = name[1].split("=");
-                    var cateString = name[2].split("=");
                     var vId = pageString[1];
-                    var cateId = cateString[1];
                     location.href = `video.html?id=${vId}`;
+                    console.log("111");
                 }
             } else {
                 location.href = "index.html";

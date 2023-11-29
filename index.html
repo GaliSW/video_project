@@ -267,1665 +267,1861 @@
             ></iframe
         ></noscript>
         <!-- End Google Tag Manager (noscript) -->
-        <!--header-->
-        <div
-            id="fullscreen_index"
-            onclick="toggleFullScreen(document.documentElement)"
-        >
-            <img
-                class="full_open"
-                src="./images/web_icon/full_open.svg"
-                alt=""
-            />
-            <img
-                class="full_close none"
-                src="./images/web_icon/full_close.svg"
-                alt=""
-            />
-        </div>
 
-        <div id="header">
-            <div class="header_left mobile_hidden">
-                <a id="logo" href="./">
-                    <span class="img rotateX" id="logoImg"
-                        ><img src="images/web_icon/funtube.svg" alt="FUNDAY"
-                    /></span>
-                    <span class="logo_text rotateX none" id="logoText">
-                        <div>看影片學英文</div>
-                    </span>
-                </a>
-                <div class="subWeb">
-                    <a href="https://music.funday.asia" target="_blank"
-                        >FunMusic</a
-                    >
-                    <a href="https://dic.funday.asia" target="_blank"
-                        >FunDictionary</a
-                    >
-                    <a href="https://funday.asia" target="_blank">FunDay</a>
-                </div>
+        <section class="index">
+            <!--header-->
+            <div
+                id="fullscreen_index"
+                onclick="toggleFullScreen(document.documentElement)"
+            >
+                <img
+                    class="full_open"
+                    src="./images/web_icon/full_open.svg"
+                    alt=""
+                />
+                <img
+                    class="full_close none"
+                    src="./images/web_icon/full_close.svg"
+                    alt=""
+                />
             </div>
-            <input type="checkbox" id="navCheck" />
-            <div class="header_left mobile_visible">
-                <label for="navCheck">
-                    <img src="images/web_icon/funtube.svg" alt="FUNDAY" />
-                    <img src="images/web_icon/nav_btn.svg" alt=""
-                /></label>
-            </div>
-            <div class="header_center mobile_visible">看影片學英文</div>
-            <div class="nav_bar">
-                <ul>
-                    <li>
+
+            <div id="header">
+                <div class="header_left mobile_hidden">
+                    <a id="logo" href="./">
+                        <span class="img rotateX" id="logoImg"
+                            ><img
+                                src="images/web_icon/funtube.svg"
+                                alt="FUNDAY"
+                        /></span>
+                        <span class="logo_text rotateX none" id="logoText">
+                            <div>看影片學英文</div>
+                        </span>
+                    </a>
+                    <div class="subWeb" v-if="ADid ==''" v-cloak>
                         <a href="https://music.funday.asia" target="_blank"
                             >FunMusic</a
                         >
-                    </li>
-                    <li>
+                        <a href="https://tales.funday.asia" target="_blank"
+                            >FunTales</a
+                        >
+                        <a href="https://funradio.funday.asia" target="_blank"
+                            >FunRadio</a
+                        >
                         <a href="https://dic.funday.asia" target="_blank"
                             >FunDictionary</a
                         >
-                    </li>
-                    <li>
                         <a href="https://funday.asia" target="_blank">FunDay</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="header_right">
-                <!-- <div class="coupon_btn">
-                    <a href="./landing.html">
-                        <img src="./images/web_icon/gift.gif" alt="" />
-                        送好禮
-                    </a>
-                </div> -->
-                <div class="toFav_btn">
-                    <a href="javascript:;" id="toFav_btn">
-                        <img src="./images/web_icon/collect.svg" alt="" />
-                        <span>我的收藏</span>
-                    </a>
-                </div>
-                <div id="join_button" class="none">
-                    <div
-                        onclick="loginTo(myModal01,null)"
-                        class="login_desktop indexJoin"
-                    >
-                        免費加入
+                        <a
+                            href="https://funday.asia/subscription/2023"
+                            target="_blank"
+                            class="more_service"
+                            >更多會員服務</a
+                        >
                     </div>
-                    <div onclick="loginTo(myModal01,null)" class="login_mobile">
-                        <img src="./images/web_icon/login.svg" alt="" />
+                    <div class="subWeb" v-else v-cloak>
+                        <a
+                            :href="'https://music.funday.asia/adLanding.html?ADid=' + ADid"
+                            target="_blank"
+                            >FunMusic</a
+                        >
+                        <a
+                            :href="'https://tales.funday.asia?ADid=' + ADid"
+                            target="_blank"
+                            >FunTales</a
+                        >
+                        <a
+                            :href="'https://funradio.funday.asia/adLanding.html?ADid=' + ADid"
+                            target="_blank"
+                            >FunRadio</a
+                        >
+                        <a
+                            :href="'https://dic.funday.asia?ADid=' + ADid"
+                            target="_blank"
+                            >FunDictionary</a
+                        >
+                        <a
+                            :href="'https://funday.asia/AD_reflink.asp?ad_id=' + ADid"
+                            target="_blank"
+                            >FunDay</a
+                        >
+                        <a
+                            :href="'https://funday.asia/subscription/2023?ad_id=' + ADid"
+                            target="_blank"
+                            class="more_service"
+                            >更多會員服務</a
+                        >
                     </div>
                 </div>
+                <input type="checkbox" id="navCheck" />
+                <div class="header_left mobile_visible">
+                    <label for="navCheck">
+                        <img src="images/web_icon/funtube.svg" alt="FUNDAY" />
+                        <img src="images/web_icon/nav_btn.svg" alt=""
+                    /></label>
+                </div>
+                <div class="header_center mobile_visible">看影片學英文</div>
+                <div class="nav_bar">
+                    <ul v-if="ADid ==''">
+                        <li>
+                            <a href="https://music.funday.asia" target="_blank"
+                                >FunMusic</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://tales.funday.asia" target="_blank"
+                                >FunTales</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://funradio.funday.asia"
+                                target="_blank"
+                                >FunRadio</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://dic.funday.asia" target="_blank"
+                                >FunDictionary</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://funday.asia" target="_blank"
+                                >FunDay</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://funday.asia/subscription/2023"
+                                target="_blank"
+                                class="more_service"
+                                >更多會員服務</a
+                            >
+                        </li>
+                    </ul>
+                    <ul v-else>
+                        <li>
+                            <a
+                                :href="'https://music.funday.asia/adLanding.html?ADid=' + ADid"
+                                target="_blank"
+                                >FunMusic</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                :href="'https://tales.funday.asia?ADid=' + ADid"
+                                target="_blank"
+                                >FunTales</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                :href="'https://funradio.funday.asia/adLanding.html?ADid=' + ADid"
+                                target="_blank"
+                                >FunRadio</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                :href="'https://dic.funday.asia?ADid=' + ADid"
+                                target="_blank"
+                                >FunDictionary</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                :href="'https://funday.asia/AD_reflink.asp?ad_id=' + ADid"
+                                target="_blank"
+                                >FunDay</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                :href="'https://funday.asia/subscription/2023?ad_id=' + ADid"
+                                target="_blank"
+                                class="more_service"
+                                >更多會員服務</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="header_right">
+                    <!-- <div class="coupon_btn">
+                        <a href="./landing.html">
+                            <img src="./images/web_icon/gift.gif" alt="" />
+                            送好禮
+                        </a>
+                    </div> -->
+                    <div class="toFav_btn">
+                        <a href="javascript:;" id="toFav_btn">
+                            <img src="./images/web_icon/collect.svg" alt="" />
+                            <span>我的收藏</span>
+                        </a>
+                    </div>
+                    <div id="join_button" class="none">
+                        <div
+                            onclick="loginTo(myModal01,null)"
+                            class="login_desktop indexJoin"
+                        >
+                            免費加入
+                        </div>
+                        <div
+                            onclick="loginTo(myModal01,null)"
+                            class="login_mobile"
+                        >
+                            <img src="./images/web_icon/login.svg" alt="" />
+                        </div>
+                    </div>
 
-                <div id="menu" class="none">
-                    <span
-                        class="logout logout_desktop"
-                        onclick="logOut()"
-                        style="color: #fff"
-                    >
-                        <img src="./images/web_icon/logout.svg" alt="" />
-                    </span>
-                    <span
-                        class="logout logout_mobile"
-                        onclick="logOut()"
-                        style="color: #fff"
-                    >
-                        <img src="./images/web_icon/logout.svg" alt="" />
-                    </span>
+                    <div id="menu" class="none">
+                        <span
+                            class="logout logout_desktop"
+                            onclick="logOut()"
+                            style="color: #fff"
+                        >
+                            <img src="./images/web_icon/logout.svg" alt="" />
+                        </span>
+                        <span
+                            class="logout logout_mobile"
+                            onclick="logOut()"
+                            style="color: #fff"
+                        >
+                            <img src="./images/web_icon/logout.svg" alt="" />
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="all_wrap" v-cloak>
-            <div
-                v-if="!firstClick"
-                @click="firstClickPage"
-                class="firstClick"
-            ></div>
-            <!--main-body-->
-            <div id="main-body">
-                <div id="sidebar">
-                    <!--這邊是側邊條-->
-                    <div id="sidebar_wrapper">
-                        <ul class="channel_list" v-html="list"></ul>
-                        <div class="podcast" @click="podcast = !podcast">
-                            <img
-                                src="./images/web_icon/podcast_mb.svg"
-                                alt=""
-                            />
-                            <img
-                                class="podcast_play"
-                                src="./images/web_icon/podcast_play.svg"
-                                alt=""
-                            />
-                            <span>前往Podcast收聽</span>
-                        </div>
-                        <div class="radio" @click="fnRadio">
-                            <img
-                                class="radio_bg"
-                                src="./images/web_icon/radio_mb.svg"
-                                alt=""
-                            />
-                            <img
-                                class="radio_gif"
-                                src="./images/web_icon/radio.gif"
-                                alt=""
-                                v-show="radio"
-                            />
-                            <img
-                                class="radio_play"
-                                src="./images/web_icon/radio_play.svg"
-                                alt=""
-                                v-if="!radio"
-                            />
-                            <img
-                                class="radio_play"
-                                src="./images/web_icon/radio_pause.svg"
-                                alt=""
-                                v-if="radio"
-                            />
+            <div class="all_wrap" v-cloak>
+                <div
+                    v-if="!firstClick"
+                    @click="firstClickPage"
+                    class="firstClick"
+                ></div>
+                <!--main-body-->
+                <div id="main-body">
+                    <div id="sidebar">
+                        <!--這邊是側邊條-->
+                        <div id="sidebar_wrapper">
+                            <ul class="channel_list" v-html="list"></ul>
+                            <div class="podcast" @click="podcast = !podcast">
+                                <img
+                                    src="./images/web_icon/podcast_mb.svg"
+                                    alt=""
+                                />
+                                <img
+                                    class="podcast_play"
+                                    src="./images/web_icon/podcast_play.svg"
+                                    alt=""
+                                />
+                                <span>前往Podcast收聽</span>
+                            </div>
+                            <div class="radio" @click="fnRadio">
+                                <img
+                                    class="radio_bg"
+                                    src="./images/web_icon/radio_mb.svg"
+                                    alt=""
+                                />
+                                <img
+                                    class="radio_gif"
+                                    src="./images/web_icon/radio.gif"
+                                    alt=""
+                                    v-show="radio"
+                                />
+                                <img
+                                    class="radio_play"
+                                    src="./images/web_icon/radio_play.svg"
+                                    alt=""
+                                    v-if="!radio"
+                                />
+                                <img
+                                    class="radio_play"
+                                    src="./images/web_icon/radio_pause.svg"
+                                    alt=""
+                                    v-if="radio"
+                                />
 
-                            <audio id="Fun_audio" :src="stream"></audio>
-                        </div>
-                        <div class="recommend" id="open_recommend">
-                            <a href="javascript:;" @click="getCaptcha"
-                                >我要推薦</a
-                            >
-                            <img src="images/web_icon/pen.svg" />
-                        </div>
-                        <div class="notification_wrapper">
-                            <transition-group
-                                appear
-                                tag="ul"
-                                class="notification"
-                                name="fade"
-                            >
-                                <li
-                                    v-cloak
-                                    v-for="(item,index) in notifications"
-                                    class="animate__animated animate__fadeInLeft"
-                                    v-bind:key="item.Cdate"
+                                <audio id="Fun_audio" :src="stream"></audio>
+                            </div>
+                            <div class="recommend" id="open_recommend">
+                                <a href="javascript:;" @click="getCaptcha"
+                                    >我要推薦</a
                                 >
-                                    <div>
-                                        <img
-                                            v-if="item.Pic == ''"
-                                            src="./images/web_icon/head_default.svg"
-                                            alt=""
-                                        />
-                                        <img v-else :src="item.Pic" alt="" />
-                                    </div>
-                                    <div>
-                                        <span
-                                            :class="[{male:item.Sex == 1},{female:item.Sex == 0}]"
-                                            >{{item.Nickname}}</span
-                                        >
-                                        <div class="wrapper">
-                                            <p class="width">{{item.Status}}</p>
-                                            <p class="first">
-                                                {{item.Status}}&nbsp;&nbsp;&nbsp;
-                                            </p>
-                                            <p class="second">
-                                                {{item.Status}}&nbsp;&nbsp;&nbsp;
-                                            </p>
+                                <img src="images/web_icon/pen.svg" />
+                            </div>
+                            <div class="notification_wrapper">
+                                <transition-group
+                                    appear
+                                    tag="ul"
+                                    class="notification"
+                                    name="fade"
+                                >
+                                    <li
+                                        v-cloak
+                                        v-for="(item,index) in notifications"
+                                        class="animate__animated animate__fadeInLeft"
+                                        v-bind:key="item.Cdate"
+                                    >
+                                        <div>
+                                            <img
+                                                v-if="item.Pic == ''"
+                                                src="./images/web_icon/head_default.svg"
+                                                alt=""
+                                            />
+                                            <img
+                                                v-else
+                                                :src="item.Pic"
+                                                alt=""
+                                            />
                                         </div>
-                                    </div>
-                                </li>
-                            </transition-group>
+                                        <div>
+                                            <span
+                                                :class="[{male:item.Sex == 1},{female:item.Sex == 0}]"
+                                                >{{item.Nickname}}</span
+                                            >
+                                            <div class="wrapper">
+                                                <p class="width">
+                                                    {{item.Status}}
+                                                </p>
+                                                <p class="first">
+                                                    {{item.Status}}&nbsp;&nbsp;&nbsp;
+                                                </p>
+                                                <p class="second">
+                                                    {{item.Status}}&nbsp;&nbsp;&nbsp;
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </transition-group>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Podcast -->
-                    <div class="podcast_pop" v-if="podcast" v-cloak>
-                        <div class="pop_close" @click="podcast = !podcast">
-                            <img
-                                src="./images/web_icon/share_close.svg"
-                                alt=""
-                            />
-                        </div>
-                        <h1>前往收聽 Podcast</h1>
-                        <h2>
-                            二十一世紀的生活壓力大，事業、家庭兩頭燒，在這個亂世之中，該如何找到身心的平衡與健康呢？
-                        </h2>
-                        <div class="link_blk">
-                            <a
-                                target="_blank"
-                                href="https://podcasts.apple.com/ee/podcast/funday-%E6%96%B0%E7%94%9F%E6%B4%BB/id1577312960"
-                            >
+                        <!-- Podcast -->
+                        <div class="podcast_pop" v-if="podcast" v-cloak>
+                            <div class="pop_close" @click="podcast = !podcast">
                                 <img
-                                    src="./images/web_icon/applePodcast.svg"
-                                    alt=""
-                                />ApplePodcast
-                            </a>
-                            <a
-                                target="_blank"
-                                href="https://player.soundon.fm/p/c7cf00a8-6987-4144-bc86-ca558d03bab2"
-                            >
-                                <img
-                                    src="./images/web_icon/soundon.svg"
-                                    alt=""
-                                />SoundOn
-                            </a>
-                        </div>
-                    </div>
-                    <!-- recommend -->
-                    <div class="recommend_pop" v-if="recommend" v-cloak>
-                        <div class="recommend_blk">
-                            <div class="pop_close">
-                                <img
-                                    @click="recommend = !recommend"
                                     src="./images/web_icon/share_close.svg"
                                     alt=""
                                 />
                             </div>
-                            <div class="recommend_title">
-                                <h1>推薦我們</h1>
-                                <h2>
-                                    找不到想看的影片嗎？歡迎留言寫下電影名稱
-                                    將有機會優先為您上架哦
-                                </h2>
-                            </div>
-                            <div class="text_input">
-                                <textarea
-                                    name="my_recommend"
-                                    cols=""
-                                    rows=""
-                                ></textarea>
-                            </div>
-                            <div class="captcha">
-                                <canvas
-                                    width="160"
-                                    height="30"
-                                    id="captcha1"
-                                ></canvas>
-                                <img
-                                    @click="getCaptcha()"
-                                    src="./images/web_icon/refresh.svg"
-                                    alt=""
-                                />
-                                <input
-                                    id="captcha_val"
-                                    type="text"
-                                    maxlength="6"
-                                />
-                                <div class="submit" @click="captchaConfirm()">
-                                    提交
-                                </div>
-                            </div>
-                            <div
-                                class="recommend_submit"
-                                @click="sendRecommend()"
-                            >
-                                送出
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="video_frame">
-                    <!--這邊是影音部份-->
-                    <div id="video_frame_top">
-                        <div id="video_playing" class="vdIndex">
-                            <div
-                                class="notification_wrapper_mobile"
-                                v-if="notifications.length > 0 "
-                            >
-                                <div
-                                    class="notification_mobile animate__animated"
-                                    :class="{animate__fadeIn:notiChange}"
+                            <h1>前往收聽 Podcast</h1>
+                            <h2>
+                                二十一世紀的生活壓力大，事業、家庭兩頭燒，在這個亂世之中，該如何找到身心的平衡與健康呢？
+                            </h2>
+                            <div class="link_blk">
+                                <a
+                                    target="_blank"
+                                    href="https://podcasts.apple.com/ee/podcast/funday-%E6%96%B0%E7%94%9F%E6%B4%BB/id1577312960"
                                 >
                                     <img
-                                        v-if="notiPic == ''"
-                                        src="./images/web_icon/head_default.svg"
+                                        src="./images/web_icon/applePodcast.svg"
+                                        alt=""
+                                    />ApplePodcast
+                                </a>
+                                <a
+                                    target="_blank"
+                                    href="https://player.soundon.fm/p/c7cf00a8-6987-4144-bc86-ca558d03bab2"
+                                >
+                                    <img
+                                        src="./images/web_icon/soundon.svg"
+                                        alt=""
+                                    />SoundOn
+                                </a>
+                            </div>
+                        </div>
+                        <!-- recommend -->
+                        <div class="recommend_pop" v-if="recommend" v-cloak>
+                            <div class="recommend_blk">
+                                <div class="pop_close">
+                                    <img
+                                        @click="recommend = !recommend"
+                                        src="./images/web_icon/share_close.svg"
                                         alt=""
                                     />
-                                    <img v-else :src="notiPic" alt="" />
-                                    <span
-                                        v-cloak
-                                        :class="[{male:notiSex == 1},{female:notiSex == 0}]"
-                                        >{{notiName}}</span
+                                </div>
+                                <div class="recommend_title">
+                                    <h1>推薦我們</h1>
+                                    <h2>
+                                        找不到想看的影片嗎？歡迎留言寫下電影名稱
+                                        將有機會優先為您上架哦
+                                    </h2>
+                                </div>
+                                <div class="text_input">
+                                    <textarea
+                                        name="my_recommend"
+                                        cols=""
+                                        rows=""
+                                    ></textarea>
+                                </div>
+                                <div class="captcha">
+                                    <canvas
+                                        width="160"
+                                        height="30"
+                                        id="captcha1"
+                                    ></canvas>
+                                    <img
+                                        @click="getCaptcha()"
+                                        src="./images/web_icon/refresh.svg"
+                                        alt=""
+                                    />
+                                    <input
+                                        id="captcha_val"
+                                        type="text"
+                                        maxlength="6"
+                                    />
+                                    <div
+                                        class="submit"
+                                        @click="captchaConfirm()"
                                     >
-                                    <div class="wrapper" v-cloak>
-                                        <p class="width">
-                                            {{notiStatus}} &nbsp;&nbsp;&nbsp;
-                                        </p>
-                                        <p class="first">
-                                            {{notiStatus}} &nbsp;&nbsp;&nbsp;
-                                        </p>
-                                        <p class="second">
-                                            {{notiStatus}} &nbsp;&nbsp;&nbsp;
-                                        </p>
+                                        提交
                                     </div>
                                 </div>
-                            </div>
-                            <div
-                                class="video_btn_togo"
-                                :id="bannerId"
-                                name="Cinephile"
-                                onclick="toVideo(this)"
-                            ></div>
-                            <!--這一塊是撥放器-->
-                            <a href="./video.html">
-                                <iframe
-                                    type="text/html"
-                                    :src="bannerVd"
-                                    width="100%"
-                                    frameborder="0"
-                                    id="bannerVd"
-                                    enablejsapi="1"
-                                    allow="autoplay"
+                                <div
+                                    class="recommend_submit"
+                                    @click="sendRecommend()"
                                 >
-                                </iframe>
-                            </a>
-                        </div>
-
-                        <div id="video_list">
-                            <!--這一塊是頁籤式電影列表切換-->
-                            <div class="switch_tab">
-                                <ul class="tabs">
-                                    <li
-                                        :class="{active:tab}"
-                                        @click.prevent="tab = !tab"
-                                    >
-                                        <a href="#tab1">配音大挑戰</a>
-                                    </li>
-                                    <!--頁籤1-->
-                                    <li
-                                        :class="{active:!tab}"
-                                        @click.prevent="tab = !tab"
-                                    >
-                                        <a href="#tab2">熱門排行</a>
-                                    </li>
-                                    <!--頁籤2-->
-                                </ul>
-                                <div class="tab_container index_container">
-                                    <div
-                                        id="tab1"
-                                        class="tab_content"
-                                        v-if="tab"
-                                    >
-                                        <!--頁籤1的內容-->
-                                        <ul
-                                            class="video_items"
-                                            v-html="videoDubbing"
-                                            style="margin-bottom: 10px"
-                                        ></ul>
-                                    </div>
-                                    <div id="tab2" class="tab_content" v-else>
-                                        <!--頁籤2的內容-->
-                                        <ul
-                                            class="video_items"
-                                            v-html="hotVideo"
-                                        ></ul>
-                                    </div>
+                                    送出
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="video_frame_bottom" class="scroll_bar">
-                        <div class="category_videos">
-                            <div class="video_category ca01">
-                                <div class="ga_title">
-                                    News
-                                    <a
-                                        href="video_category.html?p=News"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div class="items_list" v-html="News">
-                                        <!--只能放四個唷-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video_category ca02">
-                                <div class="ga_title">
-                                    Cinephile
-                                    <!-- !首頁參數 -->
-                                    <a
-                                        href="video_category.html?p=Cinephile"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div class="items_list" v-html="Cinephile">
-                                        <!--只能放四個唷-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video_category ca03">
-                                <div class="ga_title">
-                                    Explore
-                                    <a
-                                        href="video_category.html?p=Explore"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
+                    <div id="video_frame">
+                        <!--這邊是影音部份-->
+                        <div id="video_frame_top">
+                            <div id="video_playing" class="vdIndex">
+                                <div
+                                    class="notification_wrapper_mobile"
+                                    v-if="notifications.length > 0 "
+                                >
                                     <div
-                                        class="items_list"
-                                        v-html="Explore"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="video_category ca04">
-                                <div class="ga_title">
-                                    調查局
-                                    <a
-                                        href="video_category.html?p=調查局"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div
-                                        class="items_list"
-                                        v-html="調查局"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="video_category ca05">
-                                <div class="ga_title">
-                                    Knowledge
-                                    <a
-                                        href="video_category.html?p=Knowledge"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div class="items_list" v-html="Knowledge">
-                                        <!--只能放四個唷-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video_category ca09">
-                                <div class="ga_title">
-                                    微電影
-                                    <a
-                                        href="video_category.html?p=微電影"
-                                        class="more"
-                                        >more</a
-                                    >
-                                </div>
-                                <div class="video_items">
-                                    <div class="items_list" v-html="微電影">
-                                        <!--只能放四個唷-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video_category podcast_mobile_blk">
-                                <div class="ga_title">Others 其他</div>
-                                <div class="podcast_radio_mobile">
-                                    <div
-                                        class="podcast_mobile"
-                                        @click="podcast = !podcast"
+                                        class="notification_mobile animate__animated"
+                                        :class="{animate__fadeIn:notiChange}"
                                     >
                                         <img
-                                            src="./images/web_icon/podcast_mb.svg"
+                                            v-if="notiPic == ''"
+                                            src="./images/web_icon/head_default.svg"
                                             alt=""
                                         />
-                                        <div>
-                                            <img
-                                                src="./images/web_icon/radio_play.svg"
-                                                alt=""
-                                            />
-                                            前往Podcast收聽
+                                        <img v-else :src="notiPic" alt="" />
+                                        <span
+                                            v-cloak
+                                            :class="[{male:notiSex == 1},{female:notiSex == 0}]"
+                                            >{{notiName}}</span
+                                        >
+                                        <div class="wrapper" v-cloak>
+                                            <p class="width">
+                                                {{notiStatus}}
+                                                &nbsp;&nbsp;&nbsp;
+                                            </p>
+                                            <p class="first">
+                                                {{notiStatus}}
+                                                &nbsp;&nbsp;&nbsp;
+                                            </p>
+                                            <p class="second">
+                                                {{notiStatus}}
+                                                &nbsp;&nbsp;&nbsp;
+                                            </p>
                                         </div>
                                     </div>
-                                    <div @click="fnRadio" class="radio_bg_mb">
-                                        <img
-                                            src="./images/web_icon/radio_mb.svg"
-                                            alt=""
-                                        />
-                                        <img
-                                            class="radio_gif_mb"
-                                            src="./images/web_icon/radio.gif"
-                                            alt=""
-                                            v-if="radio"
-                                        />
-                                        <div>
+                                </div>
+                                <div
+                                    class="video_btn_togo"
+                                    :id="bannerId"
+                                    name="Cinephile"
+                                    onclick="toVideo(this)"
+                                ></div>
+                                <!--這一塊是撥放器-->
+                                <a href="./video.html">
+                                    <iframe
+                                        type="text/html"
+                                        :src="bannerVd"
+                                        width="100%"
+                                        frameborder="0"
+                                        id="bannerVd"
+                                        enablejsapi="1"
+                                        allow="autoplay"
+                                    >
+                                    </iframe>
+                                </a>
+                            </div>
+
+                            <div id="video_list">
+                                <!--這一塊是頁籤式電影列表切換-->
+                                <div class="switch_tab">
+                                    <ul class="tabs">
+                                        <li
+                                            :class="{active:tab}"
+                                            @click.prevent="tab = !tab"
+                                        >
+                                            <a href="#tab1">配音大挑戰</a>
+                                        </li>
+                                        <!--頁籤1-->
+                                        <li
+                                            :class="{active:!tab}"
+                                            @click.prevent="tab = !tab"
+                                        >
+                                            <a href="#tab2">熱門排行</a>
+                                        </li>
+                                        <!--頁籤2-->
+                                    </ul>
+                                    <div class="tab_container index_container">
+                                        <div
+                                            id="tab1"
+                                            class="tab_content"
+                                            v-if="tab"
+                                        >
+                                            <!--頁籤1的內容-->
+                                            <ul
+                                                class="video_items"
+                                                v-html="videoDubbing"
+                                                style="margin-bottom: 10px"
+                                            ></ul>
+                                        </div>
+                                        <div
+                                            id="tab2"
+                                            class="tab_content"
+                                            v-else
+                                        >
+                                            <!--頁籤2的內容-->
+                                            <ul
+                                                class="video_items"
+                                                v-html="hotVideo"
+                                            ></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="video_frame_bottom" class="scroll_bar">
+                            <div class="category_videos">
+                                <div class="video_category ca01">
+                                    <div class="ga_title">
+                                        News
+                                        <a
+                                            href="video_category.html?p=News"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div class="items_list" v-html="News">
+                                            <!--只能放四個唷-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video_category ca02">
+                                    <div class="ga_title">
+                                        Cinephile
+                                        <!-- !首頁參數 -->
+                                        <a
+                                            href="video_category.html?p=Cinephile"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div
+                                            class="items_list"
+                                            v-html="Cinephile"
+                                        >
+                                            <!--只能放四個唷-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video_category ca03">
+                                    <div class="ga_title">
+                                        Explore
+                                        <a
+                                            href="video_category.html?p=Explore"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div
+                                            class="items_list"
+                                            v-html="Explore"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="video_category ca04">
+                                    <div class="ga_title">
+                                        調查局
+                                        <a
+                                            href="video_category.html?p=調查局"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div
+                                            class="items_list"
+                                            v-html="調查局"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="video_category ca05">
+                                    <div class="ga_title">
+                                        Knowledge
+                                        <a
+                                            href="video_category.html?p=Knowledge"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div
+                                            class="items_list"
+                                            v-html="Knowledge"
+                                        >
+                                            <!--只能放四個唷-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video_category ca09">
+                                    <div class="ga_title">
+                                        微電影
+                                        <a
+                                            href="video_category.html?p=微電影"
+                                            class="more"
+                                            >more</a
+                                        >
+                                    </div>
+                                    <div class="video_items">
+                                        <div class="items_list" v-html="微電影">
+                                            <!--只能放四個唷-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video_category podcast_mobile_blk">
+                                    <div class="ga_title">Others 其他</div>
+                                    <div class="podcast_radio_mobile">
+                                        <div
+                                            class="podcast_mobile"
+                                            @click="podcast = !podcast"
+                                        >
                                             <img
-                                                src="./images/web_icon/radio_play.svg"
+                                                src="./images/web_icon/podcast_mb.svg"
                                                 alt=""
-                                                v-if="!radio"
+                                            />
+                                            <div>
+                                                <img
+                                                    src="./images/web_icon/radio_play.svg"
+                                                    alt=""
+                                                />
+                                                前往Podcast收聽
+                                            </div>
+                                        </div>
+                                        <div
+                                            @click="fnRadio"
+                                            class="radio_bg_mb"
+                                        >
+                                            <img
+                                                src="./images/web_icon/radio_mb.svg"
+                                                alt=""
                                             />
                                             <img
-                                                src="./images/web_icon/radio_pause.svg"
+                                                class="radio_gif_mb"
+                                                src="./images/web_icon/radio.gif"
                                                 alt=""
                                                 v-if="radio"
                                             />
-                                            FUNDAY廣播
+                                            <div>
+                                                <img
+                                                    src="./images/web_icon/radio_play.svg"
+                                                    alt=""
+                                                    v-if="!radio"
+                                                />
+                                                <img
+                                                    src="./images/web_icon/radio_pause.svg"
+                                                    alt=""
+                                                    v-if="radio"
+                                                />
+                                                FUNDAY廣播
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="page_bottom">
-                                <div class="recommend">
-                                    <a
-                                        href="javascript:;"
-                                        @click="getCaptcha"
-                                        id="open_recommend_mb"
-                                        ><img
-                                            src="images/web_icon/pen.svg"
-                                        />我要推薦</a
-                                    >
+                                <div class="page_bottom">
+                                    <div class="recommend">
+                                        <a
+                                            href="javascript:;"
+                                            @click="getCaptcha"
+                                            id="open_recommend_mb"
+                                            ><img
+                                                src="images/web_icon/pen.svg"
+                                            />我要推薦</a
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- message board -->
-            <div class="message_board_blk" :class="{boardOn:board}">
-                <div class="message_blur"></div>
-                <div
-                    class="board_close"
-                    :class="{remove:board}"
-                    @click="fnBoardToggle"
-                >
-                    <div v-for="(item,index) in boardMessage">
-                        <div class="head" v-show="boardNow == index">
-                            <img
-                                class="board_gif"
-                                src="./images/web_icon/animation-500-l38gfbm4-unscreen.gif"
-                                alt=""
-                            />
-                            <div class="userHead">
+                <!-- message board -->
+                <!-- <div class="message_board_blk" :class="{boardOn:board}">
+                    <div class="message_blur"></div>
+                    <div
+                        class="board_close"
+                        :class="{remove:board}"
+                        @click="fnBoardToggle"
+                    >
+                        <div v-for="(item,index) in boardMessage">
+                            <div class="head" v-show="boardNow == index">
                                 <img
-                                    v-show="item.imgUrl !== null"
-                                    v-cloak
-                                    :src="item.imgUrl"
+                                    class="board_gif"
+                                    src="./images/web_icon/animation-500-l38gfbm4-unscreen.gif"
                                     alt=""
-                                    class="animate__animated animate__flipInX"
                                 />
-                                <img
-                                    v-show="item.imgUrl == null"
-                                    src="./images/web_icon/head_default.svg"
-                                    alt=""
-                                    class="animate__animated animate__flipInX"
-                                />
+                                <div class="userHead">
+                                    <img
+                                        v-show="item.ImgUrl !== null"
+                                        v-cloak
+                                        :src="item.ImgUrl"
+                                        alt=""
+                                        class="animate__animated animate__flipInX"
+                                    />
+                                    <img
+                                        v-show="item.ImgUrl == null"
+                                        src="./images/web_icon/head_default.svg"
+                                        alt=""
+                                        class="animate__animated animate__flipInX"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div
-                            v-show="boardNow == index"
-                            class="animate__animated animate__tada name"
-                        >
-                            <span :class="[item.sex == 1 ?'male':'female']"
-                                >{{item.name}}</span
+                            <div
+                                v-show="boardNow == index"
+                                class="animate__animated animate__tada name"
                             >
+                                <span :class="[item.Sex == 1 ?'male':'female']"
+                                    >{{item.Name}}</span
+                                >
+                            </div>
+                            <div
+                                class="text animate__animated animate__flipInX"
+                                v-show="boardNow == index"
+                            >
+                                <span class="text_wrapper">
+                                    <p class="width">{{item.Content}}</p>
+                                    <p class="first">
+                                        {{item.Content}}&nbsp;&nbsp;&nbsp;
+                                    </p>
+                                    <p class="second">
+                                        {{item.Content}}&nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </span>
+                            </div>
                         </div>
-                        <div
-                            class="text animate__animated animate__flipInX"
-                            v-show="boardNow == index"
-                        >
-                            <span class="text_wrapper">
-                                <p class="width">{{item.content}}</p>
-                                <p class="first">
-                                    {{item.content}}&nbsp;&nbsp;&nbsp;
-                                </p>
-                                <p class="second">
-                                    {{item.content}}&nbsp;&nbsp;&nbsp;
-                                </p>
-                            </span>
-                        </div>
-                    </div>
-                    <img
-                        class="toggle"
-                        src="./images/web_icon/board_close.svg"
-                        alt=""
-                    />
-                </div>
-                <div class="board_open" :class="{open_blk:board}">
-                    <div class="content" :class="{add:board}">
-                        <ul id="content_blk">
-                            <li v-for="(item,index) in boardContent">
-                                <img
-                                    v-show="item.imgUrl !== null"
-                                    :src="item.imgUrl"
-                                    alt=""
-                                />
-                                <img
-                                    v-show="item.imgUrl == null"
-                                    src="./images/web_icon/head_default.svg"
-                                    alt=""
-                                />
-                                <div>
-                                    <span
-                                        :class="[item.sex == 1 ?'male':'female']"
-                                        >{{item.name}}</span
-                                    >
-                                    {{item.content}}
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="send_bar">
-                        <div class="alertHint">{{alert}}</div>
-                        <img class="userPic" :src="pic" alt="" v-if="userPic" />
                         <img
-                            class="userPic"
-                            src="./images/web_icon/head_default.svg"
+                            class="toggle"
+                            src="./images/web_icon/board_close.svg"
                             alt=""
-                            v-if="!userPic"
                         />
-                        <div>
-                            <input
-                                id="message"
-                                v-on:keyup.enter="send"
-                                v-on:keydown="inputKeydown"
-                                type="text"
-                                placeholder="說點什麼..."
-                            />
+                    </div>
+                    <div class="board_open" :class="{open_blk:board}">
+                        <div class="content" :class="{add:board}">
+                            <ul id="content_blk">
+                                <li v-for="(item,index) in boardContent">
+                                    <img
+                                        v-show="item.ImgUrl !== null"
+                                        :src="item.ImgUrl"
+                                        alt=""
+                                    />
+                                    <img
+                                        v-show="item.ImgUrl == null"
+                                        src="./images/web_icon/head_default.svg"
+                                        alt=""
+                                    />
+                                    <div>
+                                        <span
+                                            :class="[item.Sex == 1 ?'male':'female']"
+                                            >{{item.Name}}</span
+                                        >
+                                        {{item.Content}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="send_bar">
+                            <div class="alertHint">{{alert}}</div>
                             <img
-                                @click="emoji=!emoji"
-                                class="emoji"
-                                src="./images/web_icon/emoji.svg"
+                                class="userPic"
+                                :src="pic"
                                 alt=""
+                                v-if="userPic"
                             />
                             <img
+                                class="userPic"
+                                src="./images/web_icon/head_default.svg"
+                                alt=""
+                                v-if="!userPic"
+                            />
+                            <div>
+                                <input
+                                    id="message"
+                                    v-on:keyup.enter="send"
+                                    v-on:keydown="inputKeydown"
+                                    type="text"
+                                    placeholder="說點什麼..."
+                                />
+                                <img
+                                    @click="emoji=!emoji"
+                                    class="emoji"
+                                    src="./images/web_icon/emoji.svg"
+                                    alt=""
+                                />
+                                <img
+                                    @click="send"
+                                    class="send_mobile"
+                                    src="./images/web_icon/send.svg"
+                                    alt=""
+                                />
+                            </div>
+
+                            <img
+                                class="send_desktop"
                                 @click="send"
-                                class="send_mobile"
                                 src="./images/web_icon/send.svg"
                                 alt=""
                             />
+                            <img
+                                @click="fnBoardToggle"
+                                class="toggle"
+                                src="./images/web_icon/board_open.svg"
+                                alt=""
+                            />
                         </div>
-
+                        <div class="emoji_blk" :class="{emoji_open:emoji}">
+                            <div class="emoji_wrapper">
+                                <ul class="emoji_page1">
+                                    <li @click="addEmoji($event)">&#128512;</li>
+                                    <li @click="addEmoji($event)">&#128513;</li>
+                                    <li @click="addEmoji($event)">&#128514;</li>
+                                    <li @click="addEmoji($event)">&#128515;</li>
+                                    <li @click="addEmoji($event)">&#128516;</li>
+                                    <li @click="addEmoji($event)">&#128517;</li>
+                                    <li @click="addEmoji($event)">&#128518;</li>
+                                    <li @click="addEmoji($event)">&#128519;</li>
+                                    <li @click="addEmoji($event)">&#128520;</li>
+                                    <li @click="addEmoji($event)">&#128521;</li>
+                                    <li @click="addEmoji($event)">&#128522;</li>
+                                    <li @click="addEmoji($event)">&#128523;</li>
+                                    <li @click="addEmoji($event)">&#128524;</li>
+                                    <li @click="addEmoji($event)">&#128525;</li>
+                                    <li @click="addEmoji($event)">&#128526;</li>
+                                    <li @click="addEmoji($event)">&#128527;</li>
+                                    <li @click="addEmoji($event)">&#128528;</li>
+                                    <li @click="addEmoji($event)">&#128529;</li>
+                                    <li @click="addEmoji($event)">&#128530;</li>
+                                    <li @click="addEmoji($event)">&#128531;</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Ads Block -->
+                <!-- <div class="ads_blk">
+                    <div>
+                        <a
+                            class="ads_mb"
+                            href="https://fundayasia.pse.is/45fpmc"
+                            target="_blank"
+                            v-if="ads"
+                        >
+                            <img src="./images/web_icon/FunTubeBN.svg" alt="" />
+                        </a>
                         <img
-                            class="send_desktop"
-                            @click="send"
-                            src="./images/web_icon/send.svg"
-                            alt=""
-                        />
-                        <img
-                            @click="fnBoardToggle"
-                            class="toggle"
-                            src="./images/web_icon/board_open.svg"
+                            v-if="ads"
+                            @click="ads = !ads"
+                            class="ads_close_btn"
+                            src="./images/web_icon/ads_close_btn.svg"
                             alt=""
                         />
                     </div>
-                    <div class="emoji_blk" :class="{emoji_open:emoji}">
-                        <div class="emoji_wrapper">
-                            <ul class="emoji_page1">
-                                <li @click="addEmoji($event)">&#128512;</li>
-                                <li @click="addEmoji($event)">&#128513;</li>
-                                <li @click="addEmoji($event)">&#128514;</li>
-                                <li @click="addEmoji($event)">&#128515;</li>
-                                <li @click="addEmoji($event)">&#128516;</li>
-                                <li @click="addEmoji($event)">&#128517;</li>
-                                <li @click="addEmoji($event)">&#128518;</li>
-                                <li @click="addEmoji($event)">&#128519;</li>
-                                <li @click="addEmoji($event)">&#128520;</li>
-                                <li @click="addEmoji($event)">&#128521;</li>
-                                <li @click="addEmoji($event)">&#128522;</li>
-                                <li @click="addEmoji($event)">&#128523;</li>
-                                <li @click="addEmoji($event)">&#128524;</li>
-                                <li @click="addEmoji($event)">&#128525;</li>
-                                <li @click="addEmoji($event)">&#128526;</li>
-                                <li @click="addEmoji($event)">&#128527;</li>
-                                <li @click="addEmoji($event)">&#128528;</li>
-                                <li @click="addEmoji($event)">&#128529;</li>
-                                <li @click="addEmoji($event)">&#128530;</li>
-                                <li @click="addEmoji($event)">&#128531;</li>
-                            </ul>
-                        </div>
+                </div> -->
+                <!--footer-->
+                <div id="footer">
+                    <div class="copyright">
+                        © 2021 Brainstorm Digital Communications Corp. All
+                        rights reserved.Privacy Policy &nbsp;&nbsp;<span
+                            class="footerLink"
+                            onclick="toCopyRight()"
+                            >著作權聲明</span
+                        >
                     </div>
                 </div>
             </div>
-            <!-- Ads Block -->
-            <!-- <div class="ads_blk">
-                <div>
-                    <a
-                        class="ads_mb"
-                        href="https://fundayasia.pse.is/45fpmc"
-                        target="_blank"
-                        v-if="ads"
-                    >
-                        <img src="./images/web_icon/FunTubeBN.svg" alt="" />
-                    </a>
-                    <img
-                        v-if="ads"
-                        @click="ads = !ads"
-                        class="ads_close_btn"
-                        src="./images/web_icon/ads_close_btn.svg"
-                        alt=""
-                    />
-                </div>
-            </div> -->
-            <!--footer-->
-            <div id="footer">
-                <div class="copyright">
-                    © 2021 Brainstorm Digital Communications Corp. All rights
-                    reserved.Privacy Policy &nbsp;&nbsp;<span
-                        class="footerLink"
-                        onclick="toCopyRight()"
-                        >著作權聲明</span
-                    >
-                </div>
-            </div>
-        </div>
 
-        <!--以下是彈跳出來的視窗  （Modal） -->
-        <!--免費加入#myModal01-->
-        <div
-            class="login_page center_modal none"
-            id="myModal01"
-            tabindex="-1"
-            role="dialog"
-        >
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content1"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div class="icon_pre"></div>
-                            <div class="icon_close" onclick="modal_close(1)">
-                                <a href="javascript:;"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">
-                                免費加入獲得更多電影、新聞資訊
-                            </div>
-                            <div class="form_body">
-                                <div class="login_way mail">
-                                    <div onclick="loginTo(myModal01,myModal02)">
-                                        快速加入
-                                    </div>
-                                </div>
-                                <div class="login_way fb">
-                                    <div onclick="fbLogin()">
-                                        使用Facebook加入
-                                    </div>
-                                </div>
-                                <div id="google_signup"></div>
-                            </div>
-                            <div class="form_bottom">
+            <!--以下是彈跳出來的視窗  （Modal） -->
+            <!--免費加入#myModal01-->
+            <div
+                class="login_page center_modal none"
+                id="myModal01"
+                tabindex="-1"
+                role="dialog"
+            >
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content1"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div class="icon_pre"></div>
                                 <div
-                                    class="login_now"
-                                    onclick="loginTo(myModal01,myModal09)"
+                                    class="icon_close"
+                                    onclick="modal_close(1)"
                                 >
-                                    已是會員 立即登入
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">
+                                    免費加入獲得更多電影、新聞資訊
+                                </div>
+                                <div class="form_body">
+                                    <div class="login_way mail">
+                                        <div
+                                            onclick="loginTo(myModal01,myModal02)"
+                                        >
+                                            快速加入
+                                        </div>
+                                    </div>
+                                    <div class="login_way fb">
+                                        <div onclick="fbLogin()">
+                                            使用Facebook加入
+                                        </div>
+                                    </div>
+                                    <div id="google_signup"></div>
+                                </div>
+                                <div class="form_bottom">
+                                    <div
+                                        class="login_now"
+                                        onclick="loginTo(myModal01,myModal09)"
+                                    >
+                                        已是會員 立即登入
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- 使用電子信箱加入#myModal02-->
-        <div class="login_page center_modal none" id="myModal02">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content2"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal02,myModal01)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(2)">
-                                <a href="javascript:;"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">
-                                免費加入獲得更多電影、新聞資訊
-                            </div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
+            <!-- 使用電子信箱加入#myModal02-->
+            <div class="login_page center_modal none" id="myModal02">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content2"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal02,myModal01)"
                                 >
-                                    <div class="input">
-                                        <input
-                                            name="account_mail"
-                                            type="text"
-                                            placeholder="帳號(信箱)"
-                                        />
-                                    </div>
-                                    <div class="input">
-                                        <input
-                                            id="mail_account_mobile"
-                                            name="account_mobile"
-                                            type="password"
-                                            placeholder="手機(密碼)"
-                                            autocomplete="off"
-                                        />
-                                        <br />
-                                        請填寫正確手機號碼以取得簡訊驗證碼，完成加入
-                                    </div>
-                                    <div class="row">
-                                        <div class="input col-xs-8">
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(2)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">
+                                    免費加入獲得更多電影、新聞資訊
+                                </div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
                                             <input
-                                                id="mail_account_name"
-                                                name="account_name"
+                                                name="account_mail"
                                                 type="text"
-                                                placeholder="中文姓名"
+                                                placeholder="帳號(信箱)"
                                             />
                                         </div>
-                                        <div class="radio col-xs-4">
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="1"
-                                                    name="account_gender"
-                                                />
-                                                <span>男</span>
-                                            </label>
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="0"
-                                                    name="account_gender"
-                                                />
-                                                <span>女</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="button" onclick="mailSignUp()">
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="加入"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom">
-                                加入即代表同意FUNDAY的服務
-                                <span onclick="loginTo(myModal05,null)"
-                                    >條款與隱私權</span
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--簡訊驗證 #myModal03-->
-        <div class="login_page center_modal none" id="myModal03">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content3"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal03,myModal02)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(3)">
-                                <a
-                                    href="javascript:;"
-                                    data-dismiss="modal"
-                                    aria-hidden="true"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">簡訊驗證</div>
-                            <div class="error_focus none">驗證碼有誤</div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
-                                >
-                                    <div class="input">
-                                        <input
-                                            id="check_account_mobile"
-                                            name="account_mobile"
-                                            type="text"
-                                            placeholder="請輸入簡訊驗證碼"
-                                        />
-                                        <br />
-                                        收到簡訊驗證碼後，請於30分鐘內完成加入。超過30分鐘，驗證碼即失效
-                                    </div>
-                                    <div
-                                        class="button"
-                                        onclick="joinCheck('origin')"
-                                    >
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="加入完成"
-                                            style="
-                                                background-color: aliceblue;
-                                                color: #001937;
-                                                font-weight: 500;
-                                            "
-                                        />
-                                    </div>
-                                    <div
-                                        class="button"
-                                        onclick="loginTo(myModal03, myModal04)"
-                                    >
-                                        <input
-                                            name="change"
-                                            type="button"
-                                            value="修改手機號碼"
-                                            class="change"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--修改手機號碼  #myModal04-->
-        <div class="login_page center_modal none" id="myModal04">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content4"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal04,myModal03)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(4)">
-                                <a
-                                    href="javascript:;"
-                                    data-dismiss="modal"
-                                    aria-hidden="true"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">修改手機號碼</div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
-                                >
-                                    <div class="row">
-                                        <div class="input col-xs-7">
+                                        <div class="input">
                                             <input
-                                                id="new_mobile_number"
-                                                name="new_mobile_number"
-                                                type="text"
-                                                placeholder="新手機號碼"
+                                                id="mail_account_mobile"
+                                                name="account_mobile"
+                                                type="password"
+                                                placeholder="手機(密碼)"
+                                                autocomplete="off"
                                             />
+                                            <br />
+                                            請填寫正確手機號碼以取得簡訊驗證碼，完成加入
                                         </div>
-                                        <div class="button col-xs-5">
+                                        <div class="row">
+                                            <div class="input col-xs-8">
+                                                <input
+                                                    id="mail_account_name"
+                                                    name="account_name"
+                                                    type="text"
+                                                    placeholder="中文姓名"
+                                                />
+                                            </div>
+                                            <div class="radio col-xs-4">
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="1"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>男</span>
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="0"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>女</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="button"
+                                            onclick="mailSignUp()"
+                                        >
                                             <input
-                                                name="send"
+                                                name="join_in"
                                                 type="button"
-                                                value="發送驗證碼"
-                                                class="send"
-                                                onclick="changeMobile()"
+                                                value="加入"
                                             />
                                         </div>
-                                    </div>
-                                    <div class="input">
-                                        <input
-                                            name="account_mobile"
-                                            id="new_account_mobile"
-                                            type="text"
-                                            placeholder="請輸入簡訊驗證碼"
-                                        />
-                                        <br />
-                                        收到簡訊驗證碼後，請於30分鐘內完成加入。超過30分鐘，驗證碼即失效
-                                    </div>
-                                    <div class="button">
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="加入完成"
-                                            onclick="joinCheck('new')"
-                                            style="
-                                                background-color: aliceblue;
-                                                color: #001937;
-                                                font-weight: 500;
-                                            "
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--使用google登入#myModal06-->
-        <div class="login_page center_modal none" id="myModal06">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content6"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal06,myModal01)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(6)">
-                                <a href="javascript:;"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">使用Google登入</div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
-                                >
-                                    <div class="input">
-                                        <input
-                                            id="google_account_mobile"
-                                            name="account_mobile"
-                                            type="text"
-                                            placeholder="手機(密碼)"
-                                        />
-                                        <br />
-                                        請填寫正確手機號碼以取得簡訊驗證碼，完成加入
-                                    </div>
-                                    <div class="row">
-                                        <div class="input col-xs-8">
-                                            <input
-                                                id="google_account_name"
-                                                name="account_name"
-                                                type="text"
-                                                placeholder="中文姓名"
-                                            />
-                                        </div>
-                                        <div class="radio col-xs-4">
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="1"
-                                                    name="account_gender"
-                                                />
-                                                <span>男</span>
-                                            </label>
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="0"
-                                                    name="account_gender"
-                                                />
-                                                <span>女</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="button"
-                                        onclick="googleSignUp()"
+                                    </form>
+                                </div>
+                                <div class="form_bottom">
+                                    加入即代表同意FUNDAY的服務
+                                    <span onclick="loginTo(myModal05,null)"
+                                        >條款與隱私權</span
                                     >
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="加入"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom">
-                                加入即代表同意FUNDAY的服務
-                                <span onclick="loginTo(myModal05,null)"
-                                    >條款與隱私權</span
-                                >
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--使用facebook登入#myModal10-->
-        <div class="login_page center_modal none" id="myModal10">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content6"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal10,myModal01)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(10)">
-                                <a href="javascript:;"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">使用Facebook登入</div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
+            <!--簡訊驗證 #myModal03-->
+            <div class="login_page center_modal none" id="myModal03">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content3"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal03,myModal02)"
                                 >
-                                    <div class="input">
-                                        <input
-                                            id="fb_account_mobile"
-                                            name="account_mobile"
-                                            type="text"
-                                            placeholder="手機(密碼)"
-                                        />
-                                        <br />
-                                        請填寫正確手機號碼以取得簡訊驗證碼，完成加入
-                                    </div>
-                                    <div class="row">
-                                        <div class="input col-xs-8">
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(3)"
+                                >
+                                    <a
+                                        href="javascript:;"
+                                        data-dismiss="modal"
+                                        aria-hidden="true"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">簡訊驗證</div>
+                                <div class="error_focus none">驗證碼有誤</div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
                                             <input
-                                                id="fb_account_name"
-                                                name="account_name"
+                                                id="check_account_mobile"
+                                                name="account_mobile"
                                                 type="text"
-                                                placeholder="中文姓名"
+                                                placeholder="請輸入簡訊驗證碼"
+                                            />
+                                            <br />
+                                            收到簡訊驗證碼後，請於30分鐘內完成加入。超過30分鐘，驗證碼即失效
+                                        </div>
+                                        <div
+                                            class="button"
+                                            onclick="joinCheck('origin')"
+                                        >
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="加入完成"
+                                                style="
+                                                    background-color: aliceblue;
+                                                    color: #001937;
+                                                    font-weight: 500;
+                                                "
                                             />
                                         </div>
-                                        <div class="radio col-xs-4">
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="1"
-                                                    name="account_gender"
-                                                />
-                                                <span>男</span>
-                                            </label>
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    value="0"
-                                                    name="account_gender"
-                                                />
-                                                <span>女</span>
-                                            </label>
+                                        <div
+                                            class="button"
+                                            onclick="loginTo(myModal03, myModal04)"
+                                        >
+                                            <input
+                                                name="change"
+                                                type="button"
+                                                value="修改手機號碼"
+                                                class="change"
+                                            />
                                         </div>
-                                    </div>
-                                    <div class="button" onclick="fbSignUp()">
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="加入"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom">
-                                加入即代表同意FUNDAY的服務
-                                <span onclick="loginTo(myModal05,null)"
-                                    >條款與隱私權</span
-                                >
+                                    </form>
+                                </div>
+                                <div class="form_bottom"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!--條款與隱私權   #myModal05-->
-        <div class="login_page center_modal none" id="myModal05">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content5"
-                >
-                    <div id="page-body" class="doc">
-                        <div id="top_bar">
-                            <div class="icon_pre" onclick="modal_close(5)">
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div
-                                class="icon_close"
-                                onclick="modal_close(5)"
-                            ></div>
-                        </div>
-                        <div id="login_body">
-                            <div class="slogin">隱私權政策</div>
-                            <div class="doc_con">
-                                <p>
-                                    為了讓您詳細瞭解，Funday網站如何蒐集、應用及保護您所提供的個人資訊，請您詳細閱讀以下隱私保護政策，可以幫助您瞭解在使用Funday網站所提供的多項服務時，我們如何處理您的個人資料。<br />
-                                    如果您對於Funday隱私權聲明之相關事項有任何疑問，煩請與Funday客服人員聯絡，Funday將儘快為您回覆說明。
-                                </p>
-                                <h3>一、個人資料之蒐集</h3>
-                                <p>
-                                    1. 會員註冊<br />
-                                    當您註冊成為Funday會員時，Funday會詢問您的個人資訊，包括姓名、性別、電子郵件、生日、手機…等。申請註冊後，您將收到一組手機驗證碼，於網頁完成驗證程序後，即可開始使用Funday提供的會員服務。<br />
-                                </p>
-                                <p>
-                                    2.購買學習方案<br />
-                                    Funday提供經濟實惠的線上學習課程。當您欲購買學習方案時，您必須加人Funday
-                                    VIP會員，並於訂購單中填妥您的個人基本資料（包含：姓名、電話、地址等）；如您選擇以信用卡方式付费，您必須提供信用卡資料，以便迅速完成購買程序。而上述資料，我們將會加密儲存在一個安全的伺服器中。
-                                </p>
-                                <p>
-                                    3.活動及問卷調查<br />
-                                    當您參加Funday活動，或Funday與其商業合作夥伴主辦的抽獎、競賽、促銷活動，或問卷調查時Funday會依照活動的需要，請您提供姓名、電話及電子信箱等個人資料。
-                                </p>
-                                <p>
-                                    4. 社群與客服服務<br />
-                                    除了您主動提供的個人資料之外，您也可能在Funday網站中的討論區、留言板、等主動提供個人資料，然而此類型資料，將不在Funday隱私權保護政策的範圍之內。此外，如果您與Funday服務信箱聯繫或反應您的意見時，我們將會保存您的通訊記錄。
-                                </p>
-                                <p>
-                                    5. 廣告刊登<br />
-                                    Funday網站內可能包含許多連結及其他合作夥伴所提供的服務，或是刊登廣告之廠商，也可能蒐集您的個人資料。當您參加非Funday舉辦的活動時，您主動提供的個人資訊，將屬於該等連結網站或合作夥伴網站的隱私權聲明及與個人資料保護有關之告知事項，Funday亦不負任何連帶責任。
-                                </p>
-                                <p>
-                                    6.其它<br />
-                                    Funday網站會保留您在上網瀏覽或查詢時，伺服器自行產生的相關記錄，包括您使用的連線設備IP位址、使用時間、使用的瀏覽器、瀏覽及點選資料記錄等。Funday網站會對個別連線者的瀏覽器予以標示歸納使用者瀏覽器在Funday網站內部所瀏覽的網頁，除非您願意告知你的個人資料，否則Funday網站不會、也無法將此項記錄和您對應。
-                                </p>
-                                <h3>二、蒐集個人資料之目的與運用</h3>
-                                <p>
-                                    1.個人化服務：<br />
-                                    為提供會員專屬的數位學習服務，Funday將蒐集您的個人資料，不但可以便利的提供會員服務外，也可針對會員需求傳送更具相關性的內容。除此之外，更可藉此資訊，持續提升符合會員使用需求之服務，進而提升服務品質。
-                                </p>
-                                <p>
-                                    2. 活動與問卷調查：<br />
-                                    Funday為了行銷、客戶管理與服務及其他電子商務服務…等目的，依照各項服務之性質，可能蒐集您的個人資料（包含：姓名、聯絡電話、雷子信箱等），但僅作為通知聯繫用途。除非經由您的同意，否則其資料僅止於Funday內部分析之用，不會將資訊轉做其它用途，更不會公佈其它與您相關之個人資訊。
-                                </p>
-                                <p>
-                                    3，統計與分析：<br />
-                                    為提升服務品質，Funday會依照所提供的服務性質，記錄使用者的IP位址、以及在Funday網站內的瀏覽活動，但是這些資料僅供作流量分析和網路行為調查，以便於改善Funday的服務品質，這些資料也只是總量上的分析，不會與特定個人相連。<br />
-                                </p>
-                                <h3>三、與第三者共用個人資料</h3>
-                                <p>
-                                    一般說來，除非得到您的同意或在某些特殊情形（例如法律所要求）或下列情形之一，Funday不會揭露、轉售、交換、出租您的個人資料給任何其他團體或個人。為了提供您其它服務或優惠權益，而需要與提供該服務或優惠之第三者共用您的資料時，Funday會在活動時提供說明，您可以自由潠擇是否接受這項特定的服務或優惠，基於下列情形，Funday會在本政策原則之下，與第三者共用您的個人資料。
-                                </p>
-                                <p>
-                                    1商業合作夥伴和贊助商<br />
-                                    在Funday網站上的促銷活動可能是由Funday以外的公司單獨主辦，或是Funday與其他公司共同合辦，Funday網站可能將您的個人資料與商業合作夥伴或贊助商共享使用的方式及細節，請參閱各活動和促銷規則。
-                                </p>
-                                <p>
-                                    2.廣告商<br />
-                                    廣告商或與Funday連結的網站也可能會蒐集您的個人識別資料。而連結到Funday的網站，其資料處理措施不適用本隱私聲明。與廣告商主辦或合辦的活動中，主辦廣告商將有可能請您提供額外的資料，若您同意提供資料，即視為同意Funday將您的個人資料傳輸給廣告商。
-                                </p>
-                                <p>
-                                    3.其他<br />
-                                    在特殊情形下，當有人可能達反Funday會員條款，或者可能損害、妨礙Funday權益時，Funday使用者或因前述行為可能受害之任何人（不論是無意或是有意的），只要Funday需為辨識、連絡或對該人採取必要法律行動時，Funday得以揭露該使用者資料。同時，基於善意相信揭露用戶資料為法律需要，或為維護和改進產品、服務而用於管理或其他目的時，Funday亦可揭露或讀取用戶資料。<br />
-                                    此外，司法單位因公眾安全，要求Funday公開特定個人資料時，Funday將依司法單位合法正式的程序，以及對Funday所有使用者安全考量下做可能必要的配合。
-                                </p>
-                                <h3>四、個人資料讀取、更新和刪除</h3>
-                                <p>
-                                    當您註冊成為Funday會員後，您隨時可以利用您的Funday帳號和密碼修改您的個人資料（如暱稱、電話、電子郵件信箱…等），以及管理個人社群頁面。如果您忘記了密碼，煩請來信或來電與我們的客服人員聯繫。如果您欲刪除帳號並放棄免費試用，煩請您來電與我們的客服人員聯繫，以便驗證核實帳號擁有權，進行帳號刪除作業。
-                                </p>
-                                <h3>五、個人資料的安全防範措施</h3>
-                                <p>
-                                    Funday將以合於產業標準之合理技術及程序，維護使用者個人資料之安全。<br />
-                                    所有Funday會員帳戶資料和網路身份檔案資料均有密碼保護，只有使用者本人才能讀取個人資料。使用者可以利用Funday會員帳號和密碼，來修改Funday會員資料和Funday網路身份檔案資料，亦可決定公開或隱藏你部份或全部的個人資料。<br />
-                                    請妥善保管Funday會員帳號、密碼及任何個人資料，勿將個人資料及密碼提供給任何人。當帳戶使用完畢後，務必記得登出會員帳戶，若是與他人共享電腦或使用公共電腦，切記要關閉瀏覽器視窗，以防止他人讀取您的個人資料。<br />
-                                    另外，為保護您的個人資料檔案及學習記錄，經開啟後的網頁，若持續一段時間未使用，系統會自動將其登出。<br />
-                                    煩請特別留意，Funday不會在未經同意的電話或電子郵件中詢問您的密碼。
-                                </p>
-                                <h3>六、Cookie功能說明</h3>
-                                <p>
-                                    為提供使用者方便順暢瀏覽Funday網站，我們使用Cookie技術來存儲與追蹤某些與使用者有閼的資料以便於提供更適合使用者的個人化服務。Cookie是當使用者來到Funday時，儲存在使用者的伺服器成個人電腦硬碟中的一個純文字檔，此檔案可幫助Funday辨識使用者身份。使用者可以經由瀏覽器的設定，取消、或限制此項功能，但可能因此無法使用部份網站功能。
-                                </p>
-                                <h3>七、修訂之權利</h3>
-                                <p>
-                                    Funday有權隨時修訂本隱私權聲明及相關告知事項，並得於修訂後公佈在Funday網站上之適當位置，不另行個别通知，你可以隨時在Funday網站上詳閱修訂後的隱私權聲明及相關告知事項。
-                                </p>
-                            </div>
-                            <div class="form_bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--已是會員#myModal07-->
-        <div class="login_page center_modal none" id="myModal07">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content7"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal07,myModal01)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(7)">
-                                <a href="javascript:;"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
+            <!--修改手機號碼  #myModal04-->
+            <div class="login_page center_modal none" id="myModal04">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content4"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal04,myModal03)"
                                 >
-                                    <div class="input">
-                                        <input
-                                            name="account_mail"
-                                            type="text"
-                                            placeholder="帳號(信箱)"
-                                        />
-                                    </div>
-                                    <div class="input">
-                                        <input
-                                            name="account_mobile"
-                                            type="password"
-                                            placeholder="手機(密碼)"
-                                            autocomplete="off"
-                                        />
-                                        <br />
-                                        <div class="checkbox">
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    value="01"
-                                                />
-                                                <span>記住我</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="button login-in">
-                                        <input
-                                            name="join_in"
-                                            type="submit"
-                                            value="登入"
-                                        />
-                                        <input
-                                            class="fb-in"
-                                            name="join_in"
-                                            type="submit"
-                                            value="使用Facebook登入"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom">
-                                <a href="javascript:;">忘記密碼？</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--忘記密碼#myModal08-->
-        <div class="login_page center_modal none" id="myModal08">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content8"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal08,myModal09)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(8)">
-                                <a
-                                    href="javascript:;"
-                                    data-dismiss="modal"
-                                    aria-hidden="true"
-                                    ><img
-                                        src="images/web_icon/top_bar_close.svg"
-                                /></a>
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="slogin">忘記密碼</div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(4)"
                                 >
-                                    <div class="input">
-                                        <input
-                                            id="forgot_account_mobile"
-                                            name="account_mail"
-                                            type="text"
-                                            placeholder="請輸入您的手機號碼"
-                                        />
-                                        <br />
-                                        <div class="note">
-                                            簡訊會直接寄送密碼至您註冊的手機
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="button login-in"
-                                        onclick="forgotPass()"
+                                    <a
+                                        href="javascript:;"
+                                        data-dismiss="modal"
+                                        aria-hidden="true"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">修改手機號碼</div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
                                     >
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="送出"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="form_bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--已註冊過會員#myModal09-->
-        <div class="login_page center_modal none" id="myModal09">
-            <div class="modal-dialog">
-                <div
-                    class="modal-content animate__animated animate__fadeInDown"
-                    id="modal-content9"
-                >
-                    <div id="page-body">
-                        <div id="top_bar">
-                            <div
-                                class="icon_pre"
-                                onclick="loginTo(myModal09,myModal01)"
-                            >
-                                <a href="javascript:;"
-                                    ><img src="images/web_icon/top_bar_pre.svg"
-                                /></a>
-                            </div>
-                            <div class="icon_close" onclick="modal_close(9)">
-                                <img src="images/web_icon/top_bar_close.svg" />
-                            </div>
-                        </div>
-                        <div id="login_body">
-                            <div class="logo">
-                                <img
-                                    src="images/web_icon/funtube.svg"
-                                    width="110px"
-                                />
-                                <span>看影片學英文</span>
-                            </div>
-                            <div class="form_body">
-                                <form
-                                    action=""
-                                    method="get"
-                                    name="login_form"
-                                    class="login_form"
-                                >
-                                    <div class="input">
-                                        <input
-                                            id="login_account"
-                                            name="account_mail"
-                                            type="text"
-                                            placeholder="帳號(信箱)"
-                                        />
-                                    </div>
-                                    <div class="input">
-                                        <input
-                                            id="login_pass"
-                                            name="account_mobile"
-                                            type="password"
-                                            placeholder="手機(密碼)"
-                                            autocomplete="off"
-                                        />
-                                        <br />
-                                        <div class="checkbox">
-                                            <label>
+                                        <div class="row">
+                                            <div class="input col-xs-7">
                                                 <input
-                                                    id="rememberCheck"
-                                                    type="checkbox"
-                                                    value="01"
-                                                    onclick="remember()"
+                                                    id="new_mobile_number"
+                                                    name="new_mobile_number"
+                                                    type="text"
+                                                    placeholder="新手機號碼"
                                                 />
-                                                <span>記住我</span>
-                                            </label>
+                                            </div>
+                                            <div class="button col-xs-5">
+                                                <input
+                                                    name="send"
+                                                    type="button"
+                                                    value="發送驗證碼"
+                                                    class="send"
+                                                    onclick="changeMobile()"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="button login-in">
-                                        <input
-                                            name="join_in"
-                                            type="button"
-                                            value="登入"
-                                            style="
-                                                background-color: aliceblue;
-                                                color: #001937;
-                                                font-weight: 500;
-                                            "
-                                            onclick="mailLoginCheck()"
-                                        />
-                                        <input
-                                            class="fb-in"
-                                            type="button"
-                                            type="submit"
-                                            value="使用Facebook登入"
-                                            style="
-                                                background: #3351a0;
-                                                border: 1px solid #3351a0;
-                                                color: #fff;
-                                            "
-                                            onclick="fbLoginCheck()"
-                                        />
-                                        <div id="google_login"></div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div
-                                class="form_bottom"
-                                onclick="loginTo(myModal09,myModal08)"
-                            >
-                                <a href="javascript:;">忘記密碼？</a>
+                                        <div class="input">
+                                            <input
+                                                name="account_mobile"
+                                                id="new_account_mobile"
+                                                type="text"
+                                                placeholder="請輸入簡訊驗證碼"
+                                            />
+                                            <br />
+                                            收到簡訊驗證碼後，請於30分鐘內完成加入。超過30分鐘，驗證碼即失效
+                                        </div>
+                                        <div class="button">
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="加入完成"
+                                                onclick="joinCheck('new')"
+                                                style="
+                                                    background-color: aliceblue;
+                                                    color: #001937;
+                                                    font-weight: 500;
+                                                "
+                                            />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="form_bottom"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /.modal結束 -->
+            <!--使用google登入#myModal06-->
+            <div class="login_page center_modal none" id="myModal06">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content6"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal06,myModal01)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(6)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">使用Google登入</div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
+                                            <input
+                                                id="google_account_mobile"
+                                                name="account_mobile"
+                                                type="text"
+                                                placeholder="手機(密碼)"
+                                            />
+                                            <br />
+                                            請填寫正確手機號碼以取得簡訊驗證碼，完成加入
+                                        </div>
+                                        <div class="row">
+                                            <div class="input col-xs-8">
+                                                <input
+                                                    id="google_account_name"
+                                                    name="account_name"
+                                                    type="text"
+                                                    placeholder="中文姓名"
+                                                />
+                                            </div>
+                                            <div class="radio col-xs-4">
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="1"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>男</span>
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="0"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>女</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="button"
+                                            onclick="googleSignUp()"
+                                        >
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="加入"
+                                            />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="form_bottom">
+                                    加入即代表同意FUNDAY的服務
+                                    <span onclick="loginTo(myModal05,null)"
+                                        >條款與隱私權</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--使用facebook登入#myModal10-->
+            <div class="login_page center_modal none" id="myModal10">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content6"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal10,myModal01)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(10)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">使用Facebook登入</div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
+                                            <input
+                                                id="fb_account_mobile"
+                                                name="account_mobile"
+                                                type="text"
+                                                placeholder="手機(密碼)"
+                                            />
+                                            <br />
+                                            請填寫正確手機號碼以取得簡訊驗證碼，完成加入
+                                        </div>
+                                        <div class="row">
+                                            <div class="input col-xs-8">
+                                                <input
+                                                    id="fb_account_name"
+                                                    name="account_name"
+                                                    type="text"
+                                                    placeholder="中文姓名"
+                                                />
+                                            </div>
+                                            <div class="radio col-xs-4">
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="1"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>男</span>
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        value="0"
+                                                        name="account_gender"
+                                                    />
+                                                    <span>女</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="button"
+                                            onclick="fbSignUp()"
+                                        >
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="加入"
+                                            />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="form_bottom">
+                                    加入即代表同意FUNDAY的服務
+                                    <span onclick="loginTo(myModal05,null)"
+                                        >條款與隱私權</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--條款與隱私權   #myModal05-->
+            <div class="login_page center_modal none" id="myModal05">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content5"
+                    >
+                        <div id="page-body" class="doc">
+                            <div id="top_bar">
+                                <div class="icon_pre" onclick="modal_close(5)">
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(5)"
+                                ></div>
+                            </div>
+                            <div id="login_body">
+                                <div class="slogin">隱私權政策</div>
+                                <div class="doc_con">
+                                    <p>
+                                        為了讓您詳細瞭解，Funday網站如何蒐集、應用及保護您所提供的個人資訊，請您詳細閱讀以下隱私保護政策，可以幫助您瞭解在使用Funday網站所提供的多項服務時，我們如何處理您的個人資料。<br />
+                                        如果您對於Funday隱私權聲明之相關事項有任何疑問，煩請與Funday客服人員聯絡，Funday將儘快為您回覆說明。
+                                    </p>
+                                    <h3>一、個人資料之蒐集</h3>
+                                    <p>
+                                        1. 會員註冊<br />
+                                        當您註冊成為Funday會員時，Funday會詢問您的個人資訊，包括姓名、性別、電子郵件、生日、手機…等。申請註冊後，您將收到一組手機驗證碼，於網頁完成驗證程序後，即可開始使用Funday提供的會員服務。<br />
+                                    </p>
+                                    <p>
+                                        2.購買學習方案<br />
+                                        Funday提供經濟實惠的線上學習課程。當您欲購買學習方案時，您必須加人Funday
+                                        VIP會員，並於訂購單中填妥您的個人基本資料（包含：姓名、電話、地址等）；如您選擇以信用卡方式付费，您必須提供信用卡資料，以便迅速完成購買程序。而上述資料，我們將會加密儲存在一個安全的伺服器中。
+                                    </p>
+                                    <p>
+                                        3.活動及問卷調查<br />
+                                        當您參加Funday活動，或Funday與其商業合作夥伴主辦的抽獎、競賽、促銷活動，或問卷調查時Funday會依照活動的需要，請您提供姓名、電話及電子信箱等個人資料。
+                                    </p>
+                                    <p>
+                                        4. 社群與客服服務<br />
+                                        除了您主動提供的個人資料之外，您也可能在Funday網站中的討論區、留言板、等主動提供個人資料，然而此類型資料，將不在Funday隱私權保護政策的範圍之內。此外，如果您與Funday服務信箱聯繫或反應您的意見時，我們將會保存您的通訊記錄。
+                                    </p>
+                                    <p>
+                                        5. 廣告刊登<br />
+                                        Funday網站內可能包含許多連結及其他合作夥伴所提供的服務，或是刊登廣告之廠商，也可能蒐集您的個人資料。當您參加非Funday舉辦的活動時，您主動提供的個人資訊，將屬於該等連結網站或合作夥伴網站的隱私權聲明及與個人資料保護有關之告知事項，Funday亦不負任何連帶責任。
+                                    </p>
+                                    <p>
+                                        6.其它<br />
+                                        Funday網站會保留您在上網瀏覽或查詢時，伺服器自行產生的相關記錄，包括您使用的連線設備IP位址、使用時間、使用的瀏覽器、瀏覽及點選資料記錄等。Funday網站會對個別連線者的瀏覽器予以標示歸納使用者瀏覽器在Funday網站內部所瀏覽的網頁，除非您願意告知你的個人資料，否則Funday網站不會、也無法將此項記錄和您對應。
+                                    </p>
+                                    <h3>二、蒐集個人資料之目的與運用</h3>
+                                    <p>
+                                        1.個人化服務：<br />
+                                        為提供會員專屬的數位學習服務，Funday將蒐集您的個人資料，不但可以便利的提供會員服務外，也可針對會員需求傳送更具相關性的內容。除此之外，更可藉此資訊，持續提升符合會員使用需求之服務，進而提升服務品質。
+                                    </p>
+                                    <p>
+                                        2. 活動與問卷調查：<br />
+                                        Funday為了行銷、客戶管理與服務及其他電子商務服務…等目的，依照各項服務之性質，可能蒐集您的個人資料（包含：姓名、聯絡電話、雷子信箱等），但僅作為通知聯繫用途。除非經由您的同意，否則其資料僅止於Funday內部分析之用，不會將資訊轉做其它用途，更不會公佈其它與您相關之個人資訊。
+                                    </p>
+                                    <p>
+                                        3，統計與分析：<br />
+                                        為提升服務品質，Funday會依照所提供的服務性質，記錄使用者的IP位址、以及在Funday網站內的瀏覽活動，但是這些資料僅供作流量分析和網路行為調查，以便於改善Funday的服務品質，這些資料也只是總量上的分析，不會與特定個人相連。<br />
+                                    </p>
+                                    <h3>三、與第三者共用個人資料</h3>
+                                    <p>
+                                        一般說來，除非得到您的同意或在某些特殊情形（例如法律所要求）或下列情形之一，Funday不會揭露、轉售、交換、出租您的個人資料給任何其他團體或個人。為了提供您其它服務或優惠權益，而需要與提供該服務或優惠之第三者共用您的資料時，Funday會在活動時提供說明，您可以自由潠擇是否接受這項特定的服務或優惠，基於下列情形，Funday會在本政策原則之下，與第三者共用您的個人資料。
+                                    </p>
+                                    <p>
+                                        1商業合作夥伴和贊助商<br />
+                                        在Funday網站上的促銷活動可能是由Funday以外的公司單獨主辦，或是Funday與其他公司共同合辦，Funday網站可能將您的個人資料與商業合作夥伴或贊助商共享使用的方式及細節，請參閱各活動和促銷規則。
+                                    </p>
+                                    <p>
+                                        2.廣告商<br />
+                                        廣告商或與Funday連結的網站也可能會蒐集您的個人識別資料。而連結到Funday的網站，其資料處理措施不適用本隱私聲明。與廣告商主辦或合辦的活動中，主辦廣告商將有可能請您提供額外的資料，若您同意提供資料，即視為同意Funday將您的個人資料傳輸給廣告商。
+                                    </p>
+                                    <p>
+                                        3.其他<br />
+                                        在特殊情形下，當有人可能達反Funday會員條款，或者可能損害、妨礙Funday權益時，Funday使用者或因前述行為可能受害之任何人（不論是無意或是有意的），只要Funday需為辨識、連絡或對該人採取必要法律行動時，Funday得以揭露該使用者資料。同時，基於善意相信揭露用戶資料為法律需要，或為維護和改進產品、服務而用於管理或其他目的時，Funday亦可揭露或讀取用戶資料。<br />
+                                        此外，司法單位因公眾安全，要求Funday公開特定個人資料時，Funday將依司法單位合法正式的程序，以及對Funday所有使用者安全考量下做可能必要的配合。
+                                    </p>
+                                    <h3>四、個人資料讀取、更新和刪除</h3>
+                                    <p>
+                                        當您註冊成為Funday會員後，您隨時可以利用您的Funday帳號和密碼修改您的個人資料（如暱稱、電話、電子郵件信箱…等），以及管理個人社群頁面。如果您忘記了密碼，煩請來信或來電與我們的客服人員聯繫。如果您欲刪除帳號並放棄免費試用，煩請您來電與我們的客服人員聯繫，以便驗證核實帳號擁有權，進行帳號刪除作業。
+                                    </p>
+                                    <h3>五、個人資料的安全防範措施</h3>
+                                    <p>
+                                        Funday將以合於產業標準之合理技術及程序，維護使用者個人資料之安全。<br />
+                                        所有Funday會員帳戶資料和網路身份檔案資料均有密碼保護，只有使用者本人才能讀取個人資料。使用者可以利用Funday會員帳號和密碼，來修改Funday會員資料和Funday網路身份檔案資料，亦可決定公開或隱藏你部份或全部的個人資料。<br />
+                                        請妥善保管Funday會員帳號、密碼及任何個人資料，勿將個人資料及密碼提供給任何人。當帳戶使用完畢後，務必記得登出會員帳戶，若是與他人共享電腦或使用公共電腦，切記要關閉瀏覽器視窗，以防止他人讀取您的個人資料。<br />
+                                        另外，為保護您的個人資料檔案及學習記錄，經開啟後的網頁，若持續一段時間未使用，系統會自動將其登出。<br />
+                                        煩請特別留意，Funday不會在未經同意的電話或電子郵件中詢問您的密碼。
+                                    </p>
+                                    <h3>六、Cookie功能說明</h3>
+                                    <p>
+                                        為提供使用者方便順暢瀏覽Funday網站，我們使用Cookie技術來存儲與追蹤某些與使用者有閼的資料以便於提供更適合使用者的個人化服務。Cookie是當使用者來到Funday時，儲存在使用者的伺服器成個人電腦硬碟中的一個純文字檔，此檔案可幫助Funday辨識使用者身份。使用者可以經由瀏覽器的設定，取消、或限制此項功能，但可能因此無法使用部份網站功能。
+                                    </p>
+                                    <h3>七、修訂之權利</h3>
+                                    <p>
+                                        Funday有權隨時修訂本隱私權聲明及相關告知事項，並得於修訂後公佈在Funday網站上之適當位置，不另行個别通知，你可以隨時在Funday網站上詳閱修訂後的隱私權聲明及相關告知事項。
+                                    </p>
+                                </div>
+                                <div class="form_bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--已是會員#myModal07-->
+            <div class="login_page center_modal none" id="myModal07">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content7"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal07,myModal01)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(7)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
+                                            <input
+                                                name="account_mail"
+                                                type="text"
+                                                placeholder="帳號(信箱)"
+                                            />
+                                        </div>
+                                        <div class="input">
+                                            <input
+                                                name="account_mobile"
+                                                type="password"
+                                                placeholder="手機(密碼)"
+                                                autocomplete="off"
+                                            />
+                                            <br />
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        value="01"
+                                                    />
+                                                    <span>記住我</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="button login-in">
+                                            <input
+                                                name="join_in"
+                                                type="submit"
+                                                value="登入"
+                                            />
+                                            <input
+                                                class="fb-in"
+                                                name="join_in"
+                                                type="submit"
+                                                value="使用Facebook登入"
+                                            />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="form_bottom">
+                                    <a href="javascript:;">忘記密碼？</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--忘記密碼#myModal08-->
+            <div class="login_page center_modal none" id="myModal08">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content8"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal08,myModal09)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(8)"
+                                >
+                                    <a
+                                        href="javascript:;"
+                                        data-dismiss="modal"
+                                        aria-hidden="true"
+                                        ><img
+                                            src="images/web_icon/top_bar_close.svg"
+                                    /></a>
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="slogin">忘記密碼</div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
+                                            <input
+                                                id="forgot_account_mobile"
+                                                name="account_mail"
+                                                type="text"
+                                                placeholder="請輸入您的手機號碼"
+                                            />
+                                            <br />
+                                            <div class="note">
+                                                簡訊會直接寄送密碼至您註冊的手機
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="button login-in"
+                                            onclick="forgotPass()"
+                                        >
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="送出"
+                                            />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="form_bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--已註冊過會員#myModal09-->
+            <div class="login_page center_modal none" id="myModal09">
+                <div class="modal-dialog">
+                    <div
+                        class="modal-content animate__animated animate__fadeInDown"
+                        id="modal-content9"
+                    >
+                        <div id="page-body">
+                            <div id="top_bar">
+                                <div
+                                    class="icon_pre"
+                                    onclick="loginTo(myModal09,myModal01)"
+                                >
+                                    <a href="javascript:;"
+                                        ><img
+                                            src="images/web_icon/top_bar_pre.svg"
+                                    /></a>
+                                </div>
+                                <div
+                                    class="icon_close"
+                                    onclick="modal_close(9)"
+                                >
+                                    <img
+                                        src="images/web_icon/top_bar_close.svg"
+                                    />
+                                </div>
+                            </div>
+                            <div id="login_body">
+                                <div class="logo">
+                                    <img
+                                        src="images/web_icon/funtube.svg"
+                                        width="110px"
+                                    />
+                                    <span>看影片學英文</span>
+                                </div>
+                                <div class="form_body">
+                                    <form
+                                        action=""
+                                        method="get"
+                                        name="login_form"
+                                        class="login_form"
+                                    >
+                                        <div class="input">
+                                            <input
+                                                id="login_account"
+                                                name="account_mail"
+                                                type="text"
+                                                placeholder="帳號(信箱)"
+                                            />
+                                        </div>
+                                        <div class="input">
+                                            <input
+                                                id="login_pass"
+                                                name="account_mobile"
+                                                type="password"
+                                                placeholder="手機(密碼)"
+                                                autocomplete="off"
+                                            />
+                                            <br />
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input
+                                                        id="rememberCheck"
+                                                        type="checkbox"
+                                                        value="01"
+                                                        onclick="remember()"
+                                                    />
+                                                    <span>記住我</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="button login-in">
+                                            <input
+                                                name="join_in"
+                                                type="button"
+                                                value="登入"
+                                                style="
+                                                    background-color: aliceblue;
+                                                    color: #001937;
+                                                    font-weight: 500;
+                                                "
+                                                onclick="mailLoginCheck()"
+                                            />
+                                            <input
+                                                class="fb-in"
+                                                type="button"
+                                                type="submit"
+                                                value="使用Facebook登入"
+                                                style="
+                                                    background: #3351a0;
+                                                    border: 1px solid #3351a0;
+                                                    color: #fff;
+                                                "
+                                                onclick="fbLoginCheck()"
+                                            />
+                                            <div id="google_login"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div
+                                    class="form_bottom"
+                                    onclick="loginTo(myModal09,myModal08)"
+                                >
+                                    <a href="javascript:;">忘記密碼？</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal結束 -->
+        </section>
     </body>
 
     <script>
@@ -1939,12 +2135,25 @@
                         >
                     </li>
                     <li>
+                        <a href="https://tales.funday.asia?fdtk=${token}" target="_blank"
+                            >FunTales</a
+                        >
+                    </li>
+                    <li>
+                        <a href="https://funradio.funday.asia?fdtk=${token}" target="_blank"
+                            >FunRadio</a
+                        >
+                    </li>
+                    <li>
                         <a href="https://dic.funday.asia?fdtk=${token}" target="_blank"
                             >FunDictionary</a
                         >
                     </li>
                     <li>
                         <a href="https://funday.asia/api/SSO.asp?fdtk=${token}" target="_blank">FunDay</a>
+                    </li>
+                    <li>
+                        <a href="https://funday.asia/api/SSOGOLink.asp?fdtk=${token}&Path=Subscription" class="more_service">更多會員服務</a>
                     </li>
                 </ul>
             `;

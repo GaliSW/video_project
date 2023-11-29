@@ -294,6 +294,12 @@
                         <a href="https://music.funday.asia" target="_blank"
                             >FunMusic</a
                         >
+                        <a href="https://tales.funday.asia" target="_blank"
+                            >FunTales</a
+                        >
+                        <a href="https://funradio.funday.asia" target="_blank"
+                            >FunRadio</a
+                        >
                         <a href="https://funday.asia" target="_blank">FunDay</a>
                     </div>
                 </div>
@@ -606,7 +612,10 @@
                                                     中英字幕
                                                 </div>
                                                 <div class="blank"></div>
-                                                <div class="number video_icon">
+                                                <div
+                                                    class="number video_icon"
+                                                    v-if="item.Recordings !== '0'"
+                                                >
                                                     <img
                                                         src="images/web_icon/video_icon.svg"
                                                         class="icon"
@@ -683,7 +692,10 @@
                                                     中英字幕
                                                 </div>
                                                 <div class="blank"></div>
-                                                <div class="number video_icon">
+                                                <div
+                                                    class="number video_icon"
+                                                    v-if="item.Recordings !== '0'"
+                                                >
                                                     <img
                                                         src="images/web_icon/video_icon.svg"
                                                         class="icon"
@@ -793,6 +805,7 @@
                                                             ></div>
                                                             <div
                                                                 class="number video_icon"
+                                                                v-if="item.Recordings !== '0'"
                                                             >
                                                                 <img
                                                                     src="images/web_icon/video_icon.svg"
@@ -878,6 +891,7 @@
                                                             ></div>
                                                             <div
                                                                 class="number video_icon"
+                                                                v-if="item.Recordings !== '0'"
                                                             >
                                                                 <img
                                                                     src="images/web_icon/video_icon.svg"

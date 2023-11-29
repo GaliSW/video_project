@@ -11,7 +11,7 @@ body {
     height: 50px;
     background: linear-gradient(0deg, #0d2d53, #0d2d53), #000000;
     position: fixed;
-    z-index: 4;
+    z-index: 999;
     top: 0px;
     display: flex;
     justify-content: space-between;
@@ -99,7 +99,18 @@ body.modal-open #header {
 .subWeb > a:hover {
     color: rgba(255, 255, 255, 1);
 }
-
+.subWeb .more_service {
+    text-align: center;
+    border: 1px solid white;
+    border-style: solid;
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
 .nav_bar {
     position: fixed;
     background: #031326;
@@ -136,6 +147,18 @@ body.modal-open #header {
 }
 .nav_bar ul a:hover {
     color: rgba(255, 255, 255, 1);
+}
+.nav_bar ul .more_service {
+    text-align: center;
+    border: 1px solid white;
+    border-style: solid;
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 .header_right {
     display: flex;

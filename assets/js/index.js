@@ -5,7 +5,7 @@ import zhBadWords from "./words.js";
 
 // ***********************************navbar**************************************
 const app = new Vue({
-    el: ".all_wrap",
+    el: ".index",
     data: {
         list: "",
         notifications: "",
@@ -50,6 +50,7 @@ const app = new Vue({
         nav: false,
         tab: true,
         firstClick: false,
+        ADid: "", //廣告參數
     },
     created() {
         if (
@@ -80,6 +81,10 @@ const app = new Vue({
             mid = sessionStorage.getItem("mindx");
             this.firstClick = true;
         }
+        //判斷是否有ADid
+        if (sessionStorage.getItem("ADid")) {
+            this.ADid = sessionStorage.getItem("ADid");
+        }
 
         axios
             .get(
@@ -103,7 +108,8 @@ const app = new Vue({
                             if (response.data[`${nav}`][i]["Bookmark"] == 1) {
                                 heart = "favorites";
                             }
-                            this[`${nav.replace(/ /g, "")}`] += `
+                            if (record == 0) {
+                                this[`${nav.replace(/ /g, "")}`] += `
                             <div class="item">
                                 <div class="video_img"
                                 id=${id}
@@ -122,15 +128,6 @@ const app = new Vue({
                                     中英字幕
                                 </div>
                                 <div class="blank"></div>
-                                <div class="number video_icon" >
-                                    <img
-                                        src="images/web_icon/video_icon.svg"
-                                        class="icon"
-                                    /><span class="digi"
-                                        >${record}</span
-                                    >
-                                    次
-                                </div>
                                 <div class="number view_icon">
                                     <img
                                         src="images/web_icon/view_icon.svg"
@@ -157,6 +154,62 @@ const app = new Vue({
                             </div>
                             </div>
                             `;
+                            } else {
+                                this[`${nav.replace(/ /g, "")}`] += `
+                                <div class="item">
+                                    <div class="video_img"
+                                    id=${id}
+                                    name=${nav}
+                                    onclick="toVideo(this)">
+                                    <img
+                                            src="${pic}"
+                                            class="img"
+                                    /></a>
+                                </div>
+                                <div class="tool_bar">
+                                    <div class="subtitles"
+                                    id=${id}
+                                    name=${nav}
+                                    onclick="toVideo(this)">
+                                        中英字幕
+                                    </div>
+                                    <div class="blank"></div>
+                                    <div class="number video_icon" v-if="${record} !== 0">
+                                        <img
+                                            src="images/web_icon/video_icon.svg"
+                                            class="icon"
+                                        /><span class="digi"
+                                            >${record}</span
+                                        >
+                                        次
+                                    </div>
+                                    <div class="number view_icon">
+                                        <img
+                                            src="images/web_icon/view_icon.svg"
+                                            class="icon"
+                                        /><span class="digi"
+                                            >${click}</span
+                                        >
+                                        次
+                                    </div>
+                                    <div
+                                        id="${id}"
+                                        class="heart ${heart}"
+                                        onclick="fnAddToCollection(this)"
+                                    ></div>
+                                </div>
+                                <div class="more_title"
+                                id=${id}
+                                name=${nav}
+                                onclick="toVideo(this)">
+                                   
+                                        <span class="category"
+                                            >${nav} | </span
+                                        >${title}
+                                </div>
+                                </div>
+                                `;
+                            }
                         }
                     }
                 }
@@ -368,7 +421,7 @@ const app = new Vue({
             axios
                 .get("https://funday.asia/api/ProgramWeb/defaultlist.asp")
                 .then((response) => {
-                    // console.log(response.data.Banner[0]);
+                    // console.log(response.data);
                     //Banner圖片
                     this.bannerImg = response.data.Banner[0].Pic;
                     this.bannerId = response.data.Banner[0].Id;
@@ -558,9 +611,8 @@ const app = new Vue({
                         `https://videoapi.funday.asia/api/BulletinBoard/BulletinBoardLastThirtyRecords`
                     )
                     .then((res) => {
-                        // console.log(res);
-                        app.boardContent = res.data.content.reverse();
-                        app.boardMessage = res.data.content;
+                        app.boardContent = res.data.Content.reverse();
+                        app.boardMessage = res.data.Content;
                         app.fnBoardMessage();
                     })
                     .catch((error) => console.log(error));
@@ -718,7 +770,7 @@ const app = new Vue({
         },
         //第一次點擊頁面
         firstClickPage() {
-            this.firstClick = true;
+            // this.firstClick = true;
             loginTo(myModal01, null);
         },
     },

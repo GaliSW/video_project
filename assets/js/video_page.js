@@ -26,6 +26,7 @@ let app = new Vue({
         record_end_time: [],
         cid: "",
         mid: "",
+        user_level: "",
         keyWordResult: {}, //字典搜尋結果
         DrWordModal: false, //字典modal開關
         DrWord: "", //字本人
@@ -103,6 +104,7 @@ let app = new Vue({
         confirm: false,
         vdVoice: true,
         firstClick: false,
+        ADid: "", //廣告參數
     },
     created() {
         var player;
@@ -113,14 +115,11 @@ let app = new Vue({
         }
         if (sessionStorage.getItem("mindx")) {
             this.mid = sessionStorage.getItem("mindx");
+            this.user_level = sessionStorage.getItem("level");
             this.firstClick = true;
-        } else {
-            const login = document.getElementById("myModal01");
-            setTimeout(() => {
-                if (login.classList.contains("none")) {
-                    loginTo(login, null);
-                }
-            }, 15000);
+        }
+        if (sessionStorage.getItem("ADid")) {
+            this.ADid = sessionStorage.getItem("ADid");
         }
         if (location.hash.indexOf("mid") > -1) {
             // console.log(location.hash);
@@ -134,7 +133,6 @@ let app = new Vue({
                     `https://musicapi.funday.asia/api/Share/GetMember?customer_id=${this.singerCid}&member_id=${this.singerMid}`
                 )
                 .then((res) => {
-                    console.log(res);
                     this.singerImg = res.data.content.imgUrl;
                     this.singerSex = res.data.content.sex;
                     this.singerName = res.data.content.nickName;
@@ -167,7 +165,6 @@ let app = new Vue({
         createPlayer() {
             const url = window.location.search;
             this.URL = window.location.href;
-            // console.log(url);
             const memberid = sessionStorage.getItem("mindx");
             let id = "";
             if (url.indexOf("?") != -1) {
@@ -192,6 +189,7 @@ let app = new Vue({
                     // == 影片各資料取得
                     // ==========================================
                     this.title = response.data.info.title;
+                    this.getPostgresId();
                     //取得播放清單(上下一首 或 隨機)
                     this.next = response.data.others.next_id;
                     this.prev = response.data.others.previous_id;
@@ -232,6 +230,9 @@ let app = new Vue({
                             break;
                         case "23":
                             this.cate = "調查局";
+                            break;
+                        default:
+                            this.cate = "News";
                             break;
                     }
                     //取得是否收藏
@@ -399,7 +400,7 @@ let app = new Vue({
                         let sec = Number(allSec % 60);
                         let Minsec;
                         if (sec == 0) {
-                            Minsec = 00;
+                            Minsec = "00";
                         } else if (sec > 0 && sec < 10) {
                             Minsec = `0${sec}`;
                         } else {
@@ -411,7 +412,7 @@ let app = new Vue({
                             .querySelector(".loading_blk")
                             .classList.add("none");
 
-                        player.playVideo();
+                        // player.playVideo();
                     }
                     function onPlayerStateChange(e) {
                         let btn = document.getElementById("play_btn");
@@ -2039,7 +2040,7 @@ let app = new Vue({
         },
         //第一次點擊頁面
         firstClickPage() {
-            this.firstClick = true;
+            // this.firstClick = true;
             loginTo(myModal01, null);
         },
 
@@ -2055,6 +2056,39 @@ let app = new Vue({
             document.querySelector(".goTime_bar").style.width = `${
                 (xPos / length) * 100
             }%`;
+        },
+        getPostgresId() {
+            axios
+                .get(
+                    `https://socialmedia-api.funday.asia/api/v1/Reports/UserId?member_id=${this.mid}`
+                )
+                .then(async (res) => {
+                    const postgresId = res.data.content;
+                    this.postLogEvent(postgresId);
+                });
+        },
+        postLogEvent(id) {
+            axios
+                .post(
+                    "https://socialmedia-api.funday.asia/api/v1/Logs/AddLogs",
+                    {
+                        userId: id,
+                        createdDate: new Date(),
+                        action: "在視聽館",
+                        details: `觀看-${this.title}`,
+                        levels: this.user_level,
+                        member_id: this.mid,
+                        nickName: sessionStorage.getItem("nickName"),
+                        sex: sessionStorage.getItem("sex"),
+                        thumbnail:
+                            sessionStorage.getItem("pic") === "null"
+                                ? ""
+                                : sessionStorage.getItem("pic"),
+                    }
+                )
+                .then(async (res) => {
+                    console.log(res);
+                });
         },
     },
     watch: {

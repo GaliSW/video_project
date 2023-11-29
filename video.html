@@ -317,14 +317,59 @@
                             <div>看影片學英文</div>
                         </span>
                     </a>
-                    <div class="subWeb mobile_hidden">
+                    <div class="subWeb mobile_hidden" v-if="ADid ==''">
                         <a href="https://music.funday.asia" target="_blank"
                             >FunMusic</a
+                        >
+                        <a href="https://tales.funday.asia" target="_blank"
+                            >FunTales</a
+                        >
+                        <a href="https://funradio.funday.asia" target="_blank"
+                            >FunRadio</a
                         >
                         <a href="https://dic.funday.asia" target="_blank"
                             >FunDictionary</a
                         >
                         <a href="https://funday.asia" target="_blank">FunDay</a>
+                        <a
+                            href="https://funday.asia/subscription/2023"
+                            target="_blank"
+                            class="more_service"
+                            >更多會員服務</a
+                        >
+                    </div>
+                    <div class="subWeb mobile_hidden" v-else>
+                        <a
+                            :href="'https://music.funday.asia/adLanding.html?ADid=' + ADid"
+                            target="_blank"
+                            >FunMusic</a
+                        >
+                        <a
+                            :href="'https://tales.funday.asia?ADid=' + ADid"
+                            target="_blank"
+                            >FunTales</a
+                        >
+                        <a
+                            :href="'https://funradio.funday.asia/adLanding.html?ADid=' + ADid"
+                            target="_blank"
+                            >FunRadio</a
+                        >
+                        <a
+                            :href="'https://dic.funday.asia?ADid=' + ADid"
+                            target="_blank"
+                            >FunDictionary</a
+                        >
+                        <a
+                            :href="'https://funday.asia/AD_reflink.asp?ad_id=' + ADid"
+                            target="_blank"
+                            >FunDay</a
+                        >
+                        <a
+                            :href="'https://funday.asia/subscription/2023?ad_id=' + ADid"
+                            target="_blank"
+                            class="more_service"
+                            >更多會員服務</a
+                        >
                     </div>
                 </div>
                 <div class="header_right">
@@ -1502,7 +1547,10 @@
                                                     老師解說
                                                 </div> -->
                                                 <div class="blank"></div>
-                                                <div class="number video_icon">
+                                                <div
+                                                    class="number video_icon"
+                                                    v-if="item.Recordings !== '0'"
+                                                >
                                                     <img
                                                         src="images/web_icon/video_icon.svg"
                                                         class="icon"

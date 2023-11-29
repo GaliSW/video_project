@@ -2271,7 +2271,7 @@ body.video_page .switch_tab .back_to_singer {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    z-index: 999;
+    z-index: 998;
 }
 @media (max-width: 991px) {
     .confirm_blk {
